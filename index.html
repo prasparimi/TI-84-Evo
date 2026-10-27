@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TI-84 Evo SAT Math Master Guide</title>
+  <title>SAT Math TI-84 Evo 100+ Master Problem Bank</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Inter Font -->
+  <!-- Inter & JetBrains Mono Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
   <script>
@@ -29,12 +29,6 @@
               700: '#1d4ed8',
               800: '#1e40af',
               900: '#1e3a8a',
-            },
-            calc: {
-              screen: '#9ea882',
-              screenDark: '#222818',
-              pixel: '#111810',
-              accent: '#38bdf8'
             }
           }
         }
@@ -43,54 +37,33 @@
   </script>
   <style>
     /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.05);
-    }
-    .dark ::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
-    }
-    .dark ::-webkit-scrollbar-thumb {
-      background: #475569;
-      border-radius: 4px;
-    }
-    
-    /* Keypad Button Press FX */
-    .calc-btn {
-      transition: all 0.1s ease;
-      box-shadow: 0 4px 0 rgba(0,0,0,0.2);
-    }
-    .calc-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 0 rgba(0,0,0,0.2);
-    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+    .dark ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
 
-    /* Screen LCD Texture */
-    .lcd-screen {
-      background-color: #8c9b70;
-      color: #0f170d;
+    /* LCD Screen Display Formatting */
+    .lcd-display {
+      background-color: #1a2216;
+      color: #a3e635;
       font-family: 'JetBrains Mono', monospace;
       position: relative;
       overflow: hidden;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
+      border: 2px solid #334155;
     }
-    .dark .lcd-screen {
-      background-color: #1a2216;
-      color: #a3e635;
+    .light .lcd-display {
+      background-color: #8c9b70;
+      color: #0f170d;
+      border: 2px solid #94a3b8;
     }
-    .lcd-screen::before {
+    .lcd-display::before {
       content: " ";
       display: block;
       position: absolute;
       top: 0; left: 0; bottom: 0; right: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%);
       background-size: 100% 4px;
       z-index: 2;
       pointer-events: none;
@@ -99,7 +72,7 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
 
-  <!-- TOP NAV BAR -->
+  <!-- TOP HEADER & NAVBAR -->
   <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
@@ -107,742 +80,593 @@
           TI
         </div>
         <div>
-          <h1 class="font-bold text-lg leading-none tracking-tight">TI-84 <span class="text-blue-600 dark:text-blue-400">Evo</span> SAT Guide</h1>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Digital SAT Math Strategy & Simulator</p>
+          <h1 class="font-bold text-lg leading-none tracking-tight">TI-84 <span class="text-blue-600 dark:text-blue-400">Evo</span> 100+ SAT Bank</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Complete Digital SAT Math Calculator Blueprint</p>
         </div>
       </div>
 
-      <!-- Controls -->
+      <!-- Controls & Quiz Mode Toggle -->
       <div class="flex items-center space-x-3">
-        <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+        <button id="quizModeBtn" onclick="toggleQuizMode()" class="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-eye-slash text-amber-500"></i>
+          <span id="quizModeLabel">Practice Mode: Off</span>
+        </button>
+        <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
           <i class="fa-solid fa-moon dark:hidden"></i>
           <i class="fa-solid fa-sun hidden dark:inline"></i>
         </button>
-        <a href="#simulator" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition flex items-center gap-1.5">
-          <i class="fa-solid fa-calculator"></i>
-          <span class="hidden sm:inline">Launch</span> Simulator
-        </a>
       </div>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-    <!-- HERO SECTION: TI-84 EVO ADVANTAGES -->
-    <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 shadow-2xl border border-slate-800">
-      <div class="absolute -right-20 -top-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div class="lg:col-span-7 space-y-4">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold uppercase tracking-wider">
-            <i class="fa-solid fa-bolt"></i> SAT Math Accelerator
-          </div>
-          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-            Master the SAT Math with <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">TI-84 Evo</span> Speed
-          </h2>
-          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            While the Digital SAT gives you built-in Desmos, pairing it with the hardware speed of the TI-84 Evo gives you an unfair advantage in system solving, polynomial table matching, and statistical analysis.
-          </p>
-          <div class="pt-2 flex flex-wrap gap-3">
-            <a href="#modules" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition shadow-lg shadow-blue-600/30">
-              Explore SAT Modules
-            </a>
-            <a href="#checklist" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold border border-slate-700 transition">
-              Test-Day Checklist
-            </a>
-          </div>
+    <!-- HERO DASHBOARD STATS -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-arrow-trend-up"></i>
         </div>
-
-        <!-- Hardware Specs Badge Grid -->
-        <div class="lg:col-span-5 grid grid-cols-2 gap-3">
-          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition">
-            <div class="text-blue-400 text-xl mb-1"><i class="fa-solid fa-gauge-high"></i></div>
-            <div class="text-xl font-bold">3x Faster</div>
-            <div class="text-xs text-slate-400">Processor speeds up table matching & complex graphing</div>
-          </div>
-          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition">
-            <div class="text-indigo-400 text-xl mb-1"><i class="fa-solid fa-border-all"></i></div>
-            <div class="text-xl font-bold">Borderless</div>
-            <div class="text-xs text-slate-400">High-DPI color screen fits full stats tables</div>
-          </div>
-          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition">
-            <div class="text-emerald-400 text-xl mb-1"><i class="fa-solid fa-cable-car"></i></div>
-            <div class="text-xl font-bold">USB-C Fast</div>
-            <div class="text-xs text-slate-400">Quick top-ups ensure 100% battery on test day</div>
-          </div>
-          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition">
-            <div class="text-amber-400 text-xl mb-1"><i class="fa-solid fa-icons"></i></div>
-            <div class="text-xl font-bold">Icon-UI</div>
-            <div class="text-xs text-slate-400">Instant app navigation with zero menu confusion</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAT MASTERY MODULES & SIMULATOR SECTION -->
-    <section id="modules" class="space-y-6">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h2 class="text-2xl font-bold tracking-tight">SAT Mastery Modules</h2>
-          <p class="text-sm text-slate-500 dark:text-slate-400">Select a problem type below to load the interactive step-by-step TI-84 Evo simulator.</p>
-        </div>
-        <!-- Module Selector Tabs -->
-        <div class="flex overflow-x-auto gap-2 p-1 bg-slate-200 dark:bg-slate-900 rounded-xl max-w-full">
-          <button onclick="selectModule(1)" id="mod-tab-1" class="mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap bg-white dark:bg-slate-800 shadow-sm text-blue-600 dark:text-blue-400">
-            1. Non-Linear Systems
-          </button>
-          <button onclick="selectModule(2)" id="mod-tab-2" class="mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-            2. Table Trick
-          </button>
-          <button onclick="selectModule(3)" id="mod-tab-3" class="mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-            3. Trajectories & Vertices
-          </button>
-          <button onclick="selectModule(4)" id="mod-tab-4" class="mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-            4. 1-Var Statistics
-          </button>
+          <div class="text-xs text-slate-400 uppercase font-semibold">Total Bank</div>
+          <div class="text-xl font-extrabold" id="statTotal">100 Problems</div>
         </div>
       </div>
 
-      <!-- MAIN INTERACTIVE WORKSPACE (CARD + SIMULATOR) -->
-      <div id="simulator" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
-        <!-- LEFT COLUMN: Problem Breakdown & Walkthrough (7 Cols) -->
-        <div class="lg:col-span-7 space-y-6">
-          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-            
-            <!-- Module Title & Badge -->
-            <div class="flex items-center justify-between mb-4">
-              <span id="moduleBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
-                Module 1
-              </span>
-              <span id="moduleConcept" class="text-xs font-medium text-slate-500 dark:text-slate-400">
-                Intersection of Line & Parabola
-              </span>
-            </div>
-
-            <!-- Problem Statement Box -->
-            <div class="mb-6">
-              <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Official SAT Practice Style Question</h3>
-              <div id="problemText" class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 font-medium text-sm sm:text-base leading-relaxed">
-                A system of equations consists of <span class="font-mono text-blue-600 dark:text-blue-400 font-bold">y = x² - 4x + 3</span> and <span class="font-mono text-blue-600 dark:text-blue-400 font-bold">y = 2x - 2</span>. What is the x-value of the intersection point where x > 2?
-              </div>
-            </div>
-
-            <!-- Comparison Grid: Manual vs TI-84 Evo Shortcut -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-              <div class="p-3.5 rounded-xl bg-rose-500/5 border border-rose-500/20">
-                <div class="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold text-xs uppercase mb-1">
-                  <i class="fa-solid fa-triangle-exclamation"></i> Why Manual Math is Tricky
-                </div>
-                <p id="manualTrickyText" class="text-xs text-slate-600 dark:text-slate-300 leading-normal">
-                  Requires setting equal (x² - 6x + 5 = 0), factoring or quadratic formula, and testing x > 2 restriction under time pressure.
-                </p>
-              </div>
-              <div class="p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
-                <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase mb-1">
-                  <i class="fa-solid fa-bolt"></i> TI-84 Evo Shortcut
-                </div>
-                <p id="evoShortcutText" class="text-xs text-slate-600 dark:text-slate-300 leading-normal">
-                  Graph both equations in Y=, then use 2nd -> TRACE (CALC) -> Intersect for instant solution with zero manual algebra errors.
-                </p>
-              </div>
-            </div>
-
-            <!-- Walkthrough Step Controls -->
-            <div class="border-t border-slate-200 dark:border-slate-800 pt-5">
-              <div class="flex items-center justify-between mb-3">
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Step-by-Step Guide (<span id="currentStepNum">1</span>/<span id="totalStepsNum">4</span>)
-                </div>
-                <div class="flex gap-2">
-                  <button onclick="prevStep()" id="prevStepBtn" class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-arrow-left"></i> Prev
-                  </button>
-                  <button onclick="nextStep()" id="nextStepBtn" class="px-3 py-1 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500 transition shadow-sm">
-                    Next <i class="fa-solid fa-arrow-right"></i>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Step Explanation Box -->
-              <div class="p-4 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200/50 dark:border-blue-900/50">
-                <h4 id="stepTitle" class="font-bold text-sm text-blue-900 dark:text-blue-300 mb-1">Step 1: Enter Equations</h4>
-                <p id="stepDesc" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                  Press [Y=] on the key pad. Input Y1 = X² - 4X + 3 and Y2 = 2X - 2.
-                </p>
-              </div>
-
-              <!-- Collapsible Explanation Accordion -->
-              <div class="mt-4">
-                <button onclick="toggleAccordion()" class="w-full text-left flex items-center justify-between text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 py-1">
-                  <span><i class="fa-solid fa-circle-info mr-1"></i> Why this strategy wins on the SAT</span>
-                  <i id="accordionIcon" class="fa-solid fa-chevron-down transition-transform"></i>
-                </button>
-                <div id="accordionContent" class="hidden mt-2 p-3 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  SAT non-linear system questions are specifically constructed with traps (like asking only for x when x > 2). Graphing directly removes sign errors and gives you visual proof of all intersection points.
-                </div>
-              </div>
-
-            </div>
-
-          </div>
+      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-square-root-variable"></i>
         </div>
-
-        <!-- RIGHT COLUMN: Interactive Keypad & Screen Simulator (5 Cols) -->
-        <div class="lg:col-span-5">
-          <div class="sticky top-20 p-5 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl space-y-4">
-            
-            <!-- Calculator Top Branding -->
-            <div class="flex items-center justify-between text-slate-400 px-1 text-xs">
-              <span class="font-bold tracking-widest text-slate-200">TI-84 Plus CE <span class="text-blue-400">Evo</span></span>
-              <span class="inline-flex items-center gap-1 text-[10px] bg-slate-800 px-2 py-0.5 rounded-full text-emerald-400">
-                <i class="fa-solid fa-battery-full"></i> 100%
-              </span>
-            </div>
-
-            <!-- VIRTUAL LCD SCREEN -->
-            <div class="lcd-screen rounded-xl p-4 min-h-[190px] flex flex-col justify-between border-2 border-slate-700">
-              <!-- Top LCD Status Line -->
-              <div class="flex justify-between items-center text-[10px] font-bold opacity-75 border-b border-black/20 dark:border-white/10 pb-1 mb-2">
-                <span id="lcdStatusMode">NORMAL FLOAT AUTO REAL DEG</span>
-                <span id="lcdStepIndicator">STEP 1/4</span>
-              </div>
-
-              <!-- Main Dynamic Screen Content -->
-              <div id="lcdContent" class="flex-1 space-y-1.5 font-mono text-xs sm:text-sm">
-                <!-- Screen content injected via JS -->
-              </div>
-
-              <!-- Bottom LCD Prompt Line -->
-              <div id="lcdFooter" class="text-[11px] font-bold text-right pt-1 mt-2 border-t border-black/20 dark:border-white/10 opacity-90">
-                Press [GRAPH] to view
-              </div>
-            </div>
-
-            <!-- KEYPAD SIMULATOR -->
-            <div class="space-y-2 pt-2">
-              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 text-center mb-1">Interactive Keypad Sequence</div>
-              
-              <!-- Function Keys Row -->
-              <div class="grid grid-cols-5 gap-1.5 text-[10px] font-bold">
-                <button class="calc-btn py-2 rounded-md bg-amber-500 text-slate-950 hover:bg-amber-400 font-extrabold" onclick="virtualKeyPress('2ND')">2nd</button>
-                <button class="calc-btn py-2 rounded-md bg-slate-700 text-white hover:bg-slate-600" onclick="virtualKeyPress('Y=')">Y=</button>
-                <button class="calc-btn py-2 rounded-md bg-slate-700 text-white hover:bg-slate-600" onclick="virtualKeyPress('WINDOW')">WINDOW</button>
-                <button class="calc-btn py-2 rounded-md bg-slate-700 text-white hover:bg-slate-600" onclick="virtualKeyPress('ZOOM')">ZOOM</button>
-                <button class="calc-btn py-2 rounded-md bg-blue-600 text-white hover:bg-blue-500" onclick="virtualKeyPress('GRAPH')">GRAPH</button>
-              </div>
-
-              <!-- Secondary Row -->
-              <div class="grid grid-cols-4 gap-1.5 text-[10px] font-bold">
-                <button class="calc-btn py-2 rounded-md bg-slate-800 text-slate-200 hover:bg-slate-700" onclick="virtualKeyPress('STAT')">STAT</button>
-                <button class="calc-btn py-2 rounded-md bg-slate-800 text-slate-200 hover:bg-slate-700" onclick="virtualKeyPress('X,T,θ,n')">X,T,θ,n</button>
-                <button class="calc-btn py-2 rounded-md bg-slate-800 text-slate-200 hover:bg-slate-700" onclick="virtualKeyPress('TRACE')">TRACE</button>
-                <button class="calc-btn py-2 rounded-md bg-slate-800 text-slate-200 hover:bg-slate-700" onclick="virtualKeyPress('CLEAR')">CLEAR</button>
-              </div>
-
-              <!-- Highlighted Key Prompt Box -->
-              <div class="p-2.5 rounded-xl bg-slate-800/90 border border-slate-700 flex items-center justify-between text-xs">
-                <span class="text-slate-400">Target Key:</span>
-                <span id="targetKeyDisplay" class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono font-bold border border-blue-500/30">
-                  [Y=]
-                </span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- STRATEGY COMPARISON MATRIX & DUAL WORKFLOW -->
-    <section class="space-y-6">
-      <div>
-        <h2 class="text-2xl font-bold tracking-tight">SAT Strategy Matrix & Dual Workflow</h2>
-        <p class="text-sm text-slate-500 dark:text-slate-400">Maximizing your score by pairing built-in Desmos with TI-84 Evo hardware.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Comparison Card 1: When TI-84 Wins -->
-        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg">
-              <i class="fa-solid fa-calculator"></i>
-            </div>
-            <div>
-              <h3 class="font-bold text-base">TI-84 Evo Power Zone</h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Where physical keys beat touchscreen scrolling</p>
-            </div>
-          </div>
-          <ul class="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
-              <span><strong>Polynomial Table Testing:</strong> Scroll infinite $X$ and $Y$ values in 1 second using Table view without typing custom range sliders.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
-              <span><strong>1-Var Stats & Frequency Tables:</strong> Enter raw lists $L_1$ and $L_2$ for instant Mean ($\bar{x}$), Standard Deviation ($\sigma_x$), and Median ($Med$).</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
-              <span><strong>Physical Key Tactility:</strong> Zero onscreen keyboard lag; double-check steps without losing question window context.</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Comparison Card 2: Dual Workflow Strategy -->
-        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">
-              <i class="fa-solid fa-laptop-code"></i>
-            </div>
-            <div>
-              <h3 class="font-bold text-base">Dual Calculator Tactics</h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Combining Desmos + TI-84 Evo on test day</p>
-            </div>
-          </div>
-          <ul class="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-arrows-split-up-and-left text-indigo-500 mt-0.5"></i>
-              <span><strong>Desmos for Visual Conics:</strong> Use Desmos screen for massive circles or complex inequalities.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-arrows-split-up-and-left text-indigo-500 mt-0.5"></i>
-              <span><strong>TI-84 Evo for Rapid Computations:</strong> Keep TI-84 in hand for fractions, matrix operations, and quick arithmetic without opening on-screen menus.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-arrows-split-up-and-left text-indigo-500 mt-0.5"></i>
-              <span><strong>The Verification Protocol:</strong> Solve on TI-84 Evo; double-check tricky geometry or graph bounds on Desmos.</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- TEST-DAY CHECKLIST -->
-    <section id="checklist" class="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white space-y-6 shadow-xl border border-slate-800">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
         <div>
-          <h2 class="text-xl font-bold flex items-center gap-2">
-            <i class="fa-solid fa-clipboard-check text-emerald-400"></i> SAT Test-Day TI-84 Evo Checklist
-          </h2>
-          <p class="text-xs text-slate-400">Complete these pre-flight checks before the proctor says "Start".</p>
-        </div>
-        <div class="text-xs font-mono bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700 text-slate-300">
-          Target Time Savings: ~8 Mins
+          <div class="text-xs text-slate-400 uppercase font-semibold">Algebra & Adv.</div>
+          <div class="text-xl font-extrabold">60 Problems</div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <!-- Checklist Item 1 -->
-        <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 cursor-pointer hover:bg-slate-800 transition">
-          <input type="checkbox" checked class="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700">
-          <div class="space-y-1">
-            <span class="text-xs font-bold block text-slate-100">Degree Mode Verification</span>
-            <p class="text-[11px] text-slate-400">Press [MODE]. Ensure "DEGREE" is highlighted unless trigonometry specifically requires Radians.</p>
-          </div>
-        </label>
+      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-chart-pie"></i>
+        </div>
+        <div>
+          <div class="text-xs text-slate-400 uppercase font-semibold">Data Analysis</div>
+          <div class="text-xl font-extrabold">25 Problems</div>
+        </div>
+      </div>
 
-        <!-- Checklist Item 2 -->
-        <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 cursor-pointer hover:bg-slate-800 transition">
-          <input type="checkbox" checked class="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700">
-          <div class="space-y-1">
-            <span class="text-xs font-bold block text-slate-100">USB-C Power Check</span>
-            <p class="text-[11px] text-slate-400">Fully charge overnight. Evo fast-charging guarantees full battery through both SAT Math modules.</p>
-          </div>
-        </label>
-
-        <!-- Checklist Item 3 -->
-        <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 cursor-pointer hover:bg-slate-800 transition">
-          <input type="checkbox" checked class="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700">
-          <div class="space-y-1">
-            <span class="text-xs font-bold block text-slate-100">Clear Stat Lists & RAM</span>
-            <p class="text-[11px] text-slate-400">Press [2nd] -> [+] -> [7] -> [1] -> [2] to reset RAM if memory clutter slows calculation speed.</p>
-          </div>
-        </label>
+      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-shapes"></i>
+        </div>
+        <div>
+          <div class="text-xs text-slate-400 uppercase font-semibold">Geometry & Trig</div>
+          <div class="text-xl font-extrabold">15 Problems</div>
+        </div>
       </div>
     </section>
+
+    <!-- FILTERS AND SEARCH TOOLBAR -->
+    <section class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- Search Bar -->
+        <div class="relative flex-1">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+          <input type="text" id="searchInput" oninput="filterProblems()" placeholder="Search 100+ problems by topic, equation, or keyword (e.g. 'intersect', 'circle', 'quadratic', '1-Var Stats')..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border-none text-sm focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100">
+        </div>
+
+        <!-- TI Feature Selector -->
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold text-slate-400 whitespace-nowrap"><i class="fa-solid fa-microchip mr-1"></i>TI Feature:</span>
+          <select id="featureFilter" onchange="filterProblems()" class="bg-slate-100 dark:bg-slate-800 text-xs font-medium rounded-xl px-3 py-2.5 border-none text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-blue-500">
+            <option value="ALL">All Features</option>
+            <option value="GRAPH">Graphing & Intersect</option>
+            <option value="TABLE">Table Trick</option>
+            <option value="STAT">1-Var / 2-Var Stats</option>
+            <option value="SOLVER">Poly Roots / Equation Solver</option>
+            <option value="MATRIX">Matrix / Linear Systems</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Domain Category Tabs -->
+      <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+        <button onclick="setDomain('ALL')" id="domain-tab-ALL" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm">
+          All Domains (100)
+        </button>
+        <button onclick="setDomain('Algebra')" id="domain-tab-Algebra" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+          1. Algebra (30)
+        </button>
+        <button onclick="setDomain('Advanced Math')" id="domain-tab-Advanced Math" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+          2. Advanced Math (30)
+        </button>
+        <button onclick="setDomain('Data Analysis')" id="domain-tab-Data Analysis" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+          3. Problem Solving & Data (25)
+        </button>
+        <button onclick="setDomain('Geometry')" id="domain-tab-Geometry" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+          4. Geometry & Trig (15)
+        </button>
+      </div>
+    </section>
+
+    <!-- PROBLEMS CONTAINER GRID -->
+    <section id="problemsContainer" class="space-y-6">
+      <!-- Dynamically populated via JS -->
+    </section>
+
+    <!-- PAGINATION / SHOW MORE CONTROLS -->
+    <div id="paginationBox" class="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
+      <span id="showingCountText" class="text-slate-500">Showing 10 of 100 problems</span>
+      <div class="flex gap-2">
+        <button onclick="loadMoreProblems()" id="loadMoreBtn" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition shadow-sm">
+          Load Next 10 Problems <i class="fa-solid fa-angles-down ml-1"></i>
+        </button>
+        <button onclick="showAllProblems()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition">
+          Show All 100
+        </button>
+      </div>
+    </div>
 
   </main>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-6">
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-6 mt-12">
     <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 dark:text-slate-400">
-      TI-84 Evo SAT Math Master Guide &bull; Designed for Digital SAT Speed & Precision
+      TI-84 Evo SAT Math Master Problem Bank &bull; 100+ Interactive Solutions & Screen Simulations
     </div>
   </footer>
 
-  <!-- INTERACTIVE LOGIC & DATA -->
+  <!-- COMPREHENSIVE DATA STORE & GENERATOR SCRIPT -->
   <script>
-    // Theme Switcher Logic
+    // System Theme Toggle
     function toggleTheme() {
       const html = document.documentElement;
-      if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      } else {
-        html.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      }
+      html.classList.toggle('dark');
     }
 
-    // Module Data Store
-    const modulesData = {
-      1: {
-        badge: "Module 1",
-        concept: "Non-Linear Systems (Line & Parabola)",
-        problem: "A system of equations consists of <span class='font-mono text-blue-600 dark:text-blue-400 font-bold'>y = x² - 4x + 3</span> and <span class='font-mono text-blue-600 dark:text-blue-400 font-bold'>y = 2x - 2</span>. What is the x-value of the intersection point where x > 2?",
-        manualTricky: "Requires setting equations equal (x² - 6x + 5 = 0), factoring or applying quadratic formula, and testing x > 2 under time pressure.",
-        evoShortcut: "Graph both equations in Y=, then use [2nd] -> [TRACE] -> 5:intersect for instant pinpointing.",
-        accordion: "SAT questions often ask for a specific condition (like x > 2). Graphing lets you visually verify both intersection points immediately without manual sign errors.",
-        steps: [
-          {
-            title: "Step 1: Open Graph Function (Y=)",
-            desc: "Press [Y=] on top left key pad. Type Y1 = X^2 - 4X + 3 and press ENTER.",
-            targetKey: "[Y=]",
-            status: "NORMAL FLOAT AUTO REAL DEG",
-            lcd: `
-              <div class="text-blue-400 font-bold">Plot1 Plot2 Plot3</div>
-              <div>\Y1<span class="text-white">=X²-4X+3</span></div>
-              <div>\Y2<span class="text-slate-400">=</span></div>
-              <div>\Y3<span class="text-slate-400">=</span></div>
-              <div>\Y4<span class="text-slate-400">=</span></div>
-            `,
-            footer: "Enter first equation"
-          },
-          {
-            title: "Step 2: Enter Second Equation",
-            desc: "Under Y2, type 2X - 2 and press [GRAPH].",
-            targetKey: "[GRAPH]",
-            status: "NORMAL FLOAT AUTO REAL DEG",
-            lcd: `
-              <div class="text-blue-400 font-bold">Plot1 Plot2 Plot3</div>
-              <div>\Y1<span class="text-white">=X²-4X+3</span></div>
-              <div>\Y2<span class="text-white">=2X-2</span></div>
-              <div>\Y3<span class="text-slate-400">=</span></div>
-            `,
-            footer: "Press [GRAPH] to plot"
-          },
-          {
-            title: "Step 3: Trigger Intersect Menu",
-            desc: "Press [2nd] then [TRACE] (CALC). Select option 5: intersect.",
-            targetKey: "[TRACE]",
-            status: "CALCULATE MENU",
-            lcd: `
-              <div class="font-bold border-b border-white/20 pb-0.5">CALCULATE</div>
-              <div>1: value</div>
-              <div>2: zero</div>
-              <div>3: minimum</div>
-              <div>4: maximum</div>
-              <div class="bg-blue-600 text-white px-1">5: intersect</div>
-            `,
-            footer: "Press 5 or [ENTER]"
-          },
-          {
-            title: "Step 4: Pinpoint Solution (x > 2)",
-            desc: "Move cursor near right intersection point and press [ENTER] 3 times.",
-            targetKey: "[ENTER]",
-            status: "GRAPH VIEW: INTERSECTION",
-            lcd: `
-              <div class="text-center font-bold text-amber-300 my-2">-- GRAPH DISPLAY --</div>
-              <div class="border-t border-white/20 pt-1 text-xs">
-                <div>Intersection</div>
-                <div class="text-emerald-400 font-bold">X=5           Y=8</div>
-              </div>
-            `,
-            footer: "Answer: X = 5"
-          }
-        ]
-      },
-      2: {
-        badge: "Module 2",
-        concept: "Equivalent Expressions & Table Trick",
-        problem: "Which of the following is equivalent to <span class='font-mono text-blue-600 dark:text-blue-400 font-bold'>(2x² + 7x - 5) / (x + 4)</span> for x ≠ -4?<br>A) 2x - 1 - 1/(x+4)<br>B) 2x - 1 + 1/(x+4)",
-        manualTricky: "Polynomial long division or synthetic division is prone to negative sign distribution mistakes.",
-        evoShortcut: "Set Y1 = Original Expression and Y2 = Option A. Compare outputs in [2nd] -> [GRAPH] (TABLE). Matching columns = Equivalent!",
-        accordion: "The Table Trick converts complex algebraic equivalence questions into simple integer matching.",
-        steps: [
-          {
-            title: "Step 1: Enter Original Expression",
-            desc: "Press [Y=]. Set Y1 = (2X² + 7X - 5) / (X + 4).",
-            targetKey: "[Y=]",
-            status: "NORMAL FLOAT AUTO REAL DEG",
-            lcd: `
-              <div>\Y1<span class="text-white">=(2X²+7X-5)/(X+4)</span></div>
-              <div>\Y2<span class="text-slate-400">=</span></div>
-            `,
-            footer: "Input Y1"
-          },
-          {
-            title: "Step 2: Enter Option A in Y2",
-            desc: "Set Y2 = (2X - 1) - 1 / (X + 4).",
-            targetKey: "[Y=]",
-            status: "NORMAL FLOAT AUTO REAL DEG",
-            lcd: `
-              <div>\Y1<span class="text-white">=(2X²+7X-5)/(X+4)</span></div>
-              <div>\Y2<span class="text-white">=(2X-1)-1/(X+4)</span></div>
-            `,
-            footer: "Input Y2 to test choice A"
-          },
-          {
-            title: "Step 3: Open Table View",
-            desc: "Press [2nd] then [GRAPH] (TABLE) to compare Y1 and Y2 output values.",
-            targetKey: "[2nd] + [GRAPH]",
-            status: "TABLE VIEW",
-            lcd: `
-              <div class="grid grid-cols-3 font-bold border-b border-white/20 text-center">
-                <div>X</div><div>Y1</div><div>Y2</div>
-              </div>
-              <div class="grid grid-cols-3 text-center text-xs">
-                <div>1</div><div>0.8</div><div>0.8</div>
-                <div>2</div><div>2.833</div><div>2.833</div>
-                <div>3</div><div>4.857</div><div>4.857</div>
-              </div>
-            `,
-            footer: "Y1 matches Y2 perfectly!"
-          },
-          {
-            title: "Step 4: Confirm Match",
-            desc: "Since all values in Y1 and Y2 match across every x-row, Choice A is mathematically identical.",
-            targetKey: "[ENTER]",
-            status: "TABLE MATCH CONFIRMED",
-            lcd: `
-              <div class="text-center text-emerald-400 font-bold py-2">
-                MATCH FOUND!
-              </div>
-              <div class="text-xs text-center">Choice A is EQUIVALENT</div>
-            `,
-            footer: "Answer: Choice A"
-          }
-        ]
-      },
-      3: {
-        badge: "Module 3",
-        concept: "Quadratic Trajectories & Maximums",
-        problem: "The function <span class='font-mono text-blue-600 dark:text-blue-400 font-bold'>f(x) = -2x² + 12x - 10</span> models a projectile. What is the maximum height reached?",
-        manualTricky: "Requires completing the square or computing x = -b/(2a) then plugging back in.",
-        evoShortcut: "Graph function in Y=, then use [2nd] -> [TRACE] -> 4:maximum for immediate vertex point.",
-        accordion: "The built-in Maximum solver calculates the exact peak height without manual multi-step algebra.",
-        steps: [
-          {
-            title: "Step 1: Input Quadratic Equation",
-            desc: "Press [Y=]. Type -2X² + 12X - 10.",
-            targetKey: "[Y=]",
-            status: "NORMAL FLOAT AUTO REAL DEG",
-            lcd: `
-              <div>\Y1<span class="text-white">=-2X²+12X-10</span></div>
-            `,
-            footer: "Press [GRAPH]"
-          },
-          {
-            title: "Step 2: Plot Graph",
-            desc: "Press [GRAPH] to view parabola trajectory.",
-            targetKey: "[GRAPH]",
-            status: "GRAPH VIEW",
-            lcd: `
-              <div class="text-center font-bold text-amber-300 my-2">-- PARABOLA GRAPH --</div>
-              <div class="text-xs text-center text-slate-300">Peak visible in top middle</div>
-            `,
-            footer: "Press [2nd] -> [TRACE]"
-          },
-          {
-            title: "Step 3: Select Maximum Tool",
-            desc: "Press [2nd] -> [TRACE] (CALC) and select 4:maximum.",
-            targetKey: "[TRACE]",
-            status: "CALCULATE MENU",
-            lcd: `
-              <div>1: value</div>
-              <div>2: zero</div>
-              <div>3: minimum</div>
-              <div class="bg-blue-600 text-white px-1">4: maximum</div>
-              <div>5: intersect</div>
-            `,
-            footer: "Select option 4"
-          },
-          {
-            title: "Step 4: Set Bounds & Find Peak",
-            desc: "Set Left Bound, Right Bound, press [ENTER]. Output gives vertex height.",
-            targetKey: "[ENTER]",
-            status: "MAXIMUM SOLVED",
-            lcd: `
-              <div class="text-xs pt-2">Maximum</div>
-              <div class="text-emerald-400 font-bold text-sm">X=3            Y=8</div>
-            `,
-            footer: "Max Height = 8"
-          }
-        ]
-      },
-      4: {
-        badge: "Module 4",
-        concept: "1-Var Statistics & Frequency Tables",
-        problem: "Find mean score: Scores [70, 80, 90, 100] with frequencies [4, 8, 12, 2].",
-        manualTricky: "Manual weighted average formula leads to simple key-in errors under test stress.",
-        evoShortcut: "Enter scores in List L1, frequencies in List L2, then run 1-Var Stats L1, L2.",
-        accordion: "1-Var Stats automatically outputs Mean (x̄), Median (Med), and Sum (Σx) simultaneously.",
-        steps: [
-          {
-            title: "Step 1: Open Stat Editor",
-            desc: "Press [STAT] and select 1: Edit...",
-            targetKey: "[STAT]",
-            status: "STAT LIST EDITOR",
-            lcd: `
-              <div class="grid grid-cols-3 font-bold border-b border-white/20">
-                <div>L1</div><div>L2</div><div>L3</div>
-              </div>
-              <div class="grid grid-cols-3 text-xs">
-                <div>70</div><div>4</div><div>--</div>
-                <div>80</div><div>8</div><div>--</div>
-                <div>90</div><div>12</div><div>--</div>
-                <div>100</div><div>2</div><div>--</div>
-              </div>
-            `,
-            footer: "Enter L1 (Scores) & L2 (Freq)"
-          },
-          {
-            title: "Step 2: Navigate to Stat Calc",
-            desc: "Press [STAT], arrow right to CALC tab.",
-            targetKey: "[STAT]",
-            status: "STAT CALC MENU",
-            lcd: `
-              <div class="font-bold border-b border-white/20">EDIT  <span class="bg-blue-600 px-1 text-white">CALC</span>  TESTS</div>
-              <div class="bg-blue-600 text-white px-1 mt-1">1: 1-Var Stats</div>
-              <div>2: 2-Var Stats</div>
-            `,
-            footer: "Select 1-Var Stats"
-          },
-          {
-            title: "Step 3: Configure Lists",
-            desc: "Set List: L1 and FreqList: L2 (press [2nd] -> [2]).",
-            targetKey: "[2nd] + [2]",
-            status: "1-VAR STATS SETUP",
-            lcd: `
-              <div>List: <span class="text-white">L1</span></div>
-              <div>FreqList: <span class="text-white">L2</span></div>
-              <div class="bg-blue-600 text-white px-2 mt-2 inline-block">Calculate</div>
-            `,
-            footer: "Highlight Calculate & [ENTER]"
-          },
-          {
-            title: "Step 4: View Output Statistics",
-            desc: "Instant readout for Mean (x̄ = 83.85) and Median (Med = 85).",
-            targetKey: "[ENTER]",
-            status: "STAT RESULTS",
-            lcd: `
-              <div class="text-xs font-bold text-amber-300">1-Var Stats</div>
-              <div class="text-emerald-400 font-bold">x̄ = 83.846</div>
-              <div>Σx = 2180</div>
-              <div>n = 26</div>
-              <div class="text-emerald-400 font-bold">Med = 85</div>
-            `,
-            footer: "Mean = 83.85"
-          }
-        ]
-      }
+    // Quiz Mode Toggle State
+    let quizModeActive = false;
+    function toggleQuizMode() {
+      quizModeActive = !quizModeActive;
+      const label = document.getElementById('quizModeLabel');
+      label.innerText = quizModeActive ? "Practice Mode: ON (Hidden)" : "Practice Mode: OFF";
+      renderVisibleProblems();
+    }
+
+    // 100+ MASTER PROBLEM GENERATOR FACTORY
+    const domains = {
+      Algebra: "Algebra",
+      AdvMath: "Advanced Math",
+      Data: "Data Analysis",
+      Geom: "Geometry"
     };
 
-    // State Variables
-    let currentModule = 1;
-    let currentStep = 0;
+    function generate100Problems() {
+      const list = [];
+      let id = 1;
 
-    // Load Module Function
-    function selectModule(modNum) {
-      currentModule = modNum;
-      currentStep = 0;
+      // --- DOMAIN 1: ALGEBRA (30 Problems) ---
+      for (let i = 1; i <= 30; i++) {
+        let title, prompt, options, correct, manual, keypress, feature, lcdDisplay, tip;
 
-      // Update Tabs styling
-      document.querySelectorAll('.mod-tab').forEach((tab, index) => {
-        if (index + 1 === modNum) {
-          tab.className = "mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap bg-white dark:bg-slate-800 shadow-sm text-blue-600 dark:text-blue-400";
+        if (i === 1) {
+          title = "Linear System Intersection";
+          prompt = "A system of equations is given by 3x + 2y = 12 and x - y = 1. What is the value of x at the intersection?";
+          options = ["A) 2", "B) 2.8", "C) 3", "D) 4"];
+          correct = "B) 2.8";
+          manual = "Solve second equation for x: x = y + 1. Substitute into first: 3(y + 1) + 2y = 12 -> 5y + 3 = 12 -> 5y = 9 -> y = 1.8. Then x = 2.8.";
+          keypress = "[Y=] -> Y1 = (12 - 3X)/2, Y2 = X - 1 -> [GRAPH] -> [2nd] -> [TRACE] -> 5:intersect -> [ENTER] x3.";
+          feature = "GRAPH";
+          lcdDisplay = `<div class="text-amber-300 font-bold mb-1">Intersection</div><div class="text-emerald-400 font-bold">X=2.8            Y=1.8</div>`;
+          tip = "Always isolate Y to quickly graph linear systems in Y= on the TI-84 Evo!";
+        } else if (i === 2) {
+          title = "Absolute Value Inequality Solution Set";
+          prompt = "Which of the following values of x satisfies the inequality |2x - 5| ≤ 9?";
+          options = ["A) -3", "B) -1", "C) 8", "D) 10"];
+          correct = "B) -1";
+          manual = "-9 ≤ 2x - 5 ≤ 9 -> -4 ≤ 2x ≤ 14 -> -2 ≤ x ≤ 7. Among the options, x = -1 is the only value inside [-2, 7].";
+          keypress = "[MATH] -> NUM -> 1:abs -> abs(2X - 5) in Y1, set Y2 = 9. Press [2nd] -> [GRAPH] (TABLE) to test x = -1.";
+          feature = "TABLE";
+          lcdDisplay = `<div class="grid grid-cols-3 text-center border-b border-white/20"><div>X</div><div>Y1</div><div>Y2</div></div><div class="grid grid-cols-3 text-center text-xs"><div>-1</div><div class="text-emerald-400 font-bold">7</div><div>9</div></div>`;
+          tip = "Use the Table View to verify if absolute value expressions evaluate below the target limit.";
+        } else if (i === 3) {
+          title = "Infinite Solutions Linear System";
+          prompt = "For what value of k will the system of equations 4x + 6y = 10 and 2x + ky = 5 have infinitely many solutions?";
+          options = ["A) 2", "B) 3", "C) 4", "D) 6"];
+          correct = "B) 3";
+          manual = "Divide first equation by 2: 2x + 3y = 5. For infinitely many solutions, coefficients must match identically: k = 3.";
+          keypress = "Use Matrix rref: [2nd] -> [MATRIX] -> EDIT [A] (2x3). Row 1: [4, 6, 10], Row 2: [2, 3, 5]. Run rref([A]).";
+          feature = "MATRIX";
+          lcdDisplay = `<div class="text-xs">rref([A])</div><div class="text-emerald-400 font-bold">[ [1  1.5  2.5]<br>  [0  0    0 ] ]</div>`;
+          tip = "When rref produces a row of all zeros [0 0 0], the system has infinitely many solutions!";
+        } else if (i === 4) {
+          title = "Linear Function Table Matching";
+          prompt = "A linear function f(x) passes through (2, 7) and (5, 16). What is f(10)?";
+          options = ["A) 28", "B) 31", "C) 35", "D) 40"];
+          correct = "B) 31";
+          manual = "Slope m = (16 - 7)/(5 - 2) = 9/3 = 3. Equation: y - 7 = 3(x - 2) -> y = 3x + 1. For x = 10: f(10) = 3(10) + 1 = 31.";
+          keypress = "[STAT] -> Edit L1: [2, 5], L2: [7, 16] -> [STAT] -> CALC -> 4:LinReg(ax+b). Output: a=3, b=1 -> Y1=3X+1 -> [TABLE] x=10.";
+          feature = "STAT";
+          lcdDisplay = `<div class="text-amber-300 font-bold">LinReg(ax+b)</div><div>a=3</div><div>b=1</div><div class="text-emerald-400 font-bold">y=3x+1  --> f(10)=31</div>`;
+          tip = "LinReg on 2 points gives you the exact slope and y-intercept in seconds!";
         } else {
-          tab.className = "mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+          // Generic structured algebra problems
+          const aVal = (i % 5) + 2;
+          const bVal = i * 3 + 1;
+          title = `Linear Equation & Slope Analysis #${i}`;
+          prompt = `If ${aVal}x - 4 = ${bVal}, what is the value of ${aVal * 2}x + 1?`;
+          const xSol = (bVal + 4) / aVal;
+          const finalVal = aVal * 2 * xSol + 1;
+          options = [`A) ${finalVal - 5}`, `B) ${finalVal}`, `C) ${finalVal + 4}`, `D) ${finalVal * 2}`];
+          correct = `B) ${finalVal}`;
+          manual = `${aVal}x = ${bVal + 4} -> x = ${xSol}. Then evaluate ${aVal * 2}(${xSol}) + 1 = ${finalVal}.`;
+          keypress = `Input Y1 = ${aVal}X - 4 in [Y=], press [2nd] -> [GRAPH] (TABLE) or use main screen calculation.`;
+          feature = "TABLE";
+          lcdDisplay = `<div class="text-emerald-400 font-bold">X = ${xSol}</div><div>Ans * 2 * ${aVal} + 1 = ${finalVal}</div>`;
+          tip = "Store intermediate x-values using the [STO->] key to evaluate complex expressions quickly.";
         }
+
+        list.push({
+          id: id++,
+          domain: domains.Algebra,
+          title: `Algebra: ${title}`,
+          prompt: prompt,
+          options: options,
+          correct: correct,
+          manual: manual,
+          keypress: keypress,
+          feature: feature,
+          lcdDisplay: lcdDisplay,
+          tip: tip
+        });
+      }
+
+      // --- DOMAIN 2: ADVANCED MATH (30 Problems) ---
+      for (let i = 1; i <= 30; i++) {
+        let title, prompt, options, correct, manual, keypress, feature, lcdDisplay, tip;
+
+        if (i === 1) {
+          title = "Quadratic Vertex Maximum Trajectory";
+          prompt = "The path of a flare is modeled by h(t) = -16t² + 64t + 80. What is the maximum height h(t) reached?";
+          options = ["A) 80", "B) 128", "C) 144", "D) 160"];
+          correct = "C) 144";
+          manual = "Vertex t = -b/(2a) = -64 / (2 * -16) = 2 seconds. Substitute t = 2: h(2) = -16(4) + 64(2) + 80 = -64 + 128 + 80 = 144.";
+          keypress = "[Y=] -> Y1 = -16X^2 + 64X + 80 -> [GRAPH] -> [2nd] -> [TRACE] -> 4:maximum -> Left/Right bounds -> [ENTER].";
+          feature = "GRAPH";
+          lcdDisplay = `<div class="text-amber-300 font-bold">Maximum</div><div class="text-emerald-400 font-bold">X=2              Y=144</div>`;
+          tip = "The y-value at the graph's maximum point gives the exact maximum height!";
+        } else if (i === 2) {
+          title = "Polynomial Root Solver";
+          prompt = "What is the positive real root of the polynomial equation x³ - 3x² - 4x + 12 = 0?";
+          options = ["A) 1", "B) 2", "C) 3", "D) 4"];
+          correct = "C) 3";
+          manual = "Factor by grouping: x²(x - 3) - 4(x - 3) = 0 -> (x² - 4)(x - 3) = 0 -> (x-2)(x+2)(x-3) = 0. Positive roots are 2 and 3; x=3 is among options.";
+          keypress = "[APPS] -> PolySmlt2 -> 1:Polynomial Root Finder -> Degree 3 -> Coeffs: [1, -3, -4, 12] -> [SOLVE].";
+          feature = "SOLVER";
+          lcdDisplay = `<div class="text-xs border-b border-white/20">DEGREE 3 ROOTS</div><div class="text-emerald-400 font-bold">x1 = 3<br>x2 = 2<br>x3 = -2</div>`;
+          tip = "Use the PolySmlt2 App on TI-84 Evo to solve any degree-2, 3, or 4 polynomial instantly!";
+        } else if (i === 3) {
+          title = "Exponential Growth Function";
+          prompt = "A population of bacteria grows according to P(t) = 500(1.15)^t. After how many hours (t) will population reach 1,000?";
+          options = ["A) 4.2", "B) 4.96", "C) 5.5", "D) 6.1"];
+          correct = "B) 4.96";
+          manual = "500(1.15)^t = 1000 -> 1.15^t = 2 -> t = ln(2) / ln(1.15) ≈ 0.6931 / 0.1397 ≈ 4.96 hours.";
+          keypress = "[Y=] -> Y1 = 500*(1.15)^X, Y2 = 1000 -> [GRAPH] -> [2nd] -> [TRACE] -> 5:intersect.";
+          feature = "GRAPH";
+          lcdDisplay = `<div class="text-amber-300 font-bold">Intersection</div><div class="text-emerald-400 font-bold">X=4.959          Y=1000</div>`;
+          tip = "Graph the horizontal target line in Y2 and use intersect to avoid doing logarithmic base changes manually.";
+        } else {
+          const quadC = i * 2 + 3;
+          title = `Advanced Function & Exponents #${i}`;
+          prompt = `Which expression is equivalent to (x^2 - ${quadC}) / (x - 3)?`;
+          options = [`A) x + 3 + ${(9-quadC)}/(x-3)`, `B) x - 3`, `C) x + 3`, `D) x - 1` font-mono];
+          correct = `A) x + 3 + ${(9-quadC)}/(x-3)`;
+          manual = `Polynomial division of x^2 - ${quadC} by x - 3 gives quotient x + 3 and remainder (9 - ${quadC}).`;
+          keypress = `Input Y1 = (X^2 - ${quadC})/(X - 3), Y2 = Choice A in [Y=]. Open [2nd] -> [GRAPH] (TABLE) to confirm matching rows.`;
+          feature = "TABLE";
+          lcdDisplay = `<div class="text-emerald-400 font-bold">TABLE MATCH CONFIRMED</div><div>Y1 = Y2 for all tested X</div>`;
+          tip = "The Table Trick is the single most reliable way to check polynomial equivalence on the SAT.";
+        }
+
+        list.push({
+          id: id++,
+          domain: domains.AdvMath,
+          title: `Adv Math: ${title}`,
+          prompt: prompt,
+          options: options,
+          correct: correct,
+          manual: manual,
+          keypress: keypress,
+          feature: feature,
+          lcdDisplay: lcdDisplay,
+          tip: tip
+        });
+      }
+
+      // --- DOMAIN 3: DATA ANALYSIS (25 Problems) ---
+      for (let i = 1; i <= 25; i++) {
+        let title, prompt, options, correct, manual, keypress, feature, lcdDisplay, tip;
+
+        if (i === 1) {
+          title = "Frequency Table Mean & Median";
+          prompt = "A test score frequency list: Score 70 (4 students), 80 (8 students), 90 (12 students), 100 (2 students). What is the mean score?";
+          options = ["A) 82.5", "B) 83.85", "C) 85.0", "D) 87.5"];
+          correct = "B) 83.85";
+          manual = "Mean = (70*4 + 80*8 + 90*12 + 100*2) / (4 + 8 + 12 + 2) = (280 + 640 + 1080 + 200) / 26 = 2180 / 26 ≈ 83.846.";
+          keypress = "[STAT] -> Edit L1: [70, 80, 90, 100], L2: [4, 8, 12, 2] -> [STAT] -> CALC -> 1:1-Var Stats List:L1 FreqList:L2 -> Calculate.";
+          feature = "STAT";
+          lcdDisplay = `<div class="text-amber-300 font-bold">1-Var Stats</div><div class="text-emerald-400 font-bold">x̄ = 83.84615</div><div>Σx = 2180</div><div>n = 26</div><div class="text-emerald-400 font-bold">Med = 85</div>`;
+          tip = "Always use FreqList: L2 in 1-Var Stats when given frequency tables on SAT statistics problems.";
+        } else if (i === 2) {
+          title = "Scatterplot Linear Best Fit";
+          prompt = "A scatterplot data yields points (1, 12), (2, 18), (3, 25), (4, 31). What is the slope of the line of best fit?";
+          options = ["A) 5.8", "B) 6.3", "C) 6.8", "D) 7.2"];
+          correct = "B) 6.3";
+          manual = "Run linear regression on the 4 data points to get exact slope a.";
+          keypress = "[STAT] -> Edit L1: [1, 2, 3, 4], L2: [12, 18, 25, 31] -> [STAT] -> CALC -> 4:LinReg(ax+b).";
+          feature = "STAT";
+          lcdDisplay = `<div class="text-amber-300 font-bold">LinReg(ax+b)</div><div class="text-emerald-400 font-bold">a = 6.3</div><div>b = 5.5</div><div>r = 0.998</div>`;
+          tip = "LinReg computes the slope (a) and y-intercept (b) of the line of best fit faster than drawing manual trendlines!";
+        } else {
+          title = `Statistics & Data Analysis #${i}`;
+          prompt = `Data set A has 5 numbers with mean ${60 + i}. If a 6th number equal to ${90 + i} is added, what is the new mean?`;
+          const sumOrig = 5 * (60 + i);
+          const newMean = (sumOrig + 90 + i) / 6;
+          options = [`A) ${newMean.toFixed(1)}`, `B) ${(newMean - 2).toFixed(1)}`, `C) ${(newMean + 3).toFixed(1)}`, `D) ${(newMean * 1.1).toFixed(1)}` font-mono];
+          correct = `A) ${newMean.toFixed(1)}`;
+          manual = `Sum = 5 * ${60 + i} = ${sumOrig}. New sum = ${sumOrig} + ${90 + i} = ${sumOrig + 90 + i}. New mean = ${sumOrig + 90 + i} / 6 = ${newMean.toFixed(2)}.`;
+          keypress = `Input values into [STAT] list L1, then run [STAT] -> CALC -> 1-Var Stats L1.`;
+          feature = "STAT";
+          lcdDisplay = `<div class="text-emerald-400 font-bold">x̄ = ${newMean.toFixed(2)}</div><div>n = 6</div>`;
+          tip = "Use 1-Var Stats whenever adding data values to quickly view updated means and medians.";
+        }
+
+        list.push({
+          id: id++,
+          domain: domains.Data,
+          title: `Data: ${title}`,
+          prompt: prompt,
+          options: options,
+          correct: correct,
+          manual: manual,
+          keypress: keypress,
+          feature: feature,
+          lcdDisplay: lcdDisplay,
+          tip: tip
+        });
+      }
+
+      // --- DOMAIN 4: GEOMETRY & TRIGONOMETRY (15 Problems) ---
+      for (let i = 1; i <= 15; i++) {
+        let title, prompt, options, correct, manual, keypress, feature, lcdDisplay, tip;
+
+        if (i === 1) {
+          title = "Circle Equation Center & Radius";
+          prompt = "A circle is defined by x² + y² - 6x + 8y = 0. What is the radius of the circle?";
+          options = ["A) 4", "B) 5", "C) 10", "D) 25"];
+          correct = "B) 5";
+          manual = "Complete the square: (x² - 6x + 9) + (y² + 8y + 16) = 0 + 9 + 16 -> (x - 3)² + (y + 4)² = 25. Radius r = √25 = 5.";
+          keypress = "Use [Y=] circle parametric mode OR compute r = √( (h/2)² + (k/2)² - c ) = √( 9 + 16 ) = 5 on main screen.";
+          feature = "SOLVER";
+          lcdDisplay = `<div class="text-xs">r = √((6/2)² + (8/2)²)</div><div class="text-emerald-400 font-bold text-sm">r = √(9 + 16) = 5</div>`;
+          tip = "For circle equation x² + y² + Ax + By + C = 0, radius is always r = √((A/2)² + (B/2)² - C).";
+        } else if (i === 2) {
+          title = "Trigonometric Right Triangle Ratio";
+          prompt = "In right triangle ABC with angle C = 90°, if sin(A) = 3/5, what is tan(A)?";
+          options = ["A) 3/4", "B) 4/3", "C) 4/5", "D) 5/3"];
+          correct = "A) 3/4";
+          manual = "sin(A) = opp/hyp = 3/5. Adjacent side = √(5² - 3²) = 4. Therefore tan(A) = opp/adj = 3/4.";
+          keypress = "Check angle mode [MODE] -> DEGREE. Calculate sin⁻¹(3/5) -> store as A -> Evaluate tan(A) -> press [MATH] -> 1:>Frac.";
+          feature = "TABLE";
+          lcdDisplay = `<div class="text-xs">sin⁻¹(3/5) = 36.87°</div><div class="text-emerald-400 font-bold">tan(36.87°) ▸Frac = 3/4</div>`;
+          tip = "The [MATH] -> 1:>Frac key instantly converts decimal trig outputs back into simplified SAT fractions!";
+        } else {
+          title = `Geometry & Angle Theorem #${i}`;
+          prompt = `In a right triangle, one acute angle measures ${20 + i*3}°. What is the measure of the second acute angle?`;
+          const secondAngle = 90 - (20 + i*3);
+          options = [`A) ${secondAngle}°`, `B) ${secondAngle + 10}°`, `C) ${secondAngle - 5}°`, `D) ${180 - secondAngle}°` font-mono];
+          correct = `A) ${secondAngle}°`;
+          manual = `Acute angles in a right triangle sum to 90°. Second angle = 90 - ${20 + i*3} = ${secondAngle}°.`;
+          keypress = `Evaluate 90 - (${20 + i*3}) on home screen.`;
+          feature = "TABLE";
+          lcdDisplay = `<div class="text-emerald-400 font-bold">90 - ${20 + i*3} = ${secondAngle}°</div>`;
+          tip = "Ensure calculator is in DEGREE mode before performing angle geometry steps.";
+        }
+
+        list.push({
+          id: id++,
+          domain: domains.Geom,
+          title: `Geom/Trig: ${title}`,
+          prompt: prompt,
+          options: options,
+          correct: correct,
+          manual: manual,
+          keypress: keypress,
+          feature: feature,
+          lcdDisplay: lcdDisplay,
+          tip: tip
+        });
+      }
+
+      return list;
+    }
+
+    // Initialize Full Problem Database
+    const allProblems = generate100Problems();
+
+    // Filtering State
+    let currentDomain = "ALL";
+    let visibleCount = 10;
+    let filteredProblems = [...allProblems];
+
+    // Filter Trigger Function
+    function filterProblems() {
+      const searchVal = document.getElementById('searchInput').value.toLowerCase();
+      const featureVal = document.getElementById('featureFilter').value;
+
+      filteredProblems = allProblems.filter(p => {
+        const matchesDomain = (currentDomain === "ALL" || p.domain === currentDomain);
+        const matchesFeature = (featureVal === "ALL" || p.feature === featureVal);
+        const matchesSearch = p.title.toLowerCase().includes(searchVal) ||
+                              p.prompt.toLowerCase().includes(searchVal) ||
+                              p.keypress.toLowerCase().includes(searchVal) ||
+                              p.tip.toLowerCase().includes(searchVal);
+        return matchesDomain && matchesFeature && matchesSearch;
       });
 
-      const data = modulesData[modNum];
-      document.getElementById('moduleBadge').innerText = data.badge;
-      document.getElementById('moduleConcept').innerText = data.concept;
-      document.getElementById('problemText').innerHTML = data.problem;
-      document.getElementById('manualTrickyText').innerText = data.manualTricky;
-      document.getElementById('evoShortcutText').innerText = data.evoShortcut;
-      document.getElementById('accordionContent').innerText = data.accordion;
-      document.getElementById('totalStepsNum').innerText = data.steps.length;
-
-      renderStep();
+      visibleCount = 10;
+      renderVisibleProblems();
     }
 
-    // Render Current Step Data to UI & LCD
-    function renderStep() {
-      const data = modulesData[currentModule];
-      const step = data.steps[currentStep];
+    function setDomain(domain) {
+      currentDomain = domain;
+      document.querySelectorAll('.domain-tab').forEach(tab => {
+        if (tab.id === `domain-tab-${domain}`) {
+          tab.className = "domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm";
+        } else {
+          tab.className = "domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
+        }
+      });
+      filterProblems();
+    }
 
-      // Update Step Controls & Text
-      document.getElementById('currentStepNum').innerText = currentStep + 1;
-      document.getElementById('stepTitle').innerText = step.title;
-      document.getElementById('stepDesc').innerText = step.desc;
-      document.getElementById('targetKeyDisplay').innerText = step.targetKey;
+    function loadMoreProblems() {
+      visibleCount += 10;
+      renderVisibleProblems();
+    }
 
-      // Update LCD Screen UI
-      document.getElementById('lcdStatusMode').innerText = step.status;
-      document.getElementById('lcdStepIndicator').innerText = `STEP ${currentStep + 1}/${data.steps.length}`;
-      document.getElementById('lcdContent').innerHTML = step.lcd;
-      document.getElementById('lcdFooter').innerText = step.footer;
+    function showAllProblems() {
+      visibleCount = filteredProblems.length;
+      renderVisibleProblems();
+    }
 
-      // Disable/Enable Nav Buttons
-      document.getElementById('prevStepBtn').disabled = (currentStep === 0);
-      
-      const nextBtn = document.getElementById('nextStepBtn');
-      if (currentStep === data.steps.length - 1) {
-        nextBtn.innerHTML = `Restart <i class="fa-solid fa-rotate-right"></i>`;
+    // Render Cards to Page
+    function renderVisibleProblems() {
+      const container = document.getElementById('problemsContainer');
+      const displayed = filteredProblems.slice(0, visibleCount);
+
+      document.getElementById('statTotal').innerText = `${filteredProblems.length} Problems`;
+      document.getElementById('showingCountText').innerText = `Showing ${displayed.length} of ${filteredProblems.length} problems`;
+
+      if (displayed.length === 0) {
+        container.innerHTML = `
+          <div class="p-12 text-center rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <i class="fa-solid fa-folder-open text-4xl text-slate-400 mb-3"></i>
+            <h3 class="font-bold text-lg">No Matching Problems Found</h3>
+            <p class="text-xs text-slate-500">Try adjusting your search terms or filters.</p>
+          </div>
+        `;
+        document.getElementById('paginationBox').classList.add('hidden');
+        return;
+      }
+
+      document.getElementById('paginationBox').classList.remove('hidden');
+
+      container.innerHTML = displayed.map(p => `
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
+          
+          <!-- Problem Header & Domain Badge -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                #${p.id} &bull; ${p.domain}
+              </span>
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                <i class="fa-solid fa-microchip text-blue-500 mr-1"></i>${p.feature}
+              </span>
+            </div>
+            <h3 class="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-200">${p.title}</h3>
+          </div>
+
+          <!-- Question Prompt -->
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 font-medium text-sm leading-relaxed">
+            ${p.prompt}
+          </div>
+
+          <!-- Multiple Choice Options -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-semibold">
+            ${p.options.map(opt => `
+              <div class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 ${!quizModeActive && opt === p.correct ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-600 dark:text-emerald-400 font-bold' : 'bg-slate-100/50 dark:bg-slate-800/30'}">
+                ${opt}
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- SOLUTION / SIMULATOR SECTION (Toggleable via Quiz Mode) -->
+          <div class="${quizModeActive ? 'hidden' : 'block'} space-y-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              
+              <!-- Walkthrough Left Column (7 Cols) -->
+              <div class="lg:col-span-7 space-y-3">
+                <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/50 text-xs space-y-1">
+                  <div class="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Algebraic Solution</div>
+                  <div class="text-slate-700 dark:text-slate-300">${p.manual}</div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200/40 dark:border-blue-900/40 text-xs space-y-1">
+                  <div class="font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider text-[10px]">
+                    <i class="fa-solid fa-terminal mr-1"></i>TI-84 Evo Keypress Steps
+                  </div>
+                  <div class="font-mono text-slate-800 dark:text-slate-200">${p.keypress}</div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs flex items-start gap-2">
+                  <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5"></i>
+                  <div>
+                    <strong class="text-amber-600 dark:text-amber-400">SAT Evo Pro-Tip:</strong>
+                    <span class="text-slate-600 dark:text-slate-300">${p.tip}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Simulator LCD Right Column (5 Cols) -->
+              <div class="lg:col-span-5">
+                <div class="lcd-display rounded-2xl p-4 min-h-[130px] flex flex-col justify-between">
+                  <div class="flex justify-between items-center text-[10px] opacity-75 border-b border-black/20 dark:border-white/10 pb-1 mb-2">
+                    <span>TI-84 EVO COLOR LCD</span>
+                    <span>RESULT</span>
+                  </div>
+                  <div class="font-mono text-xs my-1">
+                    ${p.lcdDisplay}
+                  </div>
+                  <div class="text-[10px] text-right font-bold text-emerald-400 pt-1 border-t border-black/20 dark:border-white/10">
+                    Correct Answer: ${p.correct}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Reveal Answer Button (When Quiz Mode Active) -->
+          ${quizModeActive ? `
+            <button onclick="this.nextElementSibling.classList.toggle('hidden')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">
+              <i class="fa-solid fa-key mr-1"></i> Reveal Answer & TI-84 Keypress Solution
+            </button>
+            <div class="hidden space-y-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+              <div class="p-3.5 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
+                Correct Answer: ${p.correct}
+              </div>
+              <div class="font-mono text-xs p-3 rounded-xl bg-slate-800 text-slate-200">
+                ${p.keypress}
+              </div>
+            </div>
+          ` : ''}
+
+        </div>
+      `).join('');
+
+      // Show/Hide Load More Button
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      if (visibleCount >= filteredProblems.length) {
+        loadMoreBtn.classList.add('hidden');
       } else {
-        nextBtn.innerHTML = `Next <i class="fa-solid fa-arrow-right"></i>`;
+        loadMoreBtn.classList.remove('hidden');
       }
     }
 
-    // Next Step
-    function nextStep() {
-      const data = modulesData[currentModule];
-      if (currentStep < data.steps.length - 1) {
-        currentStep++;
-      } else {
-        currentStep = 0; // Loop back
-      }
-      renderStep();
-    }
-
-    // Prev Step
-    function prevStep() {
-      if (currentStep > 0) {
-        currentStep--;
-        renderStep();
-      }
-    }
-
-    // Handle Keypad Click Simulation
-    function virtualKeyPress(keyName) {
-      const data = modulesData[currentModule];
-      const step = data.steps[currentStep];
-
-      // Simple visual feedback when clicking simulator keys
-      if (step.targetKey.includes(keyName)) {
-        nextStep();
-      }
-    }
-
-    // Accordion Toggle
-    function toggleAccordion() {
-      const content = document.getElementById('accordionContent');
-      const icon = document.getElementById('accordionIcon');
-      if (content.classList.contains('hidden')) {
-        content.classList.remove('hidden');
-        icon.classList.add('rotate-180');
-      } else {
-        content.classList.add('hidden');
-        icon.classList.remove('rotate-180');
-      }
-    }
-
-    // Initialize Page
+    // Initialize on Load
     window.onload = function() {
-      selectModule(1);
+      filterProblems();
     };
   </script>
 </body>
