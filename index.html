@@ -1,1237 +1,849 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TI-84 Evo Interactive Showcase & Simulator</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TI-84 Evo SAT Math Master Guide</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            calc: {
+              screen: '#9ea882',
+              screenDark: '#222818',
+              pixel: '#111810',
+              accent: '#38bdf8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 4px;
+    }
     
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        ti: {
-                            red: '#CC0000',
-                            redDark: '#990000',
-                            dark: '#12161A',
-                            panel: '#1A2026',
-                            card: '#222A32',
-                            border: '#334155',
-                            accent: '#2563EB',
-                            screenBg: '#E8F1EA',
-                            screenDarkBg: '#1C2826',
-                            screenText: '#1A2922'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Custom styles for calculator screen & key glow effects */
-        .calculator-shadow {
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(204, 0, 0, 0.15);
-        }
-        .screen-bevel {
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.4), inset 0 -1px 2px rgba(255,255,255,0.1);
-        }
-        .btn-calc {
-            transition: all 0.08s ease;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-        .btn-calc:active {
-            transform: translateY(2px) scale(0.97);
-            filter: brightness(1.2);
-        }
-        .glass-panel {
-            background: rgba(26, 32, 38, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        /* Custom scrollbars */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #12161A;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
-        }
-    </style>
+    /* Keypad Button Press FX */
+    .calc-btn {
+      transition: all 0.1s ease;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+    }
+    .calc-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+    }
+
+    /* Screen LCD Texture */
+    .lcd-screen {
+      background-color: #8c9b70;
+      color: #0f170d;
+      font-family: 'JetBrains Mono', monospace;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+    }
+    .dark .lcd-screen {
+      background-color: #1a2216;
+      color: #a3e635;
+    }
+    .lcd-screen::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+      background-size: 100% 4px;
+      z-index: 2;
+      pointer-events: none;
+    }
+  </style>
 </head>
-<body class="bg-ti-dark text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-ti-red selection:text-white">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
 
-    <!-- Top Navigation Header -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('overview')">
-                <div class="w-8 h-8 rounded-lg bg-ti-red flex items-center justify-center font-black text-white text-lg tracking-tighter shadow-lg shadow-red-900/40">
-                    TI
-                </div>
-                <div>
-                    <span class="font-bold text-lg tracking-tight">TI-84 <span class="text-ti-red">Evo</span></span>
-                    <span class="hidden sm:inline-block ml-2 text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Next-Gen Calculator</span>
-                </div>
-            </div>
-
-            <!-- Nav Items -->
-            <nav class="hidden md:flex items-center space-x-1">
-                <button onclick="switchTab('overview')" id="nav-overview" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-colors text-white bg-slate-800 border border-slate-700">
-                    <i class="fa-solid fa-house mr-1.5 text-xs"></i> Overview
-                </button>
-                <button onclick="switchTab('features')" id="nav-features" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                    <i class="fa-solid fa-wand-magic-sparkles mr-1.5 text-xs text-amber-400"></i> Interactive Features
-                </button>
-                <button onclick="switchTab('comparison')" id="nav-comparison" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                    <i class="fa-solid fa-code-compare mr-1.5 text-xs text-blue-400"></i> Evo vs Plus CE
-                </button>
-                <button onclick="switchTab('sandbox')" id="nav-sandbox" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                    <i class="fa-solid fa-calculator mr-1.5 text-xs text-emerald-400"></i> Full Simulator
-                </button>
-            </nav>
-
-            <!-- Quick Action / Audio Toggle -->
-            <div class="flex items-center gap-3">
-                <button id="soundToggleBtn" onclick="toggleAudio()" class="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-800/80 border border-slate-700/80 transition-colors" title="Toggle Key Sound Effects">
-                    <i id="soundIcon" class="fa-solid fa-volume-xmark text-sm"></i>
-                </button>
-                <button onclick="switchTab('sandbox')" class="bg-ti-red hover:bg-red-700 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all shadow-md shadow-red-900/30 flex items-center gap-2">
-                    <i class="fa-solid fa-play text-xs"></i>
-                    <span>Try Simulator</span>
-                </button>
-            </div>
+  <!-- TOP NAV BAR -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-black text-lg shadow-md shadow-blue-500/20">
+          TI
         </div>
+        <div>
+          <h1 class="font-bold text-lg leading-none tracking-tight">TI-84 <span class="text-blue-600 dark:text-blue-400">Evo</span> SAT Guide</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Digital SAT Math Strategy & Simulator</p>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center space-x-3">
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:inline"></i>
+        </button>
+        <a href="#simulator" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition flex items-center gap-1.5">
+          <i class="fa-solid fa-calculator"></i>
+          <span class="hidden sm:inline">Launch</span> Simulator
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <!-- HERO SECTION: TI-84 EVO ADVANTAGES -->
+    <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 shadow-2xl border border-slate-800">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-bolt"></i> SAT Math Accelerator
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            Master the SAT Math with <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">TI-84 Evo</span> Speed
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            While the Digital SAT gives you built-in Desmos, pairing it with the hardware speed of the TI-84 Evo gives you an unfair advantage in system solving, polynomial table matching, and statistical analysis.
+          </p>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <a href="#modules" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition shadow-lg shadow-blue-600/30">
+              Explore SAT Modules
+            </a>
+            <a href="#checklist" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold border border-slate-700 transition">
+              Test-Day Checklist
+            </a>
+          </div>
+        </div>
+
+        <!-- Hardware Specs Badge Grid -->
+        <div class="lg:col-span-5 grid grid-cols-2 gap-3">
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition">
+            <div class="text-blue-400 text-xl mb-1"><i class="fa-solid fa-gauge-high"></i></div>
+            <div class="text-xl font-bold">3x Faster</div>
+            <div class="text-xs text-slate-400">Processor speeds up table matching & complex graphing</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition">
+            <div class="text-indigo-400 text-xl mb-1"><i class="fa-solid fa-border-all"></i></div>
+            <div class="text-xl font-bold">Borderless</div>
+            <div class="text-xs text-slate-400">High-DPI color screen fits full stats tables</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition">
+            <div class="text-emerald-400 text-xl mb-1"><i class="fa-solid fa-cable-car"></i></div>
+            <div class="text-xl font-bold">USB-C Fast</div>
+            <div class="text-xs text-slate-400">Quick top-ups ensure 100% battery on test day</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition">
+            <div class="text-amber-400 text-xl mb-1"><i class="fa-solid fa-icons"></i></div>
+            <div class="text-xl font-bold">Icon-UI</div>
+            <div class="text-xs text-slate-400">Instant app navigation with zero menu confusion</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SAT MASTERY MODULES & SIMULATOR SECTION -->
+    <section id="modules" class="space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight">SAT Mastery Modules</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Select a problem type below to load the interactive step-by-step TI-84 Evo simulator.</p>
+        </div>
+        <!-- Module Selector Tabs -->
+        <div class="flex overflow-x-auto gap-2 p-1 bg-slate-200 dark:bg-slate-900 rounded-xl max-w-full">
+          <button onclick="selectModule(1)" id="mod-tab-1" class="mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap bg-white dark:bg-slate-800 shadow-sm text-blue-600 dark:text-blue-400">
+            1. Non-Linear Systems
+          </button>
+          <button onclick="selectModule(2)" id="mod-tab-2" class="mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            2. Table Trick
+          </button>
+          <button onclick="selectModule(3)" id="mod-tab-3" class="mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            3. Trajectories & Vertices
+          </button>
+          <button onclick="selectModule(4)" id="mod-tab-4" class="mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            4. 1-Var Statistics
+          </button>
+        </div>
+      </div>
+
+      <!-- MAIN INTERACTIVE WORKSPACE (CARD + SIMULATOR) -->
+      <div id="simulator" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        <!-- Mobile Nav Bar -->
-        <div class="md:hidden flex border-t border-slate-800/80 overflow-x-auto px-2 py-1.5 gap-1 text-xs">
-            <button onclick="switchTab('overview')" id="mnav-overview" class="px-3 py-1.5 rounded-md whitespace-nowrap bg-slate-800 text-white font-medium">Overview</button>
-            <button onclick="switchTab('features')" id="mnav-features" class="px-3 py-1.5 rounded-md whitespace-nowrap text-slate-300 hover:bg-slate-800">Features Demos</button>
-            <button onclick="switchTab('comparison')" id="mnav-comparison" class="px-3 py-1.5 rounded-md whitespace-nowrap text-slate-300 hover:bg-slate-800">Comparison</button>
-            <button onclick="switchTab('sandbox')" id="mnav-sandbox" class="px-3 py-1.5 rounded-md whitespace-nowrap text-slate-300 hover:bg-slate-800">Simulator</button>
-        </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-        <!-- ================= TAB 1: OVERVIEW / HERO ================= -->
-        <section id="tab-overview" class="space-y-12">
-            <!-- Hero Banner -->
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-ti-panel via-slate-900 to-black p-6 sm:p-10 border border-slate-800 shadow-2xl">
-                <div class="absolute -top-24 -right-24 w-96 h-96 bg-ti-red/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute bottom-0 left-1/3 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-7 space-y-6">
-                        <div class="inline-flex items-center gap-2 px-3 py-1.2 rounded-full bg-red-950/60 border border-red-800/50 text-red-400 text-xs font-semibold tracking-wide">
-                            <span class="w-2 h-2 rounded-full bg-ti-red animate-pulse"></span>
-                            THE NEW STANDARD FOR GRAPHING CALCULATORS
-                        </div>
-                        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight text-white">
-                            Meet the <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-400 to-white">TI-84 Evo</span>
-                        </h1>
-                        <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
-                            Engineered with a **3x faster processor**, modern **USB-C charging**, a borderless high-res display, and an **icon-driven interface**. Fully SAT, ACT, and AP approved.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-3 pt-2">
-                            <button onclick="switchTab('features')" class="bg-ti-red hover:bg-red-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-red-900/30 transition-all flex items-center gap-2">
-                                <i class="fa-solid fa-circle-play"></i> Explore Key Features
-                            </button>
-                            <button onclick="switchTab('sandbox')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-6 py-3 rounded-xl transition-all flex items-center gap-2">
-                                <i class="fa-solid fa-gamepad"></i> Try Simulator
-                            </button>
-                        </div>
-
-                        <!-- Highlights Badge Grid -->
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800/80">
-                            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                                <div class="text-ti-red text-xs font-semibold uppercase tracking-wider">Charging</div>
-                                <div class="text-sm font-bold text-slate-200 mt-0.5"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> USB-C Port</div>
-                            </div>
-                            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                                <div class="text-ti-red text-xs font-semibold uppercase tracking-wider">Speed</div>
-                                <div class="text-sm font-bold text-slate-200 mt-0.5"><i class="fa-solid fa-gauge-high text-blue-400 mr-1"></i> 3x Faster</div>
-                            </div>
-                            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                                <div class="text-ti-red text-xs font-semibold uppercase tracking-wider">Display</div>
-                                <div class="text-sm font-bold text-slate-200 mt-0.5"><i class="fa-solid fa-expand text-emerald-400 mr-1"></i> Borderless</div>
-                            </div>
-                            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                                <div class="text-ti-red text-xs font-semibold uppercase tracking-wider">Coding</div>
-                                <div class="text-sm font-bold text-slate-200 mt-0.5"><i class="fa-brands fa-python text-yellow-400 mr-1"></i> Native Python</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Interactive Live Mini Preview Banner -->
-                    <div class="lg:col-span-5 flex justify-center">
-                        <div class="w-full max-w-xs bg-slate-900 border-4 border-slate-800 rounded-3xl p-4 calculator-shadow relative overflow-hidden">
-                            <!-- Shell Header -->
-                            <div class="flex justify-between items-center text-xs text-slate-400 font-bold mb-3 px-1">
-                                <span>TI-84 Evo</span>
-                                <span class="text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-battery-full"></i> 100%</span>
-                            </div>
-                            <!-- Screen Mockup -->
-                            <div class="bg-[#182622] rounded-xl p-3 border-2 border-slate-800 text-emerald-300 font-mono text-xs h-64 flex flex-col justify-between relative overflow-hidden screen-bevel">
-                                <div class="flex justify-between text-[10px] text-slate-400 border-b border-slate-800 pb-1">
-                                    <span>NORMAL FLOAT AUTO</span>
-                                    <span class="text-amber-400 font-bold">PYTHON</span>
-                                </div>
-                                <canvas id="heroCanvas" class="w-full h-44 my-1 rounded bg-[#131F1C]"></canvas>
-                                <div class="flex justify-between items-center text-[10px] text-slate-400 pt-1 border-t border-slate-800/80">
-                                    <span>PRESS [<span class="text-white">Y=</span>] GRAPH</span>
-                                    <span class="text-ti-red font-bold animate-pulse">● LIVE DEMO</span>
-                                </div>
-                            </div>
-                            <!-- Keypad Teaser -->
-                            <div class="mt-4 grid grid-cols-5 gap-1.5 text-center text-[9px] font-bold text-slate-300">
-                                <div class="bg-blue-600/30 text-blue-300 p-1.5 rounded border border-blue-500/30">y=</div>
-                                <div class="bg-slate-800 p-1.5 rounded border border-slate-700">window</div>
-                                <div class="bg-slate-800 p-1.5 rounded border border-slate-700">zoom</div>
-                                <div class="bg-slate-800 p-1.5 rounded border border-slate-700">trace</div>
-                                <div class="bg-slate-800 p-1.5 rounded border border-slate-700">graph</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Features Grid Overview -->
-            <div>
-                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                    <i class="fa-solid fa-star text-amber-400 text-lg"></i> What Makes the Evo Special?
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div onclick="switchTab('features', 'icon-menu')" class="bg-ti-card hover:bg-slate-800/80 border border-slate-800 p-6 rounded-2xl cursor-pointer transition-all hover:border-slate-700 group">
-                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-table-cells-large"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">Icon-Based Homescreen</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">No more memorizing long key sequences. Simply navigate a smartphone-style app grid for Graphing, Solver, Python, and Matrix tools.</p>
-                        <span class="inline-block mt-4 text-xs text-blue-400 font-semibold group-hover:translate-x-1 transition-transform">View Demo &rarr;</span>
-                    </div>
-
-                    <div onclick="switchTab('features', 'fraction-toggle')" class="bg-ti-card hover:bg-slate-800/80 border border-slate-800 p-6 rounded-2xl cursor-pointer transition-all hover:border-slate-700 group">
-                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-right-left"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">Instant Fraction Toggle (&lt;&gt;)</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">Dedicated hardware key converts results instantly between exact improper fractions, mixed numbers, and decimal representations in one press.</p>
-                        <span class="inline-block mt-4 text-xs text-emerald-400 font-semibold group-hover:translate-x-1 transition-transform">View Demo &rarr;</span>
-                    </div>
-
-                    <div onclick="switchTab('features', 'auto-trace')" class="bg-ti-card hover:bg-slate-800/80 border border-slate-800 p-6 rounded-2xl cursor-pointer transition-all hover:border-slate-700 group">
-                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-chart-line"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">Smart Auto-Trace Points</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">Graphs automatically pinpoint key coordinates like roots, Y-intercepts, intersections, and local extrema with visible labels and smooth cursor snapping.</p>
-                        <span class="inline-block mt-4 text-xs text-purple-400 font-semibold group-hover:translate-x-1 transition-transform">View Demo &rarr;</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= TAB 2: INTERACTIVE FEATURES & SIMULATED GIFS ================= -->
-        <section id="tab-features" class="hidden space-y-8">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Interactive Feature Demos</h2>
-                    <p class="text-slate-400 text-sm mt-1">Select a feature below to trigger interactive HTML5 simulated graphics & step-by-step animations.</p>
-                </div>
-                
-                <!-- Feature Selector Pill Tabs -->
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="showFeatureDemo('icon-menu')" id="fbtn-icon-menu" class="f-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-ti-red text-white">
-                        Icon Homescreen
-                    </button>
-                    <button onclick="showFeatureDemo('speed-comparison')" id="fbtn-speed-comparison" class="f-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">
-                        3x Speed Plotting
-                    </button>
-                    <button onclick="showFeatureDemo('fraction-toggle')" id="fbtn-fraction-toggle" class="f-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">
-                        Fraction Toggle (&lt;&gt;)
-                    </button>
-                    <button onclick="showFeatureDemo('auto-trace')" id="fbtn-auto-trace" class="f-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">
-                        Auto-Trace Coordinates
-                    </button>
-                    <button onclick="showFeatureDemo('python-coding')" id="fbtn-python-coding" class="f-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">
-                        Built-In Python
-                    </button>
-                    <button onclick="showFeatureDemo('usb-c')" id="fbtn-usb-c" class="f-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">
-                        USB-C Charging
-                    </button>
-                </div>
-            </div>
-
-            <!-- Feature Display Card Container -->
-            <div class="bg-ti-panel border border-slate-800 rounded-3xl p-6 lg:p-8 shadow-xl">
-                
-                <!-- DEMO 1: Icon Homescreen Grid -->
-                <div id="demo-icon-menu" class="feature-content grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-5 space-y-4">
-                        <span class="px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 text-xs font-bold border border-blue-500/20">NEW USER INTERFACE</span>
-                        <h3 class="text-2xl font-bold text-white">Intuitive Icon-Based Homescreen</h3>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            Unlike traditional calculators that load into a blank terminal, the TI-84 Evo presents an organized app dashboard. Jump right into function graphing, matrix algebra, polynomial solvers, or Python programming without memorizing key shortcuts.
-                        </p>
-                        <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 space-y-2 text-xs text-slate-300">
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Easy arrow key navigation</div>
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Single-click app launching</div>
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Fast context switching</div>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-7 flex flex-col items-center">
-                        <div class="w-full max-w-md bg-slate-900 rounded-2xl p-4 border-2 border-slate-700 shadow-2xl">
-                            <div class="text-center text-xs font-mono text-slate-400 mb-2 flex justify-between">
-                                <span>SIMULATED SCREEN DEMO</span>
-                                <span class="text-blue-400 animate-pulse">● Auto Navigating</span>
-                            </div>
-                            <canvas id="canvasIconMenu" class="w-full h-64 bg-[#14201D] rounded-xl border border-slate-800 screen-bevel"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DEMO 2: 3x Speed Plotting -->
-                <div id="demo-speed-comparison" class="feature-content hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-5 space-y-4">
-                        <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-400 text-xs font-bold border border-amber-500/20">HARDWARE UPGRADE</span>
-                        <h3 class="text-2xl font-bold text-white">3x Faster Processor & Larger Viewport</h3>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            Complex calculus functions, polar coordinates, and 3D graphs render instantaneously. Watch the side-by-side simulation below to see how much smoother curves generate compared to older hardware.
-                        </p>
-                        <div class="flex gap-3">
-                            <button onclick="restartSpeedSim()" class="bg-slate-800 hover:bg-slate-700 text-xs font-semibold px-4 py-2 rounded-lg border border-slate-700 text-slate-200 flex items-center gap-2">
-                                <i class="fa-solid fa-rotate-right"></i> Re-run Plot Race
-                            </button>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-center">
-                            <div class="text-xs font-bold text-slate-400 mb-2">Older TI-84 Plus CE</div>
-                            <canvas id="canvasSpeedOld" class="w-full h-48 bg-[#182622] rounded-lg border border-slate-800"></canvas>
-                            <div id="speedTimeOld" class="text-xs font-mono text-amber-400 mt-2">Rendering...</div>
-                        </div>
-                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 text-center">
-                            <div class="text-xs font-bold text-emerald-400 mb-2">TI-84 Evo (New Hardware)</div>
-                            <canvas id="canvasSpeedEvo" class="w-full h-48 bg-[#182622] rounded-lg border border-emerald-900/50"></canvas>
-                            <div id="speedTimeEvo" class="text-xs font-mono text-emerald-400 mt-2">Rendering...</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DEMO 3: Fraction Toggle -->
-                <div id="demo-fraction-toggle" class="feature-content hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-5 space-y-4">
-                        <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">KEYBOARD SHORTCUT</span>
-                        <h3 class="text-2xl font-bold text-white">Instant MathPrint Fraction Toggle Key</h3>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            Tap the dedicated hardware toggle key <span class="bg-slate-800 px-2 py-0.5 rounded font-mono text-emerald-400 border border-slate-700">&lt;&gt;</span> to cycle calculated outputs immediately between decimals, proper fractions, and mixed numbers.
-                        </p>
-                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 flex items-center gap-4">
-                            <button onclick="triggerFracToggle()" class="btn-calc bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2.5 rounded-lg text-sm shadow-md flex items-center gap-2">
-                                <i class="fa-solid fa-hand-pointer"></i> Press &lt;&gt; Key
-                            </button>
-                            <div class="text-xs text-slate-400">Click to interactively switch modes!</div>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-7 flex justify-center">
-                        <div class="w-full max-w-md bg-slate-900 rounded-2xl p-4 border-2 border-slate-700 shadow-2xl">
-                            <canvas id="canvasFracToggle" class="w-full h-56 bg-[#162420] rounded-xl border border-slate-800 screen-bevel"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DEMO 4: Auto Trace Coordinates -->
-                <div id="demo-auto-trace" class="feature-content hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-5 space-y-4">
-                        <span class="px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 text-xs font-bold border border-purple-500/20">SMART GRAPHING</span>
-                        <h3 class="text-2xl font-bold text-white">Smart Auto-Trace Points of Interest</h3>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            No more hunting through sub-menus to calculate zeroes or intersections. As you move the trace cursor, it automatically snaps to local minima, maxima, x-intercepts, and y-intercepts with clear visual badges.
-                        </p>
-                    </div>
-                    <div class="lg:col-span-7 flex justify-center">
-                        <div class="w-full max-w-md bg-slate-900 rounded-2xl p-4 border-2 border-slate-700 shadow-2xl">
-                            <canvas id="canvasAutoTrace" class="w-full h-64 bg-[#14201D] rounded-xl border border-slate-800 screen-bevel"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DEMO 5: Built-In Python -->
-                <div id="demo-python-coding" class="feature-content hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-5 space-y-4">
-                        <span class="px-2.5 py-1 rounded-md bg-yellow-500/10 text-yellow-400 text-xs font-bold border border-yellow-500/20">STEM & CODING READY</span>
-                        <h3 class="text-2xl font-bold text-white">Native Python IDE Built-In</h3>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            Write, run, and debug Python scripts directly on your graphing calculator. Includes math modules, turtle geometry graphics, and script storage.
-                        </p>
-                    </div>
-                    <div class="lg:col-span-7 flex justify-center">
-                        <div class="w-full max-w-md bg-slate-900 rounded-2xl p-4 border-2 border-slate-700 shadow-2xl">
-                            <canvas id="canvasPython" class="w-full h-64 bg-[#101820] rounded-xl border border-slate-800 font-mono text-xs"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DEMO 6: USB-C Charging -->
-                <div id="demo-usb-c" class="feature-content hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-5 space-y-4">
-                        <span class="px-2.5 py-1 rounded-md bg-sky-500/10 text-sky-400 text-xs font-bold border border-sky-500/20">HARDWARE CONVENIENCE</span>
-                        <h3 class="text-2xl font-bold text-white">Universal USB-C Fast Charging</h3>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            Say goodbye to proprietary cords or old Mini-USB cables. Charge your calculator using the exact same cable as your phone or laptop. A single charge lasts up to an entire month of classroom use.
-                        </p>
-                    </div>
-                    <div class="lg:col-span-7 flex justify-center">
-                        <div class="w-full max-w-md bg-slate-900 rounded-2xl p-4 border-2 border-slate-700 shadow-2xl">
-                            <canvas id="canvasUsbC" class="w-full h-64 bg-[#14201D] rounded-xl border border-slate-800"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- ================= TAB 3: COMPARISON TOOL ================= -->
-        <section id="tab-comparison" class="hidden space-y-8">
-            <div class="border-b border-slate-800 pb-4">
-                <h2 class="text-2xl font-bold text-white">TI-84 Evo vs. TI-84 Plus CE</h2>
-                <p class="text-slate-400 text-sm mt-1">Detailed comparison to see what makes the Evo the superior purchase choice.</p>
-            </div>
-
-            <!-- Comparison Table -->
-            <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-ti-panel shadow-xl">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-slate-900/90 text-slate-300 text-xs uppercase font-bold border-b border-slate-800">
-                            <th class="p-4">Feature / Specification</th>
-                            <th class="p-4 text-ti-red font-extrabold text-sm bg-red-950/20">TI-84 Evo (New)</th>
-                            <th class="p-4 text-slate-400">TI-84 Plus CE (Legacy)</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-800/60 text-sm">
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-4 font-semibold text-slate-200">Charging Port</td>
-                            <td class="p-4 font-bold text-emerald-400 bg-red-950/10">USB-C (Modern Universal)</td>
-                            <td class="p-4 text-slate-400">Mini-USB (Outdated)</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-4 font-semibold text-slate-200">Processor & Speed</td>
-                            <td class="p-4 font-bold text-emerald-400 bg-red-950/10">3x Faster Next-Gen Chip</td>
-                            <td class="p-4 text-slate-400">Standard Speed</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-4 font-semibold text-slate-200">Home Screen Interface</td>
-                            <td class="p-4 font-bold text-emerald-400 bg-red-950/10">Icon-Based Smartphone Grid</td>
-                            <td class="p-4 text-slate-400">Blank Text Terminal</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-4 font-semibold text-slate-200">Graphing Display Area</td>
-                            <td class="p-4 font-bold text-emerald-400 bg-red-950/10">Expanded Borderless Screen</td>
-                            <td class="p-4 text-slate-400">Standard Framed Display</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-4 font-semibold text-slate-200">Fraction Toggle Key</td>
-                            <td class="p-4 font-bold text-emerald-400 bg-red-950/10">Dedicated Hardware &lt;&gt; Key</td>
-                            <td class="p-4 text-slate-400">Requires Multi-Key Math Menu</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-4 font-semibold text-slate-200">Python Programming</td>
-                            <td class="p-4 font-bold text-emerald-400 bg-red-950/10">Built-In Standard</td>
-                            <td class="p-4 text-slate-400">Only on separate "Python Edition"</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-4 font-semibold text-slate-200">Exam Approvals (SAT/ACT/AP)</td>
-                            <td class="p-4 font-bold text-emerald-400 bg-red-950/10">100% Approved (No CAS)</td>
-                            <td class="p-4 text-slate-400">100% Approved</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- ================= TAB 4: INTERACTIVE CALCULATOR SIMULATOR ================= -->
-        <section id="tab-sandbox" class="hidden space-y-6">
-            <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                <div>
-                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-                        <i class="fa-solid fa-gamepad text-emerald-400"></i> Interactive TI-84 Evo Simulator
-                    </h2>
-                    <p class="text-slate-400 text-sm mt-0.5">Click the physical buttons on the calculator model to operate the display in real-time!</p>
-                </div>
-                <div class="flex items-center gap-2 text-xs bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
-                    <span class="text-slate-400">Shortcuts:</span>
-                    <button onclick="simPressKey('HOME')" class="bg-slate-700 text-white px-2 py-0.5 rounded hover:bg-slate-600">HOME</button>
-                    <button onclick="simPressKey('GRAPH')" class="bg-slate-700 text-white px-2 py-0.5 rounded hover:bg-slate-600">GRAPH</button>
-                    <button onclick="simPressKey('TOGGLE')" class="bg-emerald-700 text-white px-2 py-0.5 rounded hover:bg-emerald-600">&lt;&gt;</button>
-                </div>
-            </div>
-
-            <!-- Main Interactive Simulator Layout -->
-            <div class="flex justify-center">
-                <div class="w-full max-w-sm bg-slate-900 border-4 border-slate-700 rounded-[36px] p-5 calculator-shadow relative">
-                    <!-- Brand Top Header -->
-                    <div class="flex justify-between items-center text-xs text-slate-300 font-bold mb-3 px-2">
-                        <span class="text-ti-red tracking-wide font-black">TEXAS INSTRUMENTS</span>
-                        <span class="text-white bg-slate-800 px-2 py-0.5 rounded text-[10px] border border-slate-700">TI-84 Evo</span>
-                    </div>
-
-                    <!-- Screen Area -->
-                    <div class="bg-[#14201D] rounded-2xl p-3 border-2 border-slate-800 text-emerald-300 font-mono text-xs shadow-inner relative overflow-hidden screen-bevel mb-4">
-                        <div class="flex justify-between text-[10px] text-slate-400 border-b border-slate-800/80 pb-1 mb-1">
-                            <span id="simStatusMode">NORMAL FLOAT AUTO</span>
-                            <span class="text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-battery-full"></i> USB-C</span>
-                        </div>
-                        <canvas id="simCanvas" class="w-full h-56 bg-[#121E1B] rounded-lg"></canvas>
-                    </div>
-
-                    <!-- Keypad Shell -->
-                    <div class="space-y-2">
-                        <!-- Function Row 1 -->
-                        <div class="grid grid-cols-5 gap-1.5">
-                            <button onclick="simPressKey('Y=')" class="btn-calc bg-blue-600/40 hover:bg-blue-600/60 text-blue-300 text-[10px] font-bold py-2 rounded border border-blue-500/40">y=</button>
-                            <button onclick="simPressKey('WINDOW')" class="btn-calc bg-slate-800 text-slate-300 text-[10px] font-bold py-2 rounded border border-slate-700">window</button>
-                            <button onclick="simPressKey('ZOOM')" class="btn-calc bg-slate-800 text-slate-300 text-[10px] font-bold py-2 rounded border border-slate-700">zoom</button>
-                            <button onclick="simPressKey('TRACE')" class="btn-calc bg-slate-800 text-slate-300 text-[10px] font-bold py-2 rounded border border-slate-700">trace</button>
-                            <button onclick="simPressKey('GRAPH')" class="btn-calc bg-slate-800 text-slate-300 text-[10px] font-bold py-2 rounded border border-slate-700">graph</button>
-                        </div>
-
-                        <!-- Function Row 2 (Home, Mode, Del, D-Pad) -->
-                        <div class="grid grid-cols-5 gap-1.5 items-center">
-                            <button onclick="simPressKey('2ND')" class="btn-calc bg-blue-500 text-white text-[10px] font-extrabold py-2 rounded shadow">2nd</button>
-                            <button onclick="simPressKey('MODE')" class="btn-calc bg-slate-800 text-slate-300 text-[10px] font-bold py-2 rounded border border-slate-700">mode</button>
-                            <button onclick="simPressKey('DEL')" class="btn-calc bg-slate-800 text-slate-300 text-[10px] font-bold py-2 rounded border border-slate-700">del</button>
-                            <button onclick="simPressKey('HOME')" class="btn-calc col-span-2 bg-ti-red hover:bg-red-600 text-white text-[10px] font-bold py-2 rounded shadow flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-house text-[9px]"></i> HOME
-                            </button>
-                        </div>
-
-                        <!-- Arrow Pad & Operations -->
-                        <div class="grid grid-cols-4 gap-1.5 py-1">
-                            <div class="col-span-2 grid grid-cols-3 gap-1 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800">
-                                <div></div>
-                                <button onclick="simPressKey('UP')" class="btn-calc bg-slate-800 text-slate-200 text-xs font-bold p-1 rounded border border-slate-700">▲</button>
-                                <div></div>
-                                <button onclick="simPressKey('LEFT')" class="btn-calc bg-slate-800 text-slate-200 text-xs font-bold p-1 rounded border border-slate-700">◀</button>
-                                <button onclick="simPressKey('OK')" class="btn-calc bg-slate-700 text-white text-[9px] font-bold p-1 rounded">OK</button>
-                                <button onclick="simPressKey('RIGHT')" class="btn-calc bg-slate-800 text-slate-200 text-xs font-bold p-1 rounded border border-slate-700">▶</button>
-                                <div></div>
-                                <button onclick="simPressKey('DOWN')" class="btn-calc bg-slate-800 text-slate-200 text-xs font-bold p-1 rounded border border-slate-700">▼</button>
-                                <div></div>
-                            </div>
-
-                            <div class="col-span-2 grid grid-cols-2 gap-1.5">
-                                <button onclick="simPressKey('TOGGLE')" class="btn-calc bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-extrabold py-2 rounded border border-emerald-500 shadow flex items-center justify-center gap-1" title="Fraction / Decimal Toggle">
-                                    <span>&lt;&gt;</span>
-                                </button>
-                                <button onclick="simPressKey('CLEAR')" class="btn-calc bg-slate-800 text-slate-300 text-xs font-bold py-2 rounded border border-slate-700">clear</button>
-                                <button onclick="simPressKey('PYTHON')" class="btn-calc col-span-2 bg-amber-600/30 hover:bg-amber-600/50 text-amber-300 text-[10px] font-bold py-1.5 rounded border border-amber-500/30 flex items-center justify-center gap-1">
-                                    <i class="fa-brands fa-python text-xs"></i> Python App
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Number Pad Grid -->
-                        <div class="grid grid-cols-4 gap-1.5 pt-1">
-                            <button onclick="simPressKey('7')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">7</button>
-                            <button onclick="simPressKey('8')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">8</button>
-                            <button onclick="simPressKey('9')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">9</button>
-                            <button onclick="simPressKey('/')" class="btn-calc bg-slate-700 text-slate-200 text-sm font-bold py-2 rounded">÷</button>
-
-                            <button onclick="simPressKey('4')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">4</button>
-                            <button onclick="simPressKey('5')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">5</button>
-                            <button onclick="simPressKey('6')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">6</button>
-                            <button onclick="simPressKey('*')" class="btn-calc bg-slate-700 text-slate-200 text-sm font-bold py-2 rounded">×</button>
-
-                            <button onclick="simPressKey('1')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">1</button>
-                            <button onclick="simPressKey('2')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">2</button>
-                            <button onclick="simPressKey('3')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">3</button>
-                            <button onclick="simPressKey('-')" class="btn-calc bg-slate-700 text-slate-200 text-sm font-bold py-2 rounded">−</button>
-
-                            <button onclick="simPressKey('0')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">0</button>
-                            <button onclick="simPressKey('.')" class="btn-calc bg-slate-800 text-white text-sm font-bold py-2 rounded">.</button>
-                            <button onclick="simPressKey('ENTER')" class="btn-calc col-span-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-extrabold py-2 rounded shadow">ENTER</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-slate-800 py-6 mt-12 bg-ti-panel text-slate-400 text-xs">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-            <p>TI-84 Evo Interactive Showcase & Simulator • Created for Educational Demonstrations</p>
-            <p class="text-slate-500">TI-84, TI-84 Plus CE, and TI-84 Evo are registered trademarks of Texas Instruments Inc.</p>
-        </div>
-    </footer>
-
-    <!-- JavaScript Application Logic -->
-    <script>
-        // Global Audio Context for key tap click synthesizer
-        let audioCtx = null;
-        let soundEnabled = false;
-
-        function toggleAudio() {
-            soundEnabled = !soundEnabled;
-            const icon = document.getElementById('soundIcon');
-            const btn = document.getElementById('soundToggleBtn');
-            if (soundEnabled) {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                icon.className = 'fa-solid fa-volume-high text-emerald-400';
-                btn.classList.add('border-emerald-500/50');
-                playClickSound();
-            } else {
-                icon.className = 'fa-solid fa-volume-xmark text-slate-400';
-                btn.classList.remove('border-emerald-500/50');
-            }
-        }
-
-        function playClickSound() {
-            if (!soundEnabled || !audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.04);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.04);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
-        // Navigation Tab Switching
-        function switchTab(tabId, targetFeature = null) {
-            playClickSound();
-            const tabs = ['overview', 'features', 'comparison', 'sandbox'];
-            tabs.forEach(t => {
-                const el = document.getElementById(`tab-${t}`);
-                const btn = document.getElementById(`nav-${t}`);
-                const mbtn = document.getElementById(`mnav-${t}`);
-                
-                if (t === tabId) {
-                    el.classList.remove('hidden');
-                    if (btn) {
-                        btn.className = "nav-btn px-3 py-2 rounded-lg text-sm font-medium text-white bg-slate-800 border border-slate-700";
-                    }
-                    if (mbtn) {
-                        mbtn.className = "px-3 py-1.5 rounded-md whitespace-nowrap bg-slate-800 text-white font-medium";
-                    }
-                } else {
-                    el.classList.add('hidden');
-                    if (btn) {
-                        btn.className = "nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors";
-                    }
-                    if (mbtn) {
-                        mbtn.className = "px-3 py-1.5 rounded-md whitespace-nowrap text-slate-300 hover:bg-slate-800";
-                    }
-                }
-            });
-
-            if (tabId === 'features' && targetFeature) {
-                showFeatureDemo(targetFeature);
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Interactive Feature Tab Switcher
-        function showFeatureDemo(featureId) {
-            playClickSound();
-            const features = ['icon-menu', 'speed-comparison', 'fraction-toggle', 'auto-trace', 'python-coding', 'usb-c'];
-            features.forEach(f => {
-                const el = document.getElementById(`demo-${f}`);
-                const btn = document.getElementById(`fbtn-${f}`);
-                if (f === featureId) {
-                    el.classList.remove('hidden');
-                    if (btn) btn.className = "f-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-ti-red text-white shadow";
-                } else {
-                    el.classList.add('hidden');
-                    if (btn) btn.className = "f-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white";
-                }
-            });
-
-            if (featureId === 'speed-comparison') restartSpeedSim();
-        }
-
-        // Canvas Animations Init
-        window.onload = function () {
-            initHeroCanvas();
-            initIconMenuCanvas();
-            initSpeedComparisonCanvas();
-            initFracToggleCanvas();
-            initAutoTraceCanvas();
-            initPythonCanvas();
-            initUsbCCanvas();
-            initSimCanvas();
-        };
-
-        // 1. HERO MINI CANVAS ANIMATION
-        function initHeroCanvas() {
-            const canvas = document.getElementById('heroCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let t = 0;
-
-            function render() {
-                canvas.width = canvas.clientWidth;
-                canvas.height = canvas.clientHeight;
-                const w = canvas.width;
-                const h = canvas.height;
-
-                ctx.clearRect(0, 0, w, h);
-                // Grid
-                ctx.strokeStyle = '#233832';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(0, h/2); ctx.lineTo(w, h/2);
-                ctx.moveTo(w/2, 0); ctx.lineTo(w/2, h);
-                ctx.stroke();
-
-                // Plot Curve y = sin(x)
-                ctx.strokeStyle = '#38BDF8';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                for (let x = 0; x < w; x++) {
-                    const mathX = (x - w/2) / 20;
-                    const mathY = Math.sin(mathX + t);
-                    const canvasY = h/2 - (mathY * 30);
-                    if (x === 0) ctx.moveTo(x, canvasY);
-                    else ctx.lineTo(x, canvasY);
-                }
-                ctx.stroke();
-
-                t += 0.04;
-                requestAnimationFrame(render);
-            }
-            render();
-        }
-
-        // 2. ICON MENU SIMULATED ANIMATION
-        function initIconMenuCanvas() {
-            const canvas = document.getElementById('canvasIconMenu');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
+        <!-- LEFT COLUMN: Problem Breakdown & Walkthrough (7 Cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
             
-            const icons = [
-                { title: 'Graph', icon: '📈', color: '#3B82F6' },
-                { title: 'Solver', icon: '🧮', color: '#10B981' },
-                { title: 'Python', icon: '🐍', color: '#F59E0B' },
-                { title: 'Matrix', icon: '🔢', color: '#8B5CF6' },
-                { title: 'Stat', icon: '📊', color: '#EC4899' },
-                { title: 'Setup', icon: '⚙️', color: '#64748B' }
-            ];
+            <!-- Module Title & Badge -->
+            <div class="flex items-center justify-between mb-4">
+              <span id="moduleBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
+                Module 1
+              </span>
+              <span id="moduleConcept" class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                Intersection of Line & Parabola
+              </span>
+            </div>
 
-            let activeIdx = 0;
-            setInterval(() => {
-                activeIdx = (activeIdx + 1) % icons.length;
-            }, 1800);
+            <!-- Problem Statement Box -->
+            <div class="mb-6">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Official SAT Practice Style Question</h3>
+              <div id="problemText" class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 font-medium text-sm sm:text-base leading-relaxed">
+                A system of equations consists of <span class="font-mono text-blue-600 dark:text-blue-400 font-bold">y = x² - 4x + 3</span> and <span class="font-mono text-blue-600 dark:text-blue-400 font-bold">y = 2x - 2</span>. What is the x-value of the intersection point where x > 2?
+              </div>
+            </div>
 
-            function render() {
-                canvas.width = canvas.clientWidth;
-                canvas.height = canvas.clientHeight;
-                const w = canvas.width;
-                const h = canvas.height;
+            <!-- Comparison Grid: Manual vs TI-84 Evo Shortcut -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              <div class="p-3.5 rounded-xl bg-rose-500/5 border border-rose-500/20">
+                <div class="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold text-xs uppercase mb-1">
+                  <i class="fa-solid fa-triangle-exclamation"></i> Why Manual Math is Tricky
+                </div>
+                <p id="manualTrickyText" class="text-xs text-slate-600 dark:text-slate-300 leading-normal">
+                  Requires setting equal (x² - 6x + 5 = 0), factoring or quadratic formula, and testing x > 2 restriction under time pressure.
+                </p>
+              </div>
+              <div class="p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+                <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase mb-1">
+                  <i class="fa-solid fa-bolt"></i> TI-84 Evo Shortcut
+                </div>
+                <p id="evoShortcutText" class="text-xs text-slate-600 dark:text-slate-300 leading-normal">
+                  Graph both equations in Y=, then use 2nd -> TRACE (CALC) -> Intersect for instant solution with zero manual algebra errors.
+                </p>
+              </div>
+            </div>
 
-                ctx.clearRect(0, 0, w, h);
-                ctx.fillStyle = '#14201D';
-                ctx.fillRect(0, 0, w, h);
+            <!-- Walkthrough Step Controls -->
+            <div class="border-t border-slate-200 dark:border-slate-800 pt-5">
+              <div class="flex items-center justify-between mb-3">
+                <div class="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Step-by-Step Guide (<span id="currentStepNum">1</span>/<span id="totalStepsNum">4</span>)
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="prevStep()" id="prevStepBtn" class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-arrow-left"></i> Prev
+                  </button>
+                  <button onclick="nextStep()" id="nextStepBtn" class="px-3 py-1 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500 transition shadow-sm">
+                    Next <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
 
-                // Title bar
-                ctx.fillStyle = '#223630';
-                ctx.fillRect(0, 0, w, 24);
-                ctx.fillStyle = '#94A3B8';
-                ctx.font = '10px JetBrains Mono';
-                ctx.fillText('TI-84 Evo APPS HOME', 10, 16);
+              <!-- Step Explanation Box -->
+              <div class="p-4 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200/50 dark:border-blue-900/50">
+                <h4 id="stepTitle" class="font-bold text-sm text-blue-900 dark:text-blue-300 mb-1">Step 1: Enter Equations</h4>
+                <p id="stepDesc" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                  Press [Y=] on the key pad. Input Y1 = X² - 4X + 3 and Y2 = 2X - 2.
+                </p>
+              </div>
 
-                // Grid layout
-                const cols = 3;
-                const cellW = (w - 40) / cols;
-                const cellH = 70;
+              <!-- Collapsible Explanation Accordion -->
+              <div class="mt-4">
+                <button onclick="toggleAccordion()" class="w-full text-left flex items-center justify-between text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 py-1">
+                  <span><i class="fa-solid fa-circle-info mr-1"></i> Why this strategy wins on the SAT</span>
+                  <i id="accordionIcon" class="fa-solid fa-chevron-down transition-transform"></i>
+                </button>
+                <div id="accordionContent" class="hidden mt-2 p-3 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  SAT non-linear system questions are specifically constructed with traps (like asking only for x when x > 2). Graphing directly removes sign errors and gives you visual proof of all intersection points.
+                </div>
+              </div>
 
-                icons.forEach((item, idx) => {
-                    const row = Math.floor(idx / cols);
-                    const col = idx % cols;
-                    const x = 20 + col * (cellW + 10);
-                    const y = 40 + row * (cellH + 10);
+            </div>
 
-                    const isActive = idx === activeIdx;
+          </div>
+        </div>
 
-                    // Box
-                    ctx.fillStyle = isActive ? '#26423A' : '#1A2C27';
-                    ctx.strokeStyle = isActive ? '#10B981' : '#2A453D';
-                    ctx.lineWidth = isActive ? 2 : 1;
-                    ctx.beginPath();
-                    ctx.roundRect(x, y, cellW, cellH, 8);
-                    ctx.fill();
-                    ctx.stroke();
+        <!-- RIGHT COLUMN: Interactive Keypad & Screen Simulator (5 Cols) -->
+        <div class="lg:col-span-5">
+          <div class="sticky top-20 p-5 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl space-y-4">
+            
+            <!-- Calculator Top Branding -->
+            <div class="flex items-center justify-between text-slate-400 px-1 text-xs">
+              <span class="font-bold tracking-widest text-slate-200">TI-84 Plus CE <span class="text-blue-400">Evo</span></span>
+              <span class="inline-flex items-center gap-1 text-[10px] bg-slate-800 px-2 py-0.5 rounded-full text-emerald-400">
+                <i class="fa-solid fa-battery-full"></i> 100%
+              </span>
+            </div>
 
-                    // Icon & Label
-                    ctx.font = '22px sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(item.icon, x + cellW/2, y + 36);
+            <!-- VIRTUAL LCD SCREEN -->
+            <div class="lcd-screen rounded-xl p-4 min-h-[190px] flex flex-col justify-between border-2 border-slate-700">
+              <!-- Top LCD Status Line -->
+              <div class="flex justify-between items-center text-[10px] font-bold opacity-75 border-b border-black/20 dark:border-white/10 pb-1 mb-2">
+                <span id="lcdStatusMode">NORMAL FLOAT AUTO REAL DEG</span>
+                <span id="lcdStepIndicator">STEP 1/4</span>
+              </div>
 
-                    ctx.font = '11px Inter, sans-serif';
-                    ctx.fillStyle = isActive ? '#FFFFFF' : '#94A3B8';
-                    ctx.fillText(item.title, x + cellW/2, y + 56);
-                });
+              <!-- Main Dynamic Screen Content -->
+              <div id="lcdContent" class="flex-1 space-y-1.5 font-mono text-xs sm:text-sm">
+                <!-- Screen content injected via JS -->
+              </div>
 
-                requestAnimationFrame(render);
-            }
-            render();
+              <!-- Bottom LCD Prompt Line -->
+              <div id="lcdFooter" class="text-[11px] font-bold text-right pt-1 mt-2 border-t border-black/20 dark:border-white/10 opacity-90">
+                Press [GRAPH] to view
+              </div>
+            </div>
+
+            <!-- KEYPAD SIMULATOR -->
+            <div class="space-y-2 pt-2">
+              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 text-center mb-1">Interactive Keypad Sequence</div>
+              
+              <!-- Function Keys Row -->
+              <div class="grid grid-cols-5 gap-1.5 text-[10px] font-bold">
+                <button class="calc-btn py-2 rounded-md bg-amber-500 text-slate-950 hover:bg-amber-400 font-extrabold" onclick="virtualKeyPress('2ND')">2nd</button>
+                <button class="calc-btn py-2 rounded-md bg-slate-700 text-white hover:bg-slate-600" onclick="virtualKeyPress('Y=')">Y=</button>
+                <button class="calc-btn py-2 rounded-md bg-slate-700 text-white hover:bg-slate-600" onclick="virtualKeyPress('WINDOW')">WINDOW</button>
+                <button class="calc-btn py-2 rounded-md bg-slate-700 text-white hover:bg-slate-600" onclick="virtualKeyPress('ZOOM')">ZOOM</button>
+                <button class="calc-btn py-2 rounded-md bg-blue-600 text-white hover:bg-blue-500" onclick="virtualKeyPress('GRAPH')">GRAPH</button>
+              </div>
+
+              <!-- Secondary Row -->
+              <div class="grid grid-cols-4 gap-1.5 text-[10px] font-bold">
+                <button class="calc-btn py-2 rounded-md bg-slate-800 text-slate-200 hover:bg-slate-700" onclick="virtualKeyPress('STAT')">STAT</button>
+                <button class="calc-btn py-2 rounded-md bg-slate-800 text-slate-200 hover:bg-slate-700" onclick="virtualKeyPress('X,T,θ,n')">X,T,θ,n</button>
+                <button class="calc-btn py-2 rounded-md bg-slate-800 text-slate-200 hover:bg-slate-700" onclick="virtualKeyPress('TRACE')">TRACE</button>
+                <button class="calc-btn py-2 rounded-md bg-slate-800 text-slate-200 hover:bg-slate-700" onclick="virtualKeyPress('CLEAR')">CLEAR</button>
+              </div>
+
+              <!-- Highlighted Key Prompt Box -->
+              <div class="p-2.5 rounded-xl bg-slate-800/90 border border-slate-700 flex items-center justify-between text-xs">
+                <span class="text-slate-400">Target Key:</span>
+                <span id="targetKeyDisplay" class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono font-bold border border-blue-500/30">
+                  [Y=]
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- STRATEGY COMPARISON MATRIX & DUAL WORKFLOW -->
+    <section class="space-y-6">
+      <div>
+        <h2 class="text-2xl font-bold tracking-tight">SAT Strategy Matrix & Dual Workflow</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400">Maximizing your score by pairing built-in Desmos with TI-84 Evo hardware.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Comparison Card 1: When TI-84 Wins -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-base">TI-84 Evo Power Zone</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Where physical keys beat touchscreen scrolling</p>
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+              <span><strong>Polynomial Table Testing:</strong> Scroll infinite $X$ and $Y$ values in 1 second using Table view without typing custom range sliders.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+              <span><strong>1-Var Stats & Frequency Tables:</strong> Enter raw lists $L_1$ and $L_2$ for instant Mean ($\bar{x}$), Standard Deviation ($\sigma_x$), and Median ($Med$).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+              <span><strong>Physical Key Tactility:</strong> Zero onscreen keyboard lag; double-check steps without losing question window context.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Comparison Card 2: Dual Workflow Strategy -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">
+              <i class="fa-solid fa-laptop-code"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-base">Dual Calculator Tactics</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Combining Desmos + TI-84 Evo on test day</p>
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-arrows-split-up-and-left text-indigo-500 mt-0.5"></i>
+              <span><strong>Desmos for Visual Conics:</strong> Use Desmos screen for massive circles or complex inequalities.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-arrows-split-up-and-left text-indigo-500 mt-0.5"></i>
+              <span><strong>TI-84 Evo for Rapid Computations:</strong> Keep TI-84 in hand for fractions, matrix operations, and quick arithmetic without opening on-screen menus.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-arrows-split-up-and-left text-indigo-500 mt-0.5"></i>
+              <span><strong>The Verification Protocol:</strong> Solve on TI-84 Evo; double-check tricky geometry or graph bounds on Desmos.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEST-DAY CHECKLIST -->
+    <section id="checklist" class="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white space-y-6 shadow-xl border border-slate-800">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-xl font-bold flex items-center gap-2">
+            <i class="fa-solid fa-clipboard-check text-emerald-400"></i> SAT Test-Day TI-84 Evo Checklist
+          </h2>
+          <p class="text-xs text-slate-400">Complete these pre-flight checks before the proctor says "Start".</p>
+        </div>
+        <div class="text-xs font-mono bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700 text-slate-300">
+          Target Time Savings: ~8 Mins
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Checklist Item 1 -->
+        <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 cursor-pointer hover:bg-slate-800 transition">
+          <input type="checkbox" checked class="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700">
+          <div class="space-y-1">
+            <span class="text-xs font-bold block text-slate-100">Degree Mode Verification</span>
+            <p class="text-[11px] text-slate-400">Press [MODE]. Ensure "DEGREE" is highlighted unless trigonometry specifically requires Radians.</p>
+          </div>
+        </label>
+
+        <!-- Checklist Item 2 -->
+        <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 cursor-pointer hover:bg-slate-800 transition">
+          <input type="checkbox" checked class="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700">
+          <div class="space-y-1">
+            <span class="text-xs font-bold block text-slate-100">USB-C Power Check</span>
+            <p class="text-[11px] text-slate-400">Fully charge overnight. Evo fast-charging guarantees full battery through both SAT Math modules.</p>
+          </div>
+        </label>
+
+        <!-- Checklist Item 3 -->
+        <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 cursor-pointer hover:bg-slate-800 transition">
+          <input type="checkbox" checked class="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700">
+          <div class="space-y-1">
+            <span class="text-xs font-bold block text-slate-100">Clear Stat Lists & RAM</span>
+            <p class="text-[11px] text-slate-400">Press [2nd] -> [+] -> [7] -> [1] -> [2] to reset RAM if memory clutter slows calculation speed.</p>
+          </div>
+        </label>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-6">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 dark:text-slate-400">
+      TI-84 Evo SAT Math Master Guide &bull; Designed for Digital SAT Speed & Precision
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE LOGIC & DATA -->
+  <script>
+    // Theme Switcher Logic
+    function toggleTheme() {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Module Data Store
+    const modulesData = {
+      1: {
+        badge: "Module 1",
+        concept: "Non-Linear Systems (Line & Parabola)",
+        problem: "A system of equations consists of <span class='font-mono text-blue-600 dark:text-blue-400 font-bold'>y = x² - 4x + 3</span> and <span class='font-mono text-blue-600 dark:text-blue-400 font-bold'>y = 2x - 2</span>. What is the x-value of the intersection point where x > 2?",
+        manualTricky: "Requires setting equations equal (x² - 6x + 5 = 0), factoring or applying quadratic formula, and testing x > 2 under time pressure.",
+        evoShortcut: "Graph both equations in Y=, then use [2nd] -> [TRACE] -> 5:intersect for instant pinpointing.",
+        accordion: "SAT questions often ask for a specific condition (like x > 2). Graphing lets you visually verify both intersection points immediately without manual sign errors.",
+        steps: [
+          {
+            title: "Step 1: Open Graph Function (Y=)",
+            desc: "Press [Y=] on top left key pad. Type Y1 = X^2 - 4X + 3 and press ENTER.",
+            targetKey: "[Y=]",
+            status: "NORMAL FLOAT AUTO REAL DEG",
+            lcd: `
+              <div class="text-blue-400 font-bold">Plot1 Plot2 Plot3</div>
+              <div>\Y1<span class="text-white">=X²-4X+3</span></div>
+              <div>\Y2<span class="text-slate-400">=</span></div>
+              <div>\Y3<span class="text-slate-400">=</span></div>
+              <div>\Y4<span class="text-slate-400">=</span></div>
+            `,
+            footer: "Enter first equation"
+          },
+          {
+            title: "Step 2: Enter Second Equation",
+            desc: "Under Y2, type 2X - 2 and press [GRAPH].",
+            targetKey: "[GRAPH]",
+            status: "NORMAL FLOAT AUTO REAL DEG",
+            lcd: `
+              <div class="text-blue-400 font-bold">Plot1 Plot2 Plot3</div>
+              <div>\Y1<span class="text-white">=X²-4X+3</span></div>
+              <div>\Y2<span class="text-white">=2X-2</span></div>
+              <div>\Y3<span class="text-slate-400">=</span></div>
+            `,
+            footer: "Press [GRAPH] to plot"
+          },
+          {
+            title: "Step 3: Trigger Intersect Menu",
+            desc: "Press [2nd] then [TRACE] (CALC). Select option 5: intersect.",
+            targetKey: "[TRACE]",
+            status: "CALCULATE MENU",
+            lcd: `
+              <div class="font-bold border-b border-white/20 pb-0.5">CALCULATE</div>
+              <div>1: value</div>
+              <div>2: zero</div>
+              <div>3: minimum</div>
+              <div>4: maximum</div>
+              <div class="bg-blue-600 text-white px-1">5: intersect</div>
+            `,
+            footer: "Press 5 or [ENTER]"
+          },
+          {
+            title: "Step 4: Pinpoint Solution (x > 2)",
+            desc: "Move cursor near right intersection point and press [ENTER] 3 times.",
+            targetKey: "[ENTER]",
+            status: "GRAPH VIEW: INTERSECTION",
+            lcd: `
+              <div class="text-center font-bold text-amber-300 my-2">-- GRAPH DISPLAY --</div>
+              <div class="border-t border-white/20 pt-1 text-xs">
+                <div>Intersection</div>
+                <div class="text-emerald-400 font-bold">X=5           Y=8</div>
+              </div>
+            `,
+            footer: "Answer: X = 5"
+          }
+        ]
+      },
+      2: {
+        badge: "Module 2",
+        concept: "Equivalent Expressions & Table Trick",
+        problem: "Which of the following is equivalent to <span class='font-mono text-blue-600 dark:text-blue-400 font-bold'>(2x² + 7x - 5) / (x + 4)</span> for x ≠ -4?<br>A) 2x - 1 - 1/(x+4)<br>B) 2x - 1 + 1/(x+4)",
+        manualTricky: "Polynomial long division or synthetic division is prone to negative sign distribution mistakes.",
+        evoShortcut: "Set Y1 = Original Expression and Y2 = Option A. Compare outputs in [2nd] -> [GRAPH] (TABLE). Matching columns = Equivalent!",
+        accordion: "The Table Trick converts complex algebraic equivalence questions into simple integer matching.",
+        steps: [
+          {
+            title: "Step 1: Enter Original Expression",
+            desc: "Press [Y=]. Set Y1 = (2X² + 7X - 5) / (X + 4).",
+            targetKey: "[Y=]",
+            status: "NORMAL FLOAT AUTO REAL DEG",
+            lcd: `
+              <div>\Y1<span class="text-white">=(2X²+7X-5)/(X+4)</span></div>
+              <div>\Y2<span class="text-slate-400">=</span></div>
+            `,
+            footer: "Input Y1"
+          },
+          {
+            title: "Step 2: Enter Option A in Y2",
+            desc: "Set Y2 = (2X - 1) - 1 / (X + 4).",
+            targetKey: "[Y=]",
+            status: "NORMAL FLOAT AUTO REAL DEG",
+            lcd: `
+              <div>\Y1<span class="text-white">=(2X²+7X-5)/(X+4)</span></div>
+              <div>\Y2<span class="text-white">=(2X-1)-1/(X+4)</span></div>
+            `,
+            footer: "Input Y2 to test choice A"
+          },
+          {
+            title: "Step 3: Open Table View",
+            desc: "Press [2nd] then [GRAPH] (TABLE) to compare Y1 and Y2 output values.",
+            targetKey: "[2nd] + [GRAPH]",
+            status: "TABLE VIEW",
+            lcd: `
+              <div class="grid grid-cols-3 font-bold border-b border-white/20 text-center">
+                <div>X</div><div>Y1</div><div>Y2</div>
+              </div>
+              <div class="grid grid-cols-3 text-center text-xs">
+                <div>1</div><div>0.8</div><div>0.8</div>
+                <div>2</div><div>2.833</div><div>2.833</div>
+                <div>3</div><div>4.857</div><div>4.857</div>
+              </div>
+            `,
+            footer: "Y1 matches Y2 perfectly!"
+          },
+          {
+            title: "Step 4: Confirm Match",
+            desc: "Since all values in Y1 and Y2 match across every x-row, Choice A is mathematically identical.",
+            targetKey: "[ENTER]",
+            status: "TABLE MATCH CONFIRMED",
+            lcd: `
+              <div class="text-center text-emerald-400 font-bold py-2">
+                MATCH FOUND!
+              </div>
+              <div class="text-xs text-center">Choice A is EQUIVALENT</div>
+            `,
+            footer: "Answer: Choice A"
+          }
+        ]
+      },
+      3: {
+        badge: "Module 3",
+        concept: "Quadratic Trajectories & Maximums",
+        problem: "The function <span class='font-mono text-blue-600 dark:text-blue-400 font-bold'>f(x) = -2x² + 12x - 10</span> models a projectile. What is the maximum height reached?",
+        manualTricky: "Requires completing the square or computing x = -b/(2a) then plugging back in.",
+        evoShortcut: "Graph function in Y=, then use [2nd] -> [TRACE] -> 4:maximum for immediate vertex point.",
+        accordion: "The built-in Maximum solver calculates the exact peak height without manual multi-step algebra.",
+        steps: [
+          {
+            title: "Step 1: Input Quadratic Equation",
+            desc: "Press [Y=]. Type -2X² + 12X - 10.",
+            targetKey: "[Y=]",
+            status: "NORMAL FLOAT AUTO REAL DEG",
+            lcd: `
+              <div>\Y1<span class="text-white">=-2X²+12X-10</span></div>
+            `,
+            footer: "Press [GRAPH]"
+          },
+          {
+            title: "Step 2: Plot Graph",
+            desc: "Press [GRAPH] to view parabola trajectory.",
+            targetKey: "[GRAPH]",
+            status: "GRAPH VIEW",
+            lcd: `
+              <div class="text-center font-bold text-amber-300 my-2">-- PARABOLA GRAPH --</div>
+              <div class="text-xs text-center text-slate-300">Peak visible in top middle</div>
+            `,
+            footer: "Press [2nd] -> [TRACE]"
+          },
+          {
+            title: "Step 3: Select Maximum Tool",
+            desc: "Press [2nd] -> [TRACE] (CALC) and select 4:maximum.",
+            targetKey: "[TRACE]",
+            status: "CALCULATE MENU",
+            lcd: `
+              <div>1: value</div>
+              <div>2: zero</div>
+              <div>3: minimum</div>
+              <div class="bg-blue-600 text-white px-1">4: maximum</div>
+              <div>5: intersect</div>
+            `,
+            footer: "Select option 4"
+          },
+          {
+            title: "Step 4: Set Bounds & Find Peak",
+            desc: "Set Left Bound, Right Bound, press [ENTER]. Output gives vertex height.",
+            targetKey: "[ENTER]",
+            status: "MAXIMUM SOLVED",
+            lcd: `
+              <div class="text-xs pt-2">Maximum</div>
+              <div class="text-emerald-400 font-bold text-sm">X=3            Y=8</div>
+            `,
+            footer: "Max Height = 8"
+          }
+        ]
+      },
+      4: {
+        badge: "Module 4",
+        concept: "1-Var Statistics & Frequency Tables",
+        problem: "Find mean score: Scores [70, 80, 90, 100] with frequencies [4, 8, 12, 2].",
+        manualTricky: "Manual weighted average formula leads to simple key-in errors under test stress.",
+        evoShortcut: "Enter scores in List L1, frequencies in List L2, then run 1-Var Stats L1, L2.",
+        accordion: "1-Var Stats automatically outputs Mean (x̄), Median (Med), and Sum (Σx) simultaneously.",
+        steps: [
+          {
+            title: "Step 1: Open Stat Editor",
+            desc: "Press [STAT] and select 1: Edit...",
+            targetKey: "[STAT]",
+            status: "STAT LIST EDITOR",
+            lcd: `
+              <div class="grid grid-cols-3 font-bold border-b border-white/20">
+                <div>L1</div><div>L2</div><div>L3</div>
+              </div>
+              <div class="grid grid-cols-3 text-xs">
+                <div>70</div><div>4</div><div>--</div>
+                <div>80</div><div>8</div><div>--</div>
+                <div>90</div><div>12</div><div>--</div>
+                <div>100</div><div>2</div><div>--</div>
+              </div>
+            `,
+            footer: "Enter L1 (Scores) & L2 (Freq)"
+          },
+          {
+            title: "Step 2: Navigate to Stat Calc",
+            desc: "Press [STAT], arrow right to CALC tab.",
+            targetKey: "[STAT]",
+            status: "STAT CALC MENU",
+            lcd: `
+              <div class="font-bold border-b border-white/20">EDIT  <span class="bg-blue-600 px-1 text-white">CALC</span>  TESTS</div>
+              <div class="bg-blue-600 text-white px-1 mt-1">1: 1-Var Stats</div>
+              <div>2: 2-Var Stats</div>
+            `,
+            footer: "Select 1-Var Stats"
+          },
+          {
+            title: "Step 3: Configure Lists",
+            desc: "Set List: L1 and FreqList: L2 (press [2nd] -> [2]).",
+            targetKey: "[2nd] + [2]",
+            status: "1-VAR STATS SETUP",
+            lcd: `
+              <div>List: <span class="text-white">L1</span></div>
+              <div>FreqList: <span class="text-white">L2</span></div>
+              <div class="bg-blue-600 text-white px-2 mt-2 inline-block">Calculate</div>
+            `,
+            footer: "Highlight Calculate & [ENTER]"
+          },
+          {
+            title: "Step 4: View Output Statistics",
+            desc: "Instant readout for Mean (x̄ = 83.85) and Median (Med = 85).",
+            targetKey: "[ENTER]",
+            status: "STAT RESULTS",
+            lcd: `
+              <div class="text-xs font-bold text-amber-300">1-Var Stats</div>
+              <div class="text-emerald-400 font-bold">x̄ = 83.846</div>
+              <div>Σx = 2180</div>
+              <div>n = 26</div>
+              <div class="text-emerald-400 font-bold">Med = 85</div>
+            `,
+            footer: "Mean = 83.85"
+          }
+        ]
+      }
+    };
+
+    // State Variables
+    let currentModule = 1;
+    let currentStep = 0;
+
+    // Load Module Function
+    function selectModule(modNum) {
+      currentModule = modNum;
+      currentStep = 0;
+
+      // Update Tabs styling
+      document.querySelectorAll('.mod-tab').forEach((tab, index) => {
+        if (index + 1 === modNum) {
+          tab.className = "mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap bg-white dark:bg-slate-800 shadow-sm text-blue-600 dark:text-blue-400";
+        } else {
+          tab.className = "mod-tab px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
         }
+      });
 
-        // 3. SPEED COMPARISON CANVAS
-        let speedProgress = 0;
-        function restartSpeedSim() {
-            speedProgress = 0;
-        }
+      const data = modulesData[modNum];
+      document.getElementById('moduleBadge').innerText = data.badge;
+      document.getElementById('moduleConcept').innerText = data.concept;
+      document.getElementById('problemText').innerHTML = data.problem;
+      document.getElementById('manualTrickyText').innerText = data.manualTricky;
+      document.getElementById('evoShortcutText').innerText = data.evoShortcut;
+      document.getElementById('accordionContent').innerText = data.accordion;
+      document.getElementById('totalStepsNum').innerText = data.steps.length;
 
-        function initSpeedComparisonCanvas() {
-            const canvasOld = document.getElementById('canvasSpeedOld');
-            const canvasEvo = document.getElementById('canvasSpeedEvo');
-            if (!canvasOld || !canvasEvo) return;
+      renderStep();
+    }
 
-            const ctxOld = canvasOld.getContext('2d');
-            const ctxEvo = canvasEvo.getContext('2d');
+    // Render Current Step Data to UI & LCD
+    function renderStep() {
+      const data = modulesData[currentModule];
+      const step = data.steps[currentStep];
 
-            function render() {
-                if (speedProgress < 100) speedProgress += 0.8;
+      // Update Step Controls & Text
+      document.getElementById('currentStepNum').innerText = currentStep + 1;
+      document.getElementById('stepTitle').innerText = step.title;
+      document.getElementById('stepDesc').innerText = step.desc;
+      document.getElementById('targetKeyDisplay').innerText = step.targetKey;
 
-                [ { ctx: ctxOld, c: canvasOld, speedMult: 0.35, title: 'Old Processor' },
-                  { ctx: ctxEvo, c: canvasEvo, speedMult: 1.0, title: 'Evo Turbo Engine' }
-                ].forEach(item => {
-                    const ctx = item.ctx;
-                    const c = item.c;
-                    c.width = c.clientWidth;
-                    c.height = c.clientHeight;
-                    const w = c.width;
-                    const h = c.height;
+      // Update LCD Screen UI
+      document.getElementById('lcdStatusMode').innerText = step.status;
+      document.getElementById('lcdStepIndicator').innerText = `STEP ${currentStep + 1}/${data.steps.length}`;
+      document.getElementById('lcdContent').innerHTML = step.lcd;
+      document.getElementById('lcdFooter').innerText = step.footer;
 
-                    ctx.clearRect(0, 0, w, h);
-                    ctx.fillStyle = '#14201D';
-                    ctx.fillRect(0, 0, w, h);
+      // Disable/Enable Nav Buttons
+      document.getElementById('prevStepBtn').disabled = (currentStep === 0);
+      
+      const nextBtn = document.getElementById('nextStepBtn');
+      if (currentStep === data.steps.length - 1) {
+        nextBtn.innerHTML = `Restart <i class="fa-solid fa-rotate-right"></i>`;
+      } else {
+        nextBtn.innerHTML = `Next <i class="fa-solid fa-arrow-right"></i>`;
+      }
+    }
 
-                    // Axes
-                    ctx.strokeStyle = '#243A34';
-                    ctx.beginPath();
-                    ctx.moveTo(0, h/2); ctx.lineTo(w, h/2);
-                    ctx.moveTo(w/2, 0); ctx.lineTo(w/2, h);
-                    ctx.stroke();
+    // Next Step
+    function nextStep() {
+      const data = modulesData[currentModule];
+      if (currentStep < data.steps.length - 1) {
+        currentStep++;
+      } else {
+        currentStep = 0; // Loop back
+      }
+      renderStep();
+    }
 
-                    // Plot Curve with progress
-                    const currentDrawX = Math.min(w, (speedProgress * item.speedMult) * (w / 35));
+    // Prev Step
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        renderStep();
+      }
+    }
 
-                    ctx.strokeStyle = item.speedMult > 0.5 ? '#10B981' : '#F59E0B';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    for (let x = 0; x < currentDrawX; x += 2) {
-                        const mathX = (x - w/2) / 15;
-                        const mathY = Math.sin(mathX) * Math.cos(mathX * 0.5);
-                        const canvasY = h/2 - (mathY * 40);
-                        if (x === 0) ctx.moveTo(x, canvasY);
-                        else ctx.lineTo(x, canvasY);
-                    }
-                    ctx.stroke();
-                });
+    // Handle Keypad Click Simulation
+    function virtualKeyPress(keyName) {
+      const data = modulesData[currentModule];
+      const step = data.steps[currentStep];
 
-                // Update text indicators
-                const tOld = document.getElementById('speedTimeOld');
-                const tEvo = document.getElementById('speedTimeEvo');
-                if (tOld && tEvo) {
-                    if (speedProgress < 35) {
-                        tOld.innerText = `Plotting... ${(speedProgress*0.08).toFixed(2)}s`;
-                        tEvo.innerText = `DONE! 0.12s`;
-                    } else {
-                        tOld.innerText = `Completed in 0.98s`;
-                        tEvo.innerText = `Completed in 0.12s (8x faster!)`;
-                    }
-                }
+      // Simple visual feedback when clicking simulator keys
+      if (step.targetKey.includes(keyName)) {
+        nextStep();
+      }
+    }
 
-                requestAnimationFrame(render);
-            }
-            render();
-        }
+    // Accordion Toggle
+    function toggleAccordion() {
+      const content = document.getElementById('accordionContent');
+      const icon = document.getElementById('accordionIcon');
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        content.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
 
-        // 4. FRACTION TOGGLE INTERACTIVE CANVAS
-        let fracState = 0; // 0: Decimal, 1: Fraction, 2: Mixed
-        function triggerFracToggle() {
-            fracState = (fracState + 1) % 3;
-            playClickSound();
-        }
-
-        function initFracToggleCanvas() {
-            const canvas = document.getElementById('canvasFracToggle');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-
-            function render() {
-                canvas.width = canvas.clientWidth;
-                canvas.height = canvas.clientHeight;
-                const w = canvas.width;
-                const h = canvas.height;
-
-                ctx.fillStyle = '#14201D';
-                ctx.fillRect(0, 0, w, h);
-
-                ctx.font = '12px JetBrains Mono';
-                ctx.fillStyle = '#64748B';
-                ctx.fillText('EXPRESSION: 17 / 5', 15, 30);
-
-                ctx.font = '14px JetBrains Mono';
-                ctx.fillStyle = '#94A3B8';
-                ctx.fillText('OUTPUT MODE:', 15, 65);
-
-                // Highlight display box
-                ctx.fillStyle = '#1E322C';
-                ctx.strokeStyle = '#10B981';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.roundRect(15, 80, w - 30, 80, 10);
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.fillStyle = '#34D399';
-                ctx.font = 'bold 22px JetBrains Mono';
-                ctx.textAlign = 'right';
-
-                if (fracState === 0) {
-                    ctx.fillText('3.4', w - 35, 128);
-                    ctx.font = '10px Inter';
-                    ctx.fillStyle = '#A7F3D0';
-                    ctx.fillText('[Decimal Format]', w - 35, 148);
-                } else if (fracState === 1) {
-                    // Improper Fraction
-                    ctx.fillText('17 / 5', w - 35, 128);
-                    ctx.font = '10px Inter';
-                    ctx.fillStyle = '#A7F3D0';
-                    ctx.fillText('[Improper Fraction]', w - 35, 148);
-                } else {
-                    // Mixed fraction
-                    ctx.fillText('3 4/5', w - 35, 128);
-                    ctx.font = '10px Inter';
-                    ctx.fillStyle = '#A7F3D0';
-                    ctx.fillText('[Mixed Number]', w - 35, 148);
-                }
-
-                ctx.textAlign = 'left';
-                requestAnimationFrame(render);
-            }
-            render();
-        }
-
-        // 5. AUTO-TRACE CANVAS
-        function initAutoTraceCanvas() {
-            const canvas = document.getElementById('canvasAutoTrace');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let cursorX = 0;
-
-            function render() {
-                canvas.width = canvas.clientWidth;
-                canvas.height = canvas.clientHeight;
-                const w = canvas.width;
-                const h = canvas.height;
-
-                ctx.fillStyle = '#14201D';
-                ctx.fillRect(0, 0, w, h);
-
-                // Axes
-                ctx.strokeStyle = '#253A34';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(0, h/2 + 20); ctx.lineTo(w, h/2 + 20);
-                ctx.moveTo(w/2, 0); ctx.lineTo(w/2, h);
-                ctx.stroke();
-
-                // Parabola y = (x-2)^2 - 3
-                ctx.strokeStyle = '#38BDF8';
-                ctx.lineWidth = 2.5;
-                ctx.beginPath();
-                for (let x = 0; x < w; x++) {
-                    const mathX = (x - w/2) / 25;
-                    const mathY = Math.pow(mathX - 0.5, 2) - 2;
-                    const canvasY = (h/2 + 20) - (mathY * 25);
-                    if (x === 0) ctx.moveTo(x, canvasY);
-                    else ctx.lineTo(x, canvasY);
-                }
-                ctx.stroke();
-
-                // Moving Trace Cursor
-                cursorX = (cursorX + 1) % w;
-                const mathX = (cursorX - w/2) / 25;
-                const mathY = Math.pow(mathX - 0.5, 2) - 2;
-                const cursorY = (h/2 + 20) - (mathY * 25);
-
-                // Draw Cursor crosshair
-                ctx.strokeStyle = '#F43F5E';
-                ctx.lineWidth = 1.5;
-                ctx.beginPath();
-                ctx.arc(cursorX, cursorY, 6, 0, Math.PI * 2);
-                ctx.stroke();
-
-                // Check key points (Minimum)
-                const minX = w/2 + (0.5 * 25);
-                if (Math.abs(cursorX - minX) < 15) {
-                    ctx.fillStyle = '#10B981';
-                    ctx.font = 'bold 10px JetBrains Mono';
-                    ctx.fillText('MINIMUM (0.5, -2.0)', cursorX + 10, cursorY - 10);
-                } else {
-                    ctx.fillStyle = '#94A3B8';
-                    ctx.font = '10px JetBrains Mono';
-                    ctx.fillText(`X:${mathX.toFixed(2)} Y:${mathY.toFixed(2)}`, 15, h - 12);
-                }
-
-                requestAnimationFrame(render);
-            }
-            render();
-        }
-
-        // 6. PYTHON CODE TERMINAL SIMULATOR
-        function initPythonCanvas() {
-            const canvas = document.getElementById('canvasPython');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-
-            const codeLines = [
-                "# TI-84 Evo Python Terminal",
-                "import math",
-                "",
-                "def quadratic_root(a, b, c):",
-                "    disc = b**2 - 4*a*c",
-                "    return (-b + math.sqrt(disc)) / (2*a)",
-                "",
-                "print('Root:', quadratic_root(1, -5, 6))",
-                ">>> Root: 3.0"
-            ];
-
-            let lineIdx = 0;
-            let charIdx = 0;
-
-            setInterval(() => {
-                if (lineIdx < codeLines.length) {
-                    if (charIdx < codeLines[lineIdx].length) {
-                        charIdx++;
-                    } else {
-                        lineIdx++;
-                        charIdx = 0;
-                    }
-                } else {
-                    lineIdx = 0;
-                    charIdx = 0;
-                }
-            }, 80);
-
-            function render() {
-                canvas.width = canvas.clientWidth;
-                canvas.height = canvas.clientHeight;
-                const w = canvas.width;
-                const h = canvas.height;
-
-                ctx.fillStyle = '#0F172A';
-                ctx.fillRect(0, 0, w, h);
-
-                ctx.font = '11px JetBrains Mono';
-
-                for (let i = 0; i <= lineIdx; i++) {
-                    const text = (i === lineIdx) ? codeLines[i].substring(0, charIdx) : codeLines[i];
-                    ctx.fillStyle = text.startsWith('#') ? '#64748B' : text.startsWith('>>>') ? '#10B981' : '#E2E8F0';
-                    ctx.fillText(text, 15, 25 + (i * 20));
-                }
-
-                requestAnimationFrame(render);
-            }
-            render();
-        }
-
-        // 7. USB-C CHARGING CANVAS
-        function initUsbCCanvas() {
-            const canvas = document.getElementById('canvasUsbC');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let chargeVal = 20;
-
-            function render() {
-                canvas.width = canvas.clientWidth;
-                canvas.height = canvas.clientHeight;
-                const w = canvas.width;
-                const h = canvas.height;
-
-                ctx.fillStyle = '#14201D';
-                ctx.fillRect(0, 0, w, h);
-
-                // Battery Frame
-                ctx.strokeStyle = '#334155';
-                ctx.lineWidth = 4;
-                ctx.beginPath();
-                ctx.roundRect(w/2 - 80, h/2 - 35, 160, 70, 10);
-                ctx.stroke();
-
-                // Battery Cap
-                ctx.fillStyle = '#334155';
-                ctx.fillRect(w/2 + 82, h/2 - 12, 10, 24);
-
-                // Charge Level
-                chargeVal = (chargeVal + 0.4) % 100;
-                ctx.fillStyle = chargeVal > 80 ? '#10B981' : '#F59E0B';
-                ctx.fillRect(w/2 - 74, h/2 - 29, (148 * (chargeVal/100)), 58);
-
-                // Text
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = 'bold 14px JetBrains Mono';
-                ctx.textAlign = 'center';
-                ctx.fillText(`USB-C FAST CHARGE: ${Math.floor(chargeVal)}%`, w/2, h/2 + 6);
-
-                ctx.textAlign = 'left';
-                requestAnimationFrame(render);
-            }
-            render();
-        }
-
-        // ================= FULL SIMULATOR KEYPAD LOGIC =================
-        let simMode = 'HOME'; // 'HOME', 'GRAPH', 'CALC'
-        let simExpr = '';
-        let simResult = '';
-
-        function simPressKey(key) {
-            playClickSound();
-
-            if (key === 'HOME') {
-                simMode = 'HOME';
-                simExpr = '';
-                simResult = '';
-            } else if (key === 'GRAPH' || key === 'Y=') {
-                simMode = 'GRAPH';
-            } else if (key === 'TOGGLE') {
-                triggerFracToggle();
-            } else if (key === 'CLEAR') {
-                simExpr = '';
-                simResult = '';
-            } else if (key === 'ENTER') {
-                simMode = 'CALC';
-                try {
-                    // Safe basic math evaluator
-                    const cleanExpr = simExpr.replace(/×/g, '*').replace(/÷/g, '/');
-                    simResult = eval(cleanExpr).toString();
-                } catch (e) {
-                    simResult = 'Syntax Error';
-                }
-            } else if (['0','1','2','3','4','5','6','7','8','9','.','+','-','*','/'].includes(key)) {
-                simMode = 'CALC';
-                simExpr += key;
-            }
-
-            renderSimCanvas();
-        }
-
-        function initSimCanvas() {
-            renderSimCanvas();
-        }
-
-        function renderSimCanvas() {
-            const canvas = document.getElementById('simCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            canvas.width = canvas.clientWidth;
-            canvas.height = canvas.clientHeight;
-            const w = canvas.width;
-            const h = canvas.height;
-
-            ctx.fillStyle = '#121E1B';
-            ctx.fillRect(0, 0, w, h);
-
-            if (simMode === 'HOME') {
-                // Render Icon Dashboard
-                ctx.fillStyle = '#1E322C';
-                ctx.fillRect(10, 10, w - 20, 50);
-                ctx.fillStyle = '#34D399';
-                ctx.font = 'bold 12px Inter';
-                ctx.fillText('TI-84 Evo Main Apps', 20, 30);
-                ctx.font = '10px Inter';
-                ctx.fillStyle = '#94A3B8';
-                ctx.fillText('Press [GRAPH] or type numbers to start', 20, 48);
-
-                // Grid Mockup
-                ctx.fillStyle = '#1A2C27';
-                ctx.roundRect(20, 80, 60, 50, 6); ctx.fill();
-                ctx.roundRect(95, 80, 60, 50, 6); ctx.fill();
-                ctx.roundRect(170, 80, 60, 50, 6); ctx.fill();
-
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = '20px sans-serif';
-                ctx.fillText('📈', 38, 112);
-                ctx.fillText('🧮', 113, 112);
-                ctx.fillText('🐍', 188, 112);
-            } else if (simMode === 'GRAPH') {
-                // Axes
-                ctx.strokeStyle = '#253A34';
-                ctx.beginPath();
-                ctx.moveTo(0, h/2); ctx.lineTo(w, h/2);
-                ctx.moveTo(w/2, 0); ctx.lineTo(w/2, h);
-                ctx.stroke();
-
-                // Parabola
-                ctx.strokeStyle = '#38BDF8';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                for (let x = 0; x < w; x++) {
-                    const mathX = (x - w/2) / 15;
-                    const mathY = Math.sin(mathX);
-                    const canvasY = h/2 - (mathY * 30);
-                    if (x === 0) ctx.moveTo(x, canvasY);
-                    else ctx.lineTo(x, canvasY);
-                }
-                ctx.stroke();
-
-                ctx.fillStyle = '#10B981';
-                ctx.font = '10px JetBrains Mono';
-                ctx.fillText('y1 = sin(x)', 10, 20);
-            } else if (simMode === 'CALC') {
-                ctx.font = '14px JetBrains Mono';
-                ctx.fillStyle = '#94A3B8';
-                ctx.fillText(simExpr || '0', 15, 40);
-
-                if (simResult !== '') {
-                    ctx.font = 'bold 18px JetBrains Mono';
-                    ctx.fillStyle = '#34D399';
-                    ctx.textAlign = 'right';
-
-                    if (fracState === 1 && !isNaN(simResult)) {
-                        const num = parseFloat(simResult);
-                        ctx.fillText(`${Math.round(num * 100)} / 100`, w - 15, 100);
-                    } else {
-                        ctx.fillText(simResult, w - 15, 100);
-                    }
-                    ctx.textAlign = 'left';
-                }
-            }
-        }
-    </script>
+    // Initialize Page
+    window.onload = function() {
+      selectModule(1);
+    };
+  </script>
 </body>
 </html>
