@@ -1,672 +1,767 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAT Math TI-84 Evo 100+ Master Problem Bank</title>
-  <!-- Tailwind CSS CDN -->
+  <title>SAT Math 1000 & TI-84 Evo Master Suite</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Inter & JetBrains Mono Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            brand: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-              800: '#1e40af',
-              900: '#1e3a8a',
-            }
-          }
-        }
-      }
-    }
-  </script>
   <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
-    .dark ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    .dark ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+    }
 
-    /* LCD Screen Display Formatting */
-    .lcd-display {
-      background-color: #1a2216;
-      color: #a3e635;
-      font-family: 'JetBrains Mono', monospace;
-      position: relative;
-      overflow: hidden;
-      box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
-      border: 2px solid #334155;
+    .lcd-screen {
+      font-family: 'Fira Code', monospace;
+      background: linear-gradient(135deg, #121c17 0%, #0d1612 100%);
+      color: #3bf6a8;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 15px rgba(59,246,168,0.1);
+      border: 2px solid #224433;
+      text-shadow: 0 0 2px rgba(59,246,168,0.6);
     }
-    .light .lcd-display {
-      background-color: #8c9b70;
-      color: #0f170d;
-      border: 2px solid #94a3b8;
+
+    .key-badge {
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+      box-shadow: 0 2px 0 #0f172a, inset 0 1px 0 rgba(255,255,255,0.1);
     }
-    .lcd-display::before {
-      content: " ";
-      display: block;
-      position: absolute;
-      top: 0; left: 0; bottom: 0; right: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%);
-      background-size: 100% 4px;
-      z-index: 2;
-      pointer-events: none;
+
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
     }
   </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
+<body class="h-full flex flex-col overflow-hidden bg-slate-950 text-slate-100">
 
-  <!-- TOP HEADER & NAVBAR -->
-  <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-black text-lg shadow-md shadow-blue-500/20">
-          TI
-        </div>
-        <div>
-          <h1 class="font-bold text-lg leading-none tracking-tight">TI-84 <span class="text-blue-600 dark:text-blue-400">Evo</span> 100+ SAT Bank</h1>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Complete Digital SAT Math Calculator Blueprint</p>
-        </div>
+  <!-- Header -->
+  <header class="bg-slate-900 border-b border-slate-800 shrink-0 px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center space-x-3">
+      <div class="bg-gradient-to-tr from-cyan-600 to-emerald-500 text-white p-2 rounded-xl shadow-lg shadow-cyan-500/20">
+        <i class="fa-solid fa-calculator text-xl sm:text-2xl"></i>
       </div>
+      <div>
+        <h1 class="font-bold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+          SAT Math 1,000 <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 font-mono border border-cyan-500/30">TI-84 Evo Edition</span>
+        </h1>
+        <p class="text-xs text-slate-400 hidden sm:block">Step-by-step calculator shortcuts & simulated screen outputs</p>
+      </div>
+    </div>
 
-      <!-- Controls & Quiz Mode Toggle -->
-      <div class="flex items-center space-x-3">
-        <button id="quizModeBtn" onclick="toggleQuizMode()" class="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition flex items-center gap-1.5">
-          <i class="fa-solid fa-eye-slash text-amber-500"></i>
-          <span id="quizModeLabel">Practice Mode: Off</span>
-        </button>
-        <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
-          <i class="fa-solid fa-moon dark:hidden"></i>
-          <i class="fa-solid fa-sun hidden dark:inline"></i>
-        </button>
-      </div>
+    <!-- Quick Stats / Controls -->
+    <div class="flex items-center space-x-3 text-sm">
+      <button id="quiz-toggle-btn" onclick="toggleQuizMode()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-2">
+        <i class="fa-solid fa-eye-slash text-cyan-400" id="quiz-icon"></i>
+        <span id="quiz-btn-text" class="hidden sm:inline">Quiz Mode: OFF</span>
+      </button>
+
+      <button id="favorites-toggle-btn" onclick="toggleFavoritesFilter()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-2">
+        <i class="fa-solid fa-bookmark text-amber-400"></i>
+        <span>Saved (<span id="fav-count">0</span>)</span>
+      </button>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-
-    <!-- HERO DASHBOARD STATS -->
-    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg">
-          <i class="fa-solid fa-arrow-trend-up"></i>
-        </div>
-        <div>
-          <div class="text-xs text-slate-400 uppercase font-semibold">Total Bank</div>
-          <div class="text-xl font-extrabold" id="statTotal">100 Problems</div>
-        </div>
+  <!-- Main Toolbar & Filters -->
+  <div class="bg-slate-900/60 border-b border-slate-800/80 p-3 sm:p-4 shrink-0 backdrop-blur">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
+      
+      <!-- Search Input -->
+      <div class="relative flex-1">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+        <input 
+          type="text" 
+          id="search-input" 
+          placeholder="Search 1,000 problems by keyword, equation, domain, or calculator trick..." 
+          class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition"
+          oninput="handleFilterChange()"
+        />
       </div>
 
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">
-          <i class="fa-solid fa-square-root-variable"></i>
-        </div>
-        <div>
-          <div class="text-xs text-slate-400 uppercase font-semibold">Algebra & Adv.</div>
-          <div class="text-xl font-extrabold">60 Problems</div>
-        </div>
-      </div>
+      <!-- Filters & Jump to # -->
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+        
+        <!-- Domain Select -->
+        <select id="domain-select" onchange="handleFilterChange()" class="bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-500">
+          <option value="ALL">All Domains (4)</option>
+          <option value="Algebra">Algebra</option>
+          <option value="Advanced Math">Advanced Math</option>
+          <option value="Problem Solving & Data Analysis">Data Analysis</option>
+          <option value="Geometry & Trigonometry">Geometry & Trig</option>
+        </select>
 
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-lg">
-          <i class="fa-solid fa-chart-pie"></i>
-        </div>
-        <div>
-          <div class="text-xs text-slate-400 uppercase font-semibold">Data Analysis</div>
-          <div class="text-xl font-extrabold">25 Problems</div>
-        </div>
-      </div>
+        <!-- TI-84 Feature Select -->
+        <select id="feature-select" onchange="handleFilterChange()" class="bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-500">
+          <option value="ALL">All TI-84 Features</option>
+          <option value="[Y=] Graph Intersect">[Y=] Graph Intersect</option>
+          <option value="Table Trick [2nd][GRAPH]">Table Match [2nd][GRAPH]</option>
+          <option value="PolySmlt2 / Poly Root">PolySmlt2 / Root Finder</option>
+          <option value="System Solver [APPS]">System Solver [APPS]</option>
+          <option value="1-Var Stats [STAT]">1-Var Stats [STAT]</option>
+          <option value="LinReg (ax+b) [STAT]">LinReg (ax+b) [STAT]</option>
+          <option value="Solver App [MATH]">Solver App [MATH]</option>
+          <option value="Fraction Toggle [MATH][1]">Fraction Toggle [MATH][1]</option>
+        </select>
 
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold text-lg">
-          <i class="fa-solid fa-shapes"></i>
-        </div>
-        <div>
-          <div class="text-xs text-slate-400 uppercase font-semibold">Geometry & Trig</div>
-          <div class="text-xl font-extrabold">15 Problems</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FILTERS AND SEARCH TOOLBAR -->
-    <section class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <!-- Search Bar -->
-        <div class="relative flex-1">
-          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-          <input type="text" id="searchInput" oninput="filterProblems()" placeholder="Search 100+ problems by topic, equation, or keyword (e.g. 'intersect', 'circle', 'quadratic', '1-Var Stats')..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border-none text-sm focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100">
+        <!-- Jump to Problem # -->
+        <div class="flex items-center gap-1 bg-slate-950 border border-slate-800 rounded-xl px-2 py-1">
+          <span class="text-xs text-slate-500 pl-1">#</span>
+          <input 
+            type="number" 
+            id="jump-input" 
+            placeholder="1-1000" 
+            min="1" 
+            max="1000" 
+            class="w-16 bg-transparent text-slate-200 text-xs sm:text-sm focus:outline-none py-1"
+            onkeypress="if(event.key==='Enter') jumpToProblem()"
+          />
+          <button onclick="jumpToProblem()" class="px-2 py-1 bg-cyan-600/30 hover:bg-cyan-600/50 text-cyan-300 rounded-lg text-xs font-medium transition">
+            Go
+          </button>
         </div>
 
-        <!-- TI Feature Selector -->
-        <div class="flex items-center gap-2">
-          <span class="text-xs font-semibold text-slate-400 whitespace-nowrap"><i class="fa-solid fa-microchip mr-1"></i>TI Feature:</span>
-          <select id="featureFilter" onchange="filterProblems()" class="bg-slate-100 dark:bg-slate-800 text-xs font-medium rounded-xl px-3 py-2.5 border-none text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-blue-500">
-            <option value="ALL">All Features</option>
-            <option value="GRAPH">Graphing & Intersect</option>
-            <option value="TABLE">Table Trick</option>
-            <option value="STAT">1-Var / 2-Var Stats</option>
-            <option value="SOLVER">Poly Roots / Equation Solver</option>
-            <option value="MATRIX">Matrix / Linear Systems</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Domain Category Tabs -->
-      <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-        <button onclick="setDomain('ALL')" id="domain-tab-ALL" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm">
-          All Domains (100)
-        </button>
-        <button onclick="setDomain('Algebra')" id="domain-tab-Algebra" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
-          1. Algebra (30)
-        </button>
-        <button onclick="setDomain('Advanced Math')" id="domain-tab-Advanced Math" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
-          2. Advanced Math (30)
-        </button>
-        <button onclick="setDomain('Data Analysis')" id="domain-tab-Data Analysis" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
-          3. Problem Solving & Data (25)
-        </button>
-        <button onclick="setDomain('Geometry')" id="domain-tab-Geometry" class="domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
-          4. Geometry & Trig (15)
-        </button>
-      </div>
-    </section>
-
-    <!-- PROBLEMS CONTAINER GRID -->
-    <section id="problemsContainer" class="space-y-6">
-      <!-- Dynamically populated via JS -->
-    </section>
-
-    <!-- PAGINATION / SHOW MORE CONTROLS -->
-    <div id="paginationBox" class="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
-      <span id="showingCountText" class="text-slate-500">Showing 10 of 100 problems</span>
-      <div class="flex gap-2">
-        <button onclick="loadMoreProblems()" id="loadMoreBtn" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition shadow-sm">
-          Load Next 10 Problems <i class="fa-solid fa-angles-down ml-1"></i>
-        </button>
-        <button onclick="showAllProblems()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition">
-          Show All 100
-        </button>
       </div>
     </div>
+  </div>
 
+  <!-- Content Container (Scrollable) -->
+  <main id="scroll-container" class="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-950">
+    <div class="max-w-7xl mx-auto space-y-6">
+      
+      <!-- Results Status Bar -->
+      <div class="flex items-center justify-between text-xs sm:text-sm text-slate-400 border-b border-slate-800/60 pb-3">
+        <div>
+          Showing <span id="showing-count" class="font-semibold text-slate-200">0</span> of <span id="total-matching-count" class="font-semibold text-slate-200">1,000</span> matched problems
+        </div>
+        <div id="page-indicator" class="font-mono text-cyan-400">
+          Page 1
+        </div>
+      </div>
+
+      <!-- Problem Cards List -->
+      <div id="problem-list" class="space-y-6">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Pagination / Load More Controls -->
+      <div id="pagination-container" class="pt-6 pb-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-800">
+        <button id="prev-btn" onclick="changePage(-1)" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-arrow-left text-xs"></i> Previous Page
+        </button>
+
+        <div id="page-buttons" class="flex items-center gap-1.5 flex-wrap justify-center">
+          <!-- Page numbers injected here -->
+        </div>
+
+        <button id="next-btn" onclick="changePage(1)" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center justify-center gap-2">
+          Next Page <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </div>
+
+    </div>
   </main>
 
-  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-6 mt-12">
-    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 dark:text-slate-400">
-      TI-84 Evo SAT Math Master Problem Bank &bull; 100+ Interactive Solutions & Screen Simulations
-    </div>
-  </footer>
-
-  <!-- COMPREHENSIVE DATA STORE & GENERATOR SCRIPT -->
+  <!-- JavaScript Logic -->
   <script>
-    // System Theme Toggle
-    function toggleTheme() {
-      const html = document.documentElement;
-      html.classList.toggle('dark');
+    // Global App State
+    let quizMode = false;
+    let favoritesOnly = false;
+    let favorites = new Set(JSON.parse(localStorage.getItem('sat_math_favs') || '[]'));
+    let selectedAnswers = {}; // user selected answers in quiz mode
+
+    let currentPage = 1;
+    const pageSize = 20;
+    let filteredIndices = []; // Stores matching problem indices (0 - 999)
+
+    // Domain and Feature definitions for generator
+    const DOMAINS = [
+      "Algebra",
+      "Advanced Math",
+      "Problem Solving & Data Analysis",
+      "Geometry & Trigonometry"
+    ];
+
+    const FEATURES = [
+      "[Y=] Graph Intersect",
+      "Table Trick [2nd][GRAPH]",
+      "PolySmlt2 / Poly Root",
+      "System Solver [APPS]",
+      "1-Var Stats [STAT]",
+      "LinReg (ax+b) [STAT]",
+      "Solver App [MATH]",
+      "Fraction Toggle [MATH][1]"
+    ];
+
+    // Seeded Pseudo-Random Generator for fast deterministic problem generation
+    function pseudoRandom(seed) {
+      let x = Math.sin(seed++) * 10000;
+      return x - Math.floor(x);
     }
 
-    // Quiz Mode Toggle State
-    let quizModeActive = false;
-    function toggleQuizMode() {
-      quizModeActive = !quizModeActive;
-      const label = document.getElementById('quizModeLabel');
-      label.innerText = quizModeActive ? "Practice Mode: ON (Hidden)" : "Practice Mode: OFF";
-      renderVisibleProblems();
-    }
+    // Generator function that builds problem item #i on the fly without heavy memory overhead
+    function getProblem(id) {
+      const seed = id * 1337 + 42;
+      const r = (offset = 0) => pseudoRandom(seed + offset);
 
-    // 100+ MASTER PROBLEM GENERATOR FACTORY
-    const domains = {
-      Algebra: "Algebra",
-      AdvMath: "Advanced Math",
-      Data: "Data Analysis",
-      Geom: "Geometry"
-    };
+      const domainIndex = Math.floor(r(1) * DOMAINS.length);
+      const domain = DOMAINS[domainIndex];
+      const featureIndex = Math.floor(r(2) * FEATURES.length);
+      const feature = FEATURES[featureIndex];
 
-    function generate100Problems() {
-      const list = [];
-      let id = 1;
+      let statement = "";
+      let options = [];
+      let correctIdx = Math.floor(r(3) * 4);
+      let keypressSteps = [];
+      let lcdOutput = "";
+      let explanation = "";
 
-      // --- DOMAIN 1: ALGEBRA (30 Problems) ---
-      for (let i = 1; i <= 30; i++) {
-        let title, prompt, options, correct, manual, keypress, feature, lcdDisplay, tip;
+      // Generator logic tailored per feature & domain
+      switch (feature) {
+        case "[Y=] Graph Intersect": {
+          const a = Math.floor(r(4) * 8) + 2;
+          const b = Math.floor(r(5) * 15) + 1;
+          const target = a * 3 + b;
+          statement = `If $f(x) = ${a}x + ${b}$ and $g(x) = 2x + ${b + 3}$, what is the x-coordinate of the intersection point of the two lines?`;
+          
+          const correctVal = 3;
+          options = [
+            `x = ${correctVal - 2}`,
+            `x = ${correctVal}`,
+            `x = ${correctVal + 1}`,
+            `x = ${correctVal + 4}`
+          ];
+          
+          keypressSteps = [
+            `Press [Y=] and enter Y1 = ${a}X + ${b}`,
+            `Enter Y2 = 2X + ${b + 3}`,
+            `Press [2nd] [TRACE] (CALC) -> Select [5: intersect]`,
+            `Press [ENTER] for First curve, [ENTER] for Second curve, [ENTER] for Guess`
+          ];
 
-        if (i === 1) {
-          title = "Linear System Intersection";
-          prompt = "A system of equations is given by 3x + 2y = 12 and x - y = 1. What is the value of x at the intersection?";
-          options = ["A) 2", "B) 2.8", "C) 3", "D) 4"];
-          correct = "B) 2.8";
-          manual = "Solve second equation for x: x = y + 1. Substitute into first: 3(y + 1) + 2y = 12 -> 5y + 3 = 12 -> 5y = 9 -> y = 1.8. Then x = 2.8.";
-          keypress = "[Y=] -> Y1 = (12 - 3X)/2, Y2 = X - 1 -> [GRAPH] -> [2nd] -> [TRACE] -> 5:intersect -> [ENTER] x3.";
-          feature = "GRAPH";
-          lcdDisplay = `<div class="text-amber-300 font-bold mb-1">Intersection</div><div class="text-emerald-400 font-bold">X=2.8            Y=1.8</div>`;
-          tip = "Always isolate Y to quickly graph linear systems in Y= on the TI-84 Evo!";
-        } else if (i === 2) {
-          title = "Absolute Value Inequality Solution Set";
-          prompt = "Which of the following values of x satisfies the inequality |2x - 5| ≤ 9?";
-          options = ["A) -3", "B) -1", "C) 8", "D) 10"];
-          correct = "B) -1";
-          manual = "-9 ≤ 2x - 5 ≤ 9 -> -4 ≤ 2x ≤ 14 -> -2 ≤ x ≤ 7. Among the options, x = -1 is the only value inside [-2, 7].";
-          keypress = "[MATH] -> NUM -> 1:abs -> abs(2X - 5) in Y1, set Y2 = 9. Press [2nd] -> [GRAPH] (TABLE) to test x = -1.";
-          feature = "TABLE";
-          lcdDisplay = `<div class="grid grid-cols-3 text-center border-b border-white/20"><div>X</div><div>Y1</div><div>Y2</div></div><div class="grid grid-cols-3 text-center text-xs"><div>-1</div><div class="text-emerald-400 font-bold">7</div><div>9</div></div>`;
-          tip = "Use the Table View to verify if absolute value expressions evaluate below the target limit.";
-        } else if (i === 3) {
-          title = "Infinite Solutions Linear System";
-          prompt = "For what value of k will the system of equations 4x + 6y = 10 and 2x + ky = 5 have infinitely many solutions?";
-          options = ["A) 2", "B) 3", "C) 4", "D) 6"];
-          correct = "B) 3";
-          manual = "Divide first equation by 2: 2x + 3y = 5. For infinitely many solutions, coefficients must match identically: k = 3.";
-          keypress = "Use Matrix rref: [2nd] -> [MATRIX] -> EDIT [A] (2x3). Row 1: [4, 6, 10], Row 2: [2, 3, 5]. Run rref([A]).";
-          feature = "MATRIX";
-          lcdDisplay = `<div class="text-xs">rref([A])</div><div class="text-emerald-400 font-bold">[ [1  1.5  2.5]<br>  [0  0    0 ] ]</div>`;
-          tip = "When rref produces a row of all zeros [0 0 0], the system has infinitely many solutions!";
-        } else if (i === 4) {
-          title = "Linear Function Table Matching";
-          prompt = "A linear function f(x) passes through (2, 7) and (5, 16). What is f(10)?";
-          options = ["A) 28", "B) 31", "C) 35", "D) 40"];
-          correct = "B) 31";
-          manual = "Slope m = (16 - 7)/(5 - 2) = 9/3 = 3. Equation: y - 7 = 3(x - 2) -> y = 3x + 1. For x = 10: f(10) = 3(10) + 1 = 31.";
-          keypress = "[STAT] -> Edit L1: [2, 5], L2: [7, 16] -> [STAT] -> CALC -> 4:LinReg(ax+b). Output: a=3, b=1 -> Y1=3X+1 -> [TABLE] x=10.";
-          feature = "STAT";
-          lcdDisplay = `<div class="text-amber-300 font-bold">LinReg(ax+b)</div><div>a=3</div><div>b=1</div><div class="text-emerald-400 font-bold">y=3x+1  --> f(10)=31</div>`;
-          tip = "LinReg on 2 points gives you the exact slope and y-intercept in seconds!";
-        } else {
-          // Generic structured algebra problems
-          const aVal = (i % 5) + 2;
-          const bVal = i * 3 + 1;
-          title = `Linear Equation & Slope Analysis #${i}`;
-          prompt = `If ${aVal}x - 4 = ${bVal}, what is the value of ${aVal * 2}x + 1?`;
-          const xSol = (bVal + 4) / aVal;
-          const finalVal = aVal * 2 * xSol + 1;
-          options = [`A) ${finalVal - 5}`, `B) ${finalVal}`, `C) ${finalVal + 4}`, `D) ${finalVal * 2}`];
-          correct = `B) ${finalVal}`;
-          manual = `${aVal}x = ${bVal + 4} -> x = ${xSol}. Then evaluate ${aVal * 2}(${xSol}) + 1 = ${finalVal}.`;
-          keypress = `Input Y1 = ${aVal}X - 4 in [Y=], press [2nd] -> [GRAPH] (TABLE) or use main screen calculation.`;
-          feature = "TABLE";
-          lcdDisplay = `<div class="text-emerald-400 font-bold">X = ${xSol}</div><div>Ans * 2 * ${aVal} + 1 = ${finalVal}</div>`;
-          tip = "Store intermediate x-values using the [STO->] key to evaluate complex expressions quickly.";
+          lcdOutput = `Intersection\nX=3         Y=${a*3+b}`;
+          explanation = `By graphing both equations in Y1 and Y2 and using [2nd][TRACE] -> intersect, the calculator finds the exact intersection point at x = ${correctVal}.`;
+          break;
         }
 
-        list.push({
-          id: id++,
-          domain: domains.Algebra,
-          title: `Algebra: ${title}`,
-          prompt: prompt,
-          options: options,
-          correct: correct,
-          manual: manual,
-          keypress: keypress,
-          feature: feature,
-          lcdDisplay: lcdDisplay,
-          tip: tip
-        });
+        case "Table Trick [2nd][GRAPH]": {
+          const m = Math.floor(r(4) * 5) + 2;
+          const k = Math.floor(r(5) * 10) + 2;
+          statement = `Which of the following functions generates the coordinates $(1, ${m + k})$, $(2, ${2*m + k})$, and $(3, ${3*m + k})$?`;
+          
+          options = [
+            `f(x) = ${m}x + ${k}`,
+            `f(x) = ${m + 1}x + ${k - 1}`,
+            `f(x) = ${m}x^2 + ${k}`,
+            `f(x) = ${2*m}x + ${k}`
+          ];
+
+          keypressSteps = [
+            `Press [Y=] and enter choice A: Y1 = ${m}X + ${k}`,
+            `Press [2nd] [WINDOW] (TBLSET) -> Set TblStart = 1, ΔTbl = 1`,
+            `Press [2nd] [GRAPH] (TABLE) to view outputs`,
+            `Verify that X=1 gives ${m+k}, X=2 gives ${2*m+k}, and X=3 gives ${3*m+k}`
+          ];
+
+          lcdOutput = `X  | Y1\n1  | ${m+k}\n2  | ${2*m+k}\n3  | ${3*m+k}`;
+          explanation = `Using the Table feature [2nd][GRAPH], we can quickly inspect table values for each function option to match the given table data.`;
+          break;
+        }
+
+        case "PolySmlt2 / Poly Root": {
+          const r1 = Math.floor(r(4) * 6) + 1;
+          const r2 = Math.floor(r(5) * 6) + 1;
+          const B = -(r1 + r2);
+          const C = r1 * r2;
+          statement = `What are the real roots of the quadratic equation $x^2 ${B >= 0 ? '+ ' + B : B}x ${C >= 0 ? '+ ' + C : C} = 0$?`;
+
+          options = [
+            `x = ${r1} and x = ${r2}`,
+            `x = -${r1} and x = ${r2 + 1}`,
+            `x = ${r1 + 2} and x = -${r2}`,
+            `x = -${r1} and x = -${r2}`
+          ];
+
+          keypressSteps = [
+            `Press [APPS] -> Select [PlySmlt2]`,
+            `Select [1: Polynomial Root Finder]`,
+            `Set Degree = 2, Real numbers`,
+            `Enter coefficients: a2 = 1, a1 = ${B}, a0 = ${C}`,
+            `Press [SOLVE] (f5 key)`
+          ];
+
+          lcdOutput = `POLY ROOT FINDER\nx1=${r1}\nx2=${r2}`;
+          explanation = `PolySmlt2 instantly solves high-degree polynomials without needing the quadratic formula manually.`;
+          break;
+        }
+
+        case "System Solver [APPS]": {
+          const xVal = Math.floor(r(4) * 5) + 1;
+          const yVal = Math.floor(r(5) * 5) + 2;
+          const eq1_c = xVal + yVal;
+          const eq2_c = 2 * xVal - yVal;
+
+          statement = `Solve the system of equations for $(x, y)$:\n1) $x + y = ${eq1_c}$\n2) $2x - y = ${eq2_c}$`;
+
+          options = [
+            `(${xVal}, ${yVal})`,
+            `(${xVal + 1}, ${yVal - 1})`,
+            `(${xVal - 1}, ${yVal + 2})`,
+            `(${yVal}, ${xVal})`
+          ];
+
+          keypressSteps = [
+            `Press [APPS] -> Select [PlySmlt2]`,
+            `Select [2: System of Linear Eqn Solver]`,
+            `Set Equations = 2, Unknowns = 2`,
+            `Enter Matrix [1  1 | ${eq1_c}] and [2 -1 | ${eq2_c}]`,
+            `Press [SOLVE]`
+          ];
+
+          lcdOutput = `SYSTEM SOLVER\nx1 = ${xVal}\nx2 = ${yVal}`;
+          explanation = `The Simultaneous Equation Solver application handles 2x2 and 3x3 systems of linear equations in seconds.`;
+          break;
+        }
+
+        case "1-Var Stats [STAT]": {
+          const base = Math.floor(r(4) * 20) + 70;
+          const data = [base, base + 2, base + 5, base + 5, base + 8, base + 10];
+          const sum = data.reduce((a, b) => a + b, 0);
+          const mean = (sum / data.length).toFixed(2);
+
+          statement = `Find the mean of the data set: $\{${data.join(', ')}\}$.`;
+
+          options = [
+            `x̄ = ${mean}`,
+            `x̄ = ${(parseFloat(mean) + 1.2).toFixed(2)}`,
+            `x̄ = ${(parseFloat(mean) - 0.8).toFixed(2)}`,
+            `x̄ = ${(parseFloat(mean) + 2.5).toFixed(2)}`
+          ];
+
+          keypressSteps = [
+            `Press [STAT] -> [1: Edit...]`,
+            `Clear List L1 and enter items: ${data.join(', ')}`,
+            `Press [STAT] -> Arrow right to [CALC] -> Select [1: 1-Var Stats]`,
+            `Set List: L1 -> Press [Calculate]`
+          ];
+
+          lcdOutput = `1-Var Stats\nx̄=${mean}\nΣx=${sum}\nn=${data.length}\nMed=${data[2]}`;
+          explanation = `1-Var Stats automatically computes mean (x̄), median, quartiles, and standard deviation for any list.`;
+          break;
+        }
+
+        case "LinReg (ax+b) [STAT]": {
+          statement = `A scatterplot shows data with points (1, 4), (2, 7), (3, 10), (4, 13). What is the linear regression slope (a)?`;
+
+          options = [
+            `a = 3.00`,
+            `a = 2.50`,
+            `a = 4.00`,
+            `a = 1.00`
+          ];
+
+          keypressSteps = [
+            `Press [STAT] -> [1: Edit...]`,
+            `Enter X values {1, 2, 3, 4} into L1`,
+            `Enter Y values {4, 7, 10, 13} into L2`,
+            `Press [STAT] -> [CALC] -> [4: LinReg(ax+b)]`,
+            `Press [Calculate]`
+          ];
+
+          lcdOutput = `LinReg\ny=ax+b\na=3\nb=1\nr²=1`;
+          explanation = `LinReg calculates the best-fit line equation y = ax + b and correlation coefficients.`;
+          break;
+        }
+
+        case "Solver App [MATH]": {
+          const c = Math.floor(r(4) * 30) + 10;
+          statement = `Solve for positive $x$ in the equation $3^{x} = ${Math.pow(3, 4)}$`;
+
+          options = [
+            `x = 4`,
+            `x = 3`,
+            `x = 5`,
+            `x = 12`
+          ];
+
+          keypressSteps = [
+            `Press [MATH] -> Arrow down to [B: Solver...] or [Numeric Solver]`,
+            `Enter Eqn1: E1 = 3^X`,
+            `Enter Eqn2: E2 = 81`,
+            `Press [OK] / [SOLVE] (f5 key)`
+          ];
+
+          lcdOutput = `NUMERIC SOLVER\n3^X - 81 = 0\n X=4\n bound={-1E99,1E9...}`;
+          explanation = `The TI-84 Numeric Solver uses iterative algorithms to solve any complex single-variable equation.`;
+          break;
+        }
+
+        default: { // Fraction Toggle
+          const num = 14;
+          const den = 35;
+          statement = `Express the decimal $0.4$ as a simplified fraction.`;
+
+          options = [
+            `2/5`,
+            `4/10`,
+            `1/3`,
+            `3/8`
+          ];
+
+          keypressSteps = [
+            `Type [0] [.] [4] on the home screen`,
+            `Press [MATH]`,
+            `Select [1: Frac]`,
+            `Press [ENTER]`
+          ];
+
+          lcdOutput = `0.4►Frac\n             2/5`;
+          explanation = `The ►Frac function instantly converts repeating or terminating decimals into simplified fractional form.`;
+          break;
+        }
       }
 
-      // --- DOMAIN 2: ADVANCED MATH (30 Problems) ---
-      for (let i = 1; i <= 30; i++) {
-        let title, prompt, options, correct, manual, keypress, feature, lcdDisplay, tip;
+      // Shuffle options to place correct answer at correctIdx
+      const originalOptions = [...options];
+      const correctText = originalOptions[0]; // original[0] was built as correct
+      options = ["", "", "", ""];
+      options[correctIdx] = correctText;
 
-        if (i === 1) {
-          title = "Quadratic Vertex Maximum Trajectory";
-          prompt = "The path of a flare is modeled by h(t) = -16t² + 64t + 80. What is the maximum height h(t) reached?";
-          options = ["A) 80", "B) 128", "C) 144", "D) 160"];
-          correct = "C) 144";
-          manual = "Vertex t = -b/(2a) = -64 / (2 * -16) = 2 seconds. Substitute t = 2: h(2) = -16(4) + 64(2) + 80 = -64 + 128 + 80 = 144.";
-          keypress = "[Y=] -> Y1 = -16X^2 + 64X + 80 -> [GRAPH] -> [2nd] -> [TRACE] -> 4:maximum -> Left/Right bounds -> [ENTER].";
-          feature = "GRAPH";
-          lcdDisplay = `<div class="text-amber-300 font-bold">Maximum</div><div class="text-emerald-400 font-bold">X=2              Y=144</div>`;
-          tip = "The y-value at the graph's maximum point gives the exact maximum height!";
-        } else if (i === 2) {
-          title = "Polynomial Root Solver";
-          prompt = "What is the positive real root of the polynomial equation x³ - 3x² - 4x + 12 = 0?";
-          options = ["A) 1", "B) 2", "C) 3", "D) 4"];
-          correct = "C) 3";
-          manual = "Factor by grouping: x²(x - 3) - 4(x - 3) = 0 -> (x² - 4)(x - 3) = 0 -> (x-2)(x+2)(x-3) = 0. Positive roots are 2 and 3; x=3 is among options.";
-          keypress = "[APPS] -> PolySmlt2 -> 1:Polynomial Root Finder -> Degree 3 -> Coeffs: [1, -3, -4, 12] -> [SOLVE].";
-          feature = "SOLVER";
-          lcdDisplay = `<div class="text-xs border-b border-white/20">DEGREE 3 ROOTS</div><div class="text-emerald-400 font-bold">x1 = 3<br>x2 = 2<br>x3 = -2</div>`;
-          tip = "Use the PolySmlt2 App on TI-84 Evo to solve any degree-2, 3, or 4 polynomial instantly!";
-        } else if (i === 3) {
-          title = "Exponential Growth Function";
-          prompt = "A population of bacteria grows according to P(t) = 500(1.15)^t. After how many hours (t) will population reach 1,000?";
-          options = ["A) 4.2", "B) 4.96", "C) 5.5", "D) 6.1"];
-          correct = "B) 4.96";
-          manual = "500(1.15)^t = 1000 -> 1.15^t = 2 -> t = ln(2) / ln(1.15) ≈ 0.6931 / 0.1397 ≈ 4.96 hours.";
-          keypress = "[Y=] -> Y1 = 500*(1.15)^X, Y2 = 1000 -> [GRAPH] -> [2nd] -> [TRACE] -> 5:intersect.";
-          feature = "GRAPH";
-          lcdDisplay = `<div class="text-amber-300 font-bold">Intersection</div><div class="text-emerald-400 font-bold">X=4.959          Y=1000</div>`;
-          tip = "Graph the horizontal target line in Y2 and use intersect to avoid doing logarithmic base changes manually.";
-        } else {
-          const quadC = i * 2 + 3;
-          title = `Advanced Function & Exponents #${i}`;
-          prompt = `Which expression is equivalent to (x^2 - ${quadC}) / (x - 3)?`;
-          options = [`A) x + 3 + ${(9-quadC)}/(x-3)`, `B) x - 3`, `C) x + 3`, `D) x - 1` font-mono];
-          correct = `A) x + 3 + ${(9-quadC)}/(x-3)`;
-          manual = `Polynomial division of x^2 - ${quadC} by x - 3 gives quotient x + 3 and remainder (9 - ${quadC}).`;
-          keypress = `Input Y1 = (X^2 - ${quadC})/(X - 3), Y2 = Choice A in [Y=]. Open [2nd] -> [GRAPH] (TABLE) to confirm matching rows.`;
-          feature = "TABLE";
-          lcdDisplay = `<div class="text-emerald-400 font-bold">TABLE MATCH CONFIRMED</div><div>Y1 = Y2 for all tested X</div>`;
-          tip = "The Table Trick is the single most reliable way to check polynomial equivalence on the SAT.";
+      let remainingIdx = 0;
+      for (let i = 0; i < 4; i++) {
+        if (i !== correctIdx) {
+          remainingIdx++;
+          options[i] = originalOptions[remainingIdx] || `Option ${i+1}`;
         }
-
-        list.push({
-          id: id++,
-          domain: domains.AdvMath,
-          title: `Adv Math: ${title}`,
-          prompt: prompt,
-          options: options,
-          correct: correct,
-          manual: manual,
-          keypress: keypress,
-          feature: feature,
-          lcdDisplay: lcdDisplay,
-          tip: tip
-        });
       }
 
-      // --- DOMAIN 3: DATA ANALYSIS (25 Problems) ---
-      for (let i = 1; i <= 25; i++) {
-        let title, prompt, options, correct, manual, keypress, feature, lcdDisplay, tip;
+      return {
+        id: id + 1,
+        domain: domain,
+        feature: feature,
+        statement: statement,
+        options: options,
+        correctIdx: correctIdx,
+        keypressSteps: keypressSteps,
+        lcdOutput: lcdOutput,
+        explanation: explanation
+      };
+    }
 
-        if (i === 1) {
-          title = "Frequency Table Mean & Median";
-          prompt = "A test score frequency list: Score 70 (4 students), 80 (8 students), 90 (12 students), 100 (2 students). What is the mean score?";
-          options = ["A) 82.5", "B) 83.85", "C) 85.0", "D) 87.5"];
-          correct = "B) 83.85";
-          manual = "Mean = (70*4 + 80*8 + 90*12 + 100*2) / (4 + 8 + 12 + 2) = (280 + 640 + 1080 + 200) / 26 = 2180 / 26 ≈ 83.846.";
-          keypress = "[STAT] -> Edit L1: [70, 80, 90, 100], L2: [4, 8, 12, 2] -> [STAT] -> CALC -> 1:1-Var Stats List:L1 FreqList:L2 -> Calculate.";
-          feature = "STAT";
-          lcdDisplay = `<div class="text-amber-300 font-bold">1-Var Stats</div><div class="text-emerald-400 font-bold">x̄ = 83.84615</div><div>Σx = 2180</div><div>n = 26</div><div class="text-emerald-400 font-bold">Med = 85</div>`;
-          tip = "Always use FreqList: L2 in 1-Var Stats when given frequency tables on SAT statistics problems.";
-        } else if (i === 2) {
-          title = "Scatterplot Linear Best Fit";
-          prompt = "A scatterplot data yields points (1, 12), (2, 18), (3, 25), (4, 31). What is the slope of the line of best fit?";
-          options = ["A) 5.8", "B) 6.3", "C) 6.8", "D) 7.2"];
-          correct = "B) 6.3";
-          manual = "Run linear regression on the 4 data points to get exact slope a.";
-          keypress = "[STAT] -> Edit L1: [1, 2, 3, 4], L2: [12, 18, 25, 31] -> [STAT] -> CALC -> 4:LinReg(ax+b).";
-          feature = "STAT";
-          lcdDisplay = `<div class="text-amber-300 font-bold">LinReg(ax+b)</div><div class="text-emerald-400 font-bold">a = 6.3</div><div>b = 5.5</div><div>r = 0.998</div>`;
-          tip = "LinReg computes the slope (a) and y-intercept (b) of the line of best fit faster than drawing manual trendlines!";
-        } else {
-          title = `Statistics & Data Analysis #${i}`;
-          prompt = `Data set A has 5 numbers with mean ${60 + i}. If a 6th number equal to ${90 + i} is added, what is the new mean?`;
-          const sumOrig = 5 * (60 + i);
-          const newMean = (sumOrig + 90 + i) / 6;
-          options = [`A) ${newMean.toFixed(1)}`, `B) ${(newMean - 2).toFixed(1)}`, `C) ${(newMean + 3).toFixed(1)}`, `D) ${(newMean * 1.1).toFixed(1)}` font-mono];
-          correct = `A) ${newMean.toFixed(1)}`;
-          manual = `Sum = 5 * ${60 + i} = ${sumOrig}. New sum = ${sumOrig} + ${90 + i} = ${sumOrig + 90 + i}. New mean = ${sumOrig + 90 + i} / 6 = ${newMean.toFixed(2)}.`;
-          keypress = `Input values into [STAT] list L1, then run [STAT] -> CALC -> 1-Var Stats L1.`;
-          feature = "STAT";
-          lcdDisplay = `<div class="text-emerald-400 font-bold">x̄ = ${newMean.toFixed(2)}</div><div>n = 6</div>`;
-          tip = "Use 1-Var Stats whenever adding data values to quickly view updated means and medians.";
+    // Initialize Filtered Indices
+    function applyFilters() {
+      const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+      const domainVal = document.getElementById('domain-select').value;
+      const featureVal = document.getElementById('feature-select').value;
+
+      filteredIndices = [];
+
+      for (let i = 0; i < 1000; i++) {
+        const p = getProblem(i);
+
+        if (favoritesOnly && !favorites.has(p.id)) continue;
+        if (domainVal !== 'ALL' && p.domain !== domainVal) continue;
+        if (featureVal !== 'ALL' && p.feature !== featureVal) continue;
+
+        if (searchVal) {
+          const matchText = `${p.id} ${p.statement} ${p.domain} ${p.feature} ${p.explanation}`.toLowerCase();
+          if (!matchText.includes(searchVal)) continue;
         }
 
-        list.push({
-          id: id++,
-          domain: domains.Data,
-          title: `Data: ${title}`,
-          prompt: prompt,
-          options: options,
-          correct: correct,
-          manual: manual,
-          keypress: keypress,
-          feature: feature,
-          lcdDisplay: lcdDisplay,
-          tip: tip
-        });
+        filteredIndices.push(i);
       }
 
-      // --- DOMAIN 4: GEOMETRY & TRIGONOMETRY (15 Problems) ---
-      for (let i = 1; i <= 15; i++) {
-        let title, prompt, options, correct, manual, keypress, feature, lcdDisplay, tip;
-
-        if (i === 1) {
-          title = "Circle Equation Center & Radius";
-          prompt = "A circle is defined by x² + y² - 6x + 8y = 0. What is the radius of the circle?";
-          options = ["A) 4", "B) 5", "C) 10", "D) 25"];
-          correct = "B) 5";
-          manual = "Complete the square: (x² - 6x + 9) + (y² + 8y + 16) = 0 + 9 + 16 -> (x - 3)² + (y + 4)² = 25. Radius r = √25 = 5.";
-          keypress = "Use [Y=] circle parametric mode OR compute r = √( (h/2)² + (k/2)² - c ) = √( 9 + 16 ) = 5 on main screen.";
-          feature = "SOLVER";
-          lcdDisplay = `<div class="text-xs">r = √((6/2)² + (8/2)²)</div><div class="text-emerald-400 font-bold text-sm">r = √(9 + 16) = 5</div>`;
-          tip = "For circle equation x² + y² + Ax + By + C = 0, radius is always r = √((A/2)² + (B/2)² - C).";
-        } else if (i === 2) {
-          title = "Trigonometric Right Triangle Ratio";
-          prompt = "In right triangle ABC with angle C = 90°, if sin(A) = 3/5, what is tan(A)?";
-          options = ["A) 3/4", "B) 4/3", "C) 4/5", "D) 5/3"];
-          correct = "A) 3/4";
-          manual = "sin(A) = opp/hyp = 3/5. Adjacent side = √(5² - 3²) = 4. Therefore tan(A) = opp/adj = 3/4.";
-          keypress = "Check angle mode [MODE] -> DEGREE. Calculate sin⁻¹(3/5) -> store as A -> Evaluate tan(A) -> press [MATH] -> 1:>Frac.";
-          feature = "TABLE";
-          lcdDisplay = `<div class="text-xs">sin⁻¹(3/5) = 36.87°</div><div class="text-emerald-400 font-bold">tan(36.87°) ▸Frac = 3/4</div>`;
-          tip = "The [MATH] -> 1:>Frac key instantly converts decimal trig outputs back into simplified SAT fractions!";
-        } else {
-          title = `Geometry & Angle Theorem #${i}`;
-          prompt = `In a right triangle, one acute angle measures ${20 + i*3}°. What is the measure of the second acute angle?`;
-          const secondAngle = 90 - (20 + i*3);
-          options = [`A) ${secondAngle}°`, `B) ${secondAngle + 10}°`, `C) ${secondAngle - 5}°`, `D) ${180 - secondAngle}°` font-mono];
-          correct = `A) ${secondAngle}°`;
-          manual = `Acute angles in a right triangle sum to 90°. Second angle = 90 - ${20 + i*3} = ${secondAngle}°.`;
-          keypress = `Evaluate 90 - (${20 + i*3}) on home screen.`;
-          feature = "TABLE";
-          lcdDisplay = `<div class="text-emerald-400 font-bold">90 - ${20 + i*3} = ${secondAngle}°</div>`;
-          tip = "Ensure calculator is in DEGREE mode before performing angle geometry steps.";
-        }
-
-        list.push({
-          id: id++,
-          domain: domains.Geom,
-          title: `Geom/Trig: ${title}`,
-          prompt: prompt,
-          options: options,
-          correct: correct,
-          manual: manual,
-          keypress: keypress,
-          feature: feature,
-          lcdDisplay: lcdDisplay,
-          tip: tip
-        });
-      }
-
-      return list;
+      currentPage = 1;
+      renderList();
     }
 
-    // Initialize Full Problem Database
-    const allProblems = generate100Problems();
+    function renderList() {
+      const problemListEl = document.getElementById('problem-list');
+      const totalCount = filteredIndices.length;
 
-    // Filtering State
-    let currentDomain = "ALL";
-    let visibleCount = 10;
-    let filteredProblems = [...allProblems];
+      document.getElementById('total-matching-count').innerText = totalCount.toLocaleString();
 
-    // Filter Trigger Function
-    function filterProblems() {
-      const searchVal = document.getElementById('searchInput').value.toLowerCase();
-      const featureVal = document.getElementById('featureFilter').value;
-
-      filteredProblems = allProblems.filter(p => {
-        const matchesDomain = (currentDomain === "ALL" || p.domain === currentDomain);
-        const matchesFeature = (featureVal === "ALL" || p.feature === featureVal);
-        const matchesSearch = p.title.toLowerCase().includes(searchVal) ||
-                              p.prompt.toLowerCase().includes(searchVal) ||
-                              p.keypress.toLowerCase().includes(searchVal) ||
-                              p.tip.toLowerCase().includes(searchVal);
-        return matchesDomain && matchesFeature && matchesSearch;
-      });
-
-      visibleCount = 10;
-      renderVisibleProblems();
-    }
-
-    function setDomain(domain) {
-      currentDomain = domain;
-      document.querySelectorAll('.domain-tab').forEach(tab => {
-        if (tab.id === `domain-tab-${domain}`) {
-          tab.className = "domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm";
-        } else {
-          tab.className = "domain-tab px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
-        }
-      });
-      filterProblems();
-    }
-
-    function loadMoreProblems() {
-      visibleCount += 10;
-      renderVisibleProblems();
-    }
-
-    function showAllProblems() {
-      visibleCount = filteredProblems.length;
-      renderVisibleProblems();
-    }
-
-    // Render Cards to Page
-    function renderVisibleProblems() {
-      const container = document.getElementById('problemsContainer');
-      const displayed = filteredProblems.slice(0, visibleCount);
-
-      document.getElementById('statTotal').innerText = `${filteredProblems.length} Problems`;
-      document.getElementById('showingCountText').innerText = `Showing ${displayed.length} of ${filteredProblems.length} problems`;
-
-      if (displayed.length === 0) {
-        container.innerHTML = `
-          <div class="p-12 text-center rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            <i class="fa-solid fa-folder-open text-4xl text-slate-400 mb-3"></i>
-            <h3 class="font-bold text-lg">No Matching Problems Found</h3>
-            <p class="text-xs text-slate-500">Try adjusting your search terms or filters.</p>
+      if (totalCount === 0) {
+        problemListEl.innerHTML = `
+          <div class="text-center py-16 bg-slate-900/40 rounded-2xl border border-slate-800">
+            <i class="fa-solid fa-filter-circle-xmark text-4xl text-slate-600 mb-3"></i>
+            <h3 class="text-lg font-medium text-slate-300">No matching SAT Math problems found</h3>
+            <p class="text-xs text-slate-500 mt-1">Try resetting your search criteria or category filters.</p>
           </div>
         `;
-        document.getElementById('paginationBox').classList.add('hidden');
+        document.getElementById('showing-count').innerText = "0";
+        document.getElementById('page-indicator').innerText = "Page 0";
+        renderPagination(0);
         return;
       }
 
-      document.getElementById('paginationBox').classList.remove('hidden');
+      const totalPages = Math.ceil(totalCount / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages;
 
-      container.innerHTML = displayed.map(p => `
-        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
-          
-          <!-- Problem Header & Domain Badge -->
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
-                #${p.id} &bull; ${p.domain}
-              </span>
-              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                <i class="fa-solid fa-microchip text-blue-500 mr-1"></i>${p.feature}
-              </span>
-            </div>
-            <h3 class="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-200">${p.title}</h3>
-          </div>
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = Math.min(startIndex + pageSize, totalCount);
 
-          <!-- Question Prompt -->
-          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 font-medium text-sm leading-relaxed">
-            ${p.prompt}
-          </div>
+      document.getElementById('showing-count').innerText = `${startIndex + 1} - ${endIndex}`;
+      document.getElementById('page-indicator').innerText = `Page ${currentPage} of ${totalPages}`;
 
-          <!-- Multiple Choice Options -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-semibold">
-            ${p.options.map(opt => `
-              <div class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 ${!quizModeActive && opt === p.correct ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-600 dark:text-emerald-400 font-bold' : 'bg-slate-100/50 dark:bg-slate-800/30'}">
-                ${opt}
-              </div>
-            `).join('')}
-          </div>
+      let html = '';
 
-          <!-- SOLUTION / SIMULATOR SECTION (Toggleable via Quiz Mode) -->
-          <div class="${quizModeActive ? 'hidden' : 'block'} space-y-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+      for (let i = startIndex; i < endIndex; i++) {
+        const pIndex = filteredIndices[i];
+        const p = getProblem(pIndex);
+        const isFav = favorites.has(p.id);
+        const userChoice = selectedAnswers[p.id];
+
+        html += `
+          <div class="bg-slate-900 border border-slate-800/90 rounded-2xl p-5 sm:p-6 shadow-xl relative transition-all duration-200 hover:border-slate-700/80">
             
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              
-              <!-- Walkthrough Left Column (7 Cols) -->
-              <div class="lg:col-span-7 space-y-3">
-                <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/50 text-xs space-y-1">
-                  <div class="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Algebraic Solution</div>
-                  <div class="text-slate-700 dark:text-slate-300">${p.manual}</div>
-                </div>
-
-                <div class="p-3.5 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200/40 dark:border-blue-900/40 text-xs space-y-1">
-                  <div class="font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider text-[10px]">
-                    <i class="fa-solid fa-terminal mr-1"></i>TI-84 Evo Keypress Steps
-                  </div>
-                  <div class="font-mono text-slate-800 dark:text-slate-200">${p.keypress}</div>
-                </div>
-
-                <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs flex items-start gap-2">
-                  <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5"></i>
-                  <div>
-                    <strong class="text-amber-600 dark:text-amber-400">SAT Evo Pro-Tip:</strong>
-                    <span class="text-slate-600 dark:text-slate-300">${p.tip}</span>
-                  </div>
-                </div>
+            <!-- Card Top Header -->
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800/70">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                  Problem #${p.id}
+                </span>
+                <span class="text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">
+                  ${p.domain}
+                </span>
+                <span class="text-xs font-medium px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
+                  <i class="fa-solid fa-microchip text-[10px]"></i> ${p.feature}
+                </span>
               </div>
 
-              <!-- Simulator LCD Right Column (5 Cols) -->
-              <div class="lg:col-span-5">
-                <div class="lcd-display rounded-2xl p-4 min-h-[130px] flex flex-col justify-between">
-                  <div class="flex justify-between items-center text-[10px] opacity-75 border-b border-black/20 dark:border-white/10 pb-1 mb-2">
-                    <span>TI-84 EVO COLOR LCD</span>
-                    <span>RESULT</span>
-                  </div>
-                  <div class="font-mono text-xs my-1">
-                    ${p.lcdDisplay}
-                  </div>
-                  <div class="text-[10px] text-right font-bold text-emerald-400 pt-1 border-t border-black/20 dark:border-white/10">
-                    Correct Answer: ${p.correct}
+              <!-- Bookmark Button -->
+              <button onclick="toggleBookmark(${p.id})" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-amber-400 transition">
+                <i class="${isFav ? 'fa-solid text-amber-400' : 'fa-regular'} fa-bookmark"></i>
+              </button>
+            </div>
+
+            <!-- Problem Statement -->
+            <div class="mb-5 text-slate-200 text-sm sm:text-base leading-relaxed font-normal">
+              ${p.statement.replace(/\n/g, '<br/>')}
+            </div>
+
+            <!-- Options Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+              ${p.options.map((opt, idx) => {
+                const optLetter = String.fromCharCode(65 + idx);
+                const isCorrect = idx === p.correctIdx;
+                let btnStyle = "bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700";
+
+                if (!quizMode) {
+                  // Standard Mode - Highlight Correct
+                  if (isCorrect) {
+                    btnStyle = "bg-emerald-950/40 border-emerald-500/60 text-emerald-300 font-medium";
+                  }
+                } else {
+                  // Quiz Mode Logic
+                  if (userChoice !== undefined) {
+                    if (idx === userChoice) {
+                      btnStyle = isCorrect 
+                        ? "bg-emerald-950/60 border-emerald-500 text-emerald-300" 
+                        : "bg-rose-950/60 border-rose-500 text-rose-300";
+                    } else if (isCorrect) {
+                      btnStyle = "bg-emerald-950/30 border-emerald-500/40 text-emerald-400";
+                    }
+                  }
+                }
+
+                return `
+                  <button 
+                    onclick="selectOption(${p.id}, ${idx})"
+                    class="p-3 rounded-xl border text-left transition flex items-start gap-3 text-xs sm:text-sm ${btnStyle}">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 flex items-center justify-center font-bold text-slate-400 text-xs shrink-0">
+                      ${optLetter}
+                    </span>
+                    <span class="pt-0.5">${opt}</span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- TI-84 Evo Step-by-Step & LCD Display Container -->
+            <div class="mt-4 ${quizMode && userChoice === undefined ? 'hidden' : 'block'} border-t border-slate-800/80 pt-5">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+                
+                <!-- Steps List -->
+                <div class="lg:col-span-7 space-y-2.5">
+                  <h4 class="text-xs font-semibold text-cyan-400 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-list-check"></i> TI-84 Evo Keypress Workflow
+                  </h4>
+                  <ol class="space-y-1.5 text-xs text-slate-300">
+                    ${p.keypressSteps.map((step, sIdx) => `
+                      <li class="flex items-start gap-2 bg-slate-950/60 p-2 rounded-lg border border-slate-800/50">
+                        <span class="font-mono text-cyan-400 font-bold">${sIdx + 1}.</span>
+                        <span>${step}</span>
+                      </li>
+                    `).join('')}
+                  </ol>
+                  <p class="text-xs text-slate-400 mt-2 italic bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/40">
+                    <strong class="text-slate-300 font-semibold">SAT Strategy Tip:</strong> ${p.explanation}
+                  </p>
+                </div>
+
+                <!-- Simulated LCD Screen -->
+                <div class="lg:col-span-5">
+                  <h4 class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-tv"></i> Simulated TI-84 LCD Display
+                  </h4>
+                  <div class="lcd-screen rounded-xl p-4 text-xs leading-relaxed whitespace-pre font-mono">
+                    <div class="flex justify-between items-center text-[10px] text-emerald-500/70 border-b border-emerald-900/60 pb-1 mb-2">
+                      <span>NORMAL FLOAT AUTO REAL</span>
+                      <span>TI-84 EVO</span>
+                    </div>
+                    <div>${p.lcdOutput}</div>
                   </div>
                 </div>
-              </div>
 
+              </div>
             </div>
 
           </div>
+        `;
+      }
 
-          <!-- Reveal Answer Button (When Quiz Mode Active) -->
-          ${quizModeActive ? `
-            <button onclick="this.nextElementSibling.classList.toggle('hidden')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">
-              <i class="fa-solid fa-key mr-1"></i> Reveal Answer & TI-84 Keypress Solution
-            </button>
-            <div class="hidden space-y-4 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <div class="p-3.5 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
-                Correct Answer: ${p.correct}
-              </div>
-              <div class="font-mono text-xs p-3 rounded-xl bg-slate-800 text-slate-200">
-                ${p.keypress}
-              </div>
-            </div>
-          ` : ''}
+      problemListEl.innerHTML = html;
+      renderPagination(totalPages);
+    }
 
-        </div>
-      `).join('');
+    function renderPagination(totalPages) {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const buttonsContainer = document.getElementById('page-buttons');
 
-      // Show/Hide Load More Button
-      const loadMoreBtn = document.getElementById('loadMoreBtn');
-      if (visibleCount >= filteredProblems.length) {
-        loadMoreBtn.classList.add('hidden');
-      } else {
-        loadMoreBtn.classList.remove('hidden');
+      prevBtn.disabled = currentPage === 1 || totalPages === 0;
+      nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+      if (totalPages === 0) {
+        buttonsContainer.innerHTML = '';
+        return;
+      }
+
+      let pagesHtml = '';
+      const maxVisible = 5;
+      let startPage = Math.max(1, currentPage - 2);
+      let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+      if (endPage - startPage < maxVisible - 1) {
+        startPage = Math.max(1, endPage - maxVisible + 1);
+      }
+
+      for (let p = startPage; p <= endPage; p++) {
+        const isActive = p === currentPage;
+        pagesHtml += `
+          <button 
+            onclick="goToPage(${p})" 
+            class="w-8 h-8 rounded-lg text-xs font-semibold transition ${
+              isActive 
+                ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30' 
+                : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-800'
+            }">
+            ${p}
+          </button>
+        `;
+      }
+
+      buttonsContainer.innerHTML = pagesHtml;
+    }
+
+    function goToPage(p) {
+      currentPage = p;
+      renderList();
+      document.getElementById('scroll-container').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function changePage(delta) {
+      currentPage += delta;
+      renderList();
+      document.getElementById('scroll-container').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleFilterChange() {
+      applyFilters();
+    }
+
+    function jumpToProblem() {
+      const input = document.getElementById('jump-input');
+      const num = parseInt(input.value);
+      if (isNaN(num) || num < 1 || num > 1000) return;
+
+      // Reset filters so problem is visible
+      document.getElementById('search-input').value = '';
+      document.getElementById('domain-select').value = 'ALL';
+      document.getElementById('feature-select').value = 'ALL';
+      favoritesOnly = false;
+      document.getElementById('favorites-toggle-btn').classList.remove('bg-amber-500/20', 'border-amber-500/40');
+
+      applyFilters();
+
+      // Find index in filtered
+      const targetIdx = filteredIndices.indexOf(num - 1);
+      if (targetIdx !== -1) {
+        currentPage = Math.floor(targetIdx / pageSize) + 1;
+        renderList();
+        document.getElementById('scroll-container').scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
 
-    // Initialize on Load
+    function toggleQuizMode() {
+      quizMode = !quizMode;
+      const btnText = document.getElementById('quiz-btn-text');
+      const icon = document.getElementById('quiz-icon');
+      
+      if (quizMode) {
+        btnText.innerText = 'Quiz Mode: ON';
+        icon.className = 'fa-solid fa-eye text-emerald-400';
+      } else {
+        btnText.innerText = 'Quiz Mode: OFF';
+        icon.className = 'fa-solid fa-eye-slash text-cyan-400';
+      }
+
+      renderList();
+    }
+
+    function toggleFavoritesFilter() {
+      favoritesOnly = !favoritesOnly;
+      const btn = document.getElementById('favorites-toggle-btn');
+      if (favoritesOnly) {
+        btn.classList.add('bg-amber-500/20', 'border-amber-500/40');
+      } else {
+        btn.classList.remove('bg-amber-500/20', 'border-amber-500/40');
+      }
+      applyFilters();
+    }
+
+    function toggleBookmark(problemId) {
+      if (favorites.has(problemId)) {
+        favorites.delete(problemId);
+      } else {
+        favorites.add(problemId);
+      }
+      localStorage.setItem('sat_math_favs', JSON.stringify([...favorites]));
+      document.getElementById('fav-count').innerText = favorites.size;
+      renderList();
+    }
+
+    function selectOption(problemId, optionIdx) {
+      selectedAnswers[problemId] = optionIdx;
+      renderList();
+    }
+
+    // Initialize App on DOM ready
     window.onload = function() {
-      filterProblems();
+      document.getElementById('fav-count').innerText = favorites.size;
+      applyFilters();
     };
   </script>
 </body>
